@@ -108,7 +108,6 @@ class MapViewController: BaseViewController {
         
         locationManager.add(self)
         
-        configureNavigationItem()
     }
     
     

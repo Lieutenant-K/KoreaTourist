@@ -52,6 +52,7 @@ class BaseInfoCell: UITableViewCell {
         configureCell()
         addSubviews()
         addConstraints()
+        backgroundColor = .clear
     }
     
     @available(*, unavailable)

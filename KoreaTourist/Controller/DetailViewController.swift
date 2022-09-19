@@ -88,6 +88,8 @@ final class DetailViewController: BaseViewController {
         
     }
     
+    
+    
     // MARK: - Method
     
     private func fetchDetailPlaceInfo() {
@@ -155,6 +157,13 @@ final class DetailViewController: BaseViewController {
     }
     
     override func configureNavigationItem() {
+        
+        let appear = UINavigationBarAppearance()
+        appear.configureWithTransparentBackground()
+        appear.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+        
+        navigationItem.standardAppearance = appear
+        navigationItem.scrollEdgeAppearance = appear
         
         navigationController?.navigationBar.prefersLargeTitles = true
         title = commonInfo.title
