@@ -7,104 +7,124 @@
 
 import UIKit
 import SnapKit
+import Then
 
 class PopupView: BaseView {
     
-    let announceLabel: BasePaddingLabel = {
-        let view = BasePaddingLabel(value: 20)
-        view.font = .systemFont(ofSize: 24, weight: .semibold)
-        view.textColor = .label
-        view.textAlignment = .center
-        view.numberOfLines = 1
-        view.lineBreakMode = .byWordWrapping
-        view.backgroundColor = .tertiarySystemGroupedBackground
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 16
-        view.layer.borderWidth = 2
-        view.layer.borderColor = UIColor.label.cgColor
-        view.text = "새로운 장소 발견!"
-        return view
-    }()
-    
-    let contentView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .tertiarySystemGroupedBackground
-//        view.clipsToBounds = true
-        view.layer.cornerRadius = 16
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
-        view.layer.shadowOpacity = 0.5
+    private let announceLabel = BasePaddingLabel(value: 20).then {
         
-        return view
-    }()
+        $0.font = .systemFont(ofSize: 24, weight: .semibold)
+        $0.textColor = .label
+        $0.textAlignment = .center
+        $0.numberOfLines = 1
+        $0.lineBreakMode = .byWordWrapping
+//        $0.backgroundColor = .tertiarySystemGroupedBackground
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 16
+        $0.layer.borderWidth = 1.5
+        $0.layer.borderColor = UIColor.secondaryLabel.cgColor
+        $0.text = "새로운 장소 발견!"
+        
+    }
     
-    let imageView: UIImageView = {
-        let view = UIImageView()
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 10
-        view.contentMode = .scaleAspectFill
-        return view
-    }()
+    private lazy var announceView = UIView().then {
+        
+        let visual = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterial))
+        visual.clipsToBounds = true
+        visual.layer.cornerRadius = 16
+        
+        $0.addSubview(visual)
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.layer.shadowOpacity = 0.5
+        
+        visual.snp.makeConstraints { $0.edges.equalToSuperview() }
+        
+        visual.contentView.addSubview(announceLabel)
+        announceLabel.snp.makeConstraints { $0.edges.equalToSuperview() }
+        
+    }
     
-    let titleLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 24, weight: .semibold)
-        view.textColor = .label
-        view.textAlignment = .center
-        view.numberOfLines = 0
-        view.lineBreakMode = .byWordWrapping
-        view.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        view.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        return view
-    }()
+    let contentView = UIView().then {
+        
+        let visual = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterial))
+        visual.clipsToBounds = true
+        visual.layer.cornerRadius = 16
+        $0.addSubview(visual)
+        visual.snp.makeConstraints { $0.edges.equalToSuperview() }
+        
+//        $0.backgroundColor = .tertiarySystemGroupedBackground
+//        view.clipsToBounds = true
+        $0.layer.cornerRadius = 16
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.layer.shadowOpacity = 0.5
+        
+        
+    }
     
-    let descriptLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 18, weight: .medium)
-        view.textColor = .secondaryLabel
-        view.textAlignment = .center
-        view.numberOfLines = 0
-        view.lineBreakMode = .byWordWrapping
-        return view
-    }()
+    let imageView = UIImageView().then {
+        
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 10
+        $0.contentMode = .scaleAspectFill
+        
+    }
     
-    let okButton: UIButton = {
-        let view = UIButton(type: .custom)
-        view.setTitle("확인", for: .normal)
-        view.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
-        view.setTitleColor(.label, for: .normal)
-        return view
-    }()
+    let titleLabel = UILabel().then {
+        
+        $0.font = .systemFont(ofSize: 24, weight: .semibold)
+        $0.textColor = .label
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+        $0.lineBreakMode = .byWordWrapping
+        $0.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        $0.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        
+    }
     
-    let detailButton: UIButton = {
-        let view = UIButton(type: .custom)
-        view.setTitle("세부정보 보기", for: .normal)
-        view.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
-        view.setTitleColor(.label, for: .normal)
-        return view
-    }()
+    let descriptLabel = UILabel().then {
+        
+        $0.font = .systemFont(ofSize: 18, weight: .medium)
+        $0.textColor = .secondaryLabel
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+        $0.lineBreakMode = .byWordWrapping
+        
+    }
     
-    private lazy var buttonStackView: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [okButton, detailButton])
-        view.axis = .horizontal
-        view.distribution = .fillEqually
-        view.alignment = .fill
-        return view
-    }()
+    let okButton = UIButton(type: .custom).then {
+        
+        $0.setTitle("확인", for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
+        $0.setTitleColor(.label, for: .normal)
+        
+    }
+    
+    let detailButton = UIButton(type: .custom).then {
+        
+        $0.setTitle("세부정보 보기", for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
+        
+        
+    }
+    
+    private lazy var buttonStackView = UIStackView(arrangedSubviews: [okButton, detailButton]).then {
+        
+        $0.axis = .horizontal
+        $0.distribution = .fillEqually
+        $0.alignment = .fill
+        
+    }
     
     override func setBackground() {
         
-        backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        backgroundColor = UIColor.black.withAlphaComponent(0.15)
     }
     
     override func addSubviews() {
         
-        contentView.addSubview(imageView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(descriptLabel)
-        contentView.addSubview(buttonStackView)
+        [imageView, titleLabel, descriptLabel, buttonStackView].forEach { contentView.addSubview($0) }
         
-        addSubview(contentView)
-        addSubview(announceLabel)
+        [contentView, announceView].forEach { addSubview($0) }
         
     }
     
@@ -142,9 +162,10 @@ class PopupView: BaseView {
             make.height.equalTo(50)
         }
         
-        announceLabel.snp.makeConstraints { make in
+        announceView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(contentView)
             make.bottom.equalTo(contentView.snp.top).offset(-12)
+            make.height.equalTo(announceLabel.snp.height)
         }
     }
     
