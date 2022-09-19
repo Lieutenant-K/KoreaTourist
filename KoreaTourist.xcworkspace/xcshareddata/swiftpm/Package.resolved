@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "circle-menu",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Ramotion/circle-menu.git",
+      "state" : {
+        "revision" : "3ee0a8a606f4dea14c1be113579d0d8486e9eb4b",
+        "version" : "4.1.0"
+      }
+    },
+    {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher.git",
@@ -34,6 +43,15 @@
       "state" : {
         "revision" : "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
         "version" : "5.0.1"
+      }
+    },
+    {
+      "identity" : "then",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/devxoul/Then.git",
+      "state" : {
+        "revision" : "d41ef523faef0f911369f79c0b96815d9dbb6d7a",
+        "version" : "3.0.0"
       }
     }
   ],
