@@ -25,7 +25,7 @@ final class MapView: NMFNaverMapView {
     
     }
     
-    lazy var circleButton = CircleMenu(frame: .zero, normalIcon: "", selectedIcon: "", duration: 0.7, distance: 85).then {
+    lazy var circleButton = CircleMenu(frame: .zero, normalIcon: "", selectedIcon: "", duration: 0.5, distance: 85).then {
         
         $0.setImage(UIImage(systemName: "list.bullet"), for: .normal)
         $0.setImage(UIImage(systemName: "xmark"), for: .selected)

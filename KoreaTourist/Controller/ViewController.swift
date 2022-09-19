@@ -264,6 +264,13 @@ extension ViewController: CircleMenuDelegate {
     }
     
     func circleMenu(_ circleMenu: CircleMenu, buttonDidSelected button: UIButton, atIndex: Int) {
+        
+        
+        circleMenu.isSelected = false
+    }
+    
+    func circleMenu(_ circleMenu: CircleMenu, buttonWillSelected button: UIButton, atIndex: Int) {
+        
         print(#function)
         
         let menu = Menu.allCases[atIndex]
@@ -275,8 +282,6 @@ extension ViewController: CircleMenuDelegate {
         case .userInfo:
             break
         }
-        
-        circleMenu.isSelected = false
     }
     
     
