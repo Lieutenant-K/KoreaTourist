@@ -8,26 +8,42 @@
 import UIKit
 import NMapsMap
 import SnapKit
+import CircleMenu
+import Then
 
-class MapView: NMFNaverMapView {
+final class MapView: NMFNaverMapView {
     
     let infoWindow = NMFInfoWindow()
     
-    lazy var searchButton: UIButton = {
-        let view = UIButton(type: .system)
-        view.setTitle("주변의 관광지 찾기", for: .normal)
-        view.backgroundColor = .label
-        view.setTitleColor(.systemBackground, for: .normal)
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 12
-        return view
-    }()
+    lazy var searchButton = UIButton(type: .system).then {
+        
+        $0.setTitle("주변의 관광지 찾기", for: .normal)
+        $0.backgroundColor = .label
+        $0.setTitleColor(.systemBackground, for: .normal)
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 12
     
-    lazy var trackControl: NMFLocationButton = {
-        let button = NMFLocationButton()
-        button.mapView = mapView
-        return button
-    }()
+    }
+    
+    let circleButton = CircleMenu(frame: .zero, normalIcon: "", selectedIcon: "", buttonsCount: 4, duration: 1.5, distance: 100).then {
+        
+        $0.setImage(UIImage(systemName: "list.bullet"), for: .normal)
+        $0.setImage(UIImage(systemName: "xmark"), for: .selected)
+        $0.backgroundColor = .systemBackground
+        $0.startAngle = -90
+        $0.endAngle = 90
+        
+        $0.layer.shadowOffset = .zero
+        $0.layer.shadowOpacity = 0.5
+        
+    }
+    
+    
+    lazy var trackControl = NMFLocationButton().then {
+        
+        $0.mapView = mapView
+        
+    }
     
     private func configureMapView() {
         
@@ -52,17 +68,29 @@ class MapView: NMFNaverMapView {
     
     private func configureButton() {
         
-        addSubview(searchButton)
-        addSubview(trackControl)
+//        addSubview(searchButton)
         
-        searchButton.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview().inset(28)
-            make.height.equalTo(60)
-        }
+        [trackControl, circleButton].forEach { addSubview($0) }
+        
+//        searchButton.snp.makeConstraints { make in
+//            make.leading.trailing.bottom.equalToSuperview().inset(28)
+//            make.height.equalTo(60)
+//        }
         trackControl.snp.makeConstraints { make in
             make.leading.equalTo(28)
-            make.bottom.equalTo(searchButton.snp.top).offset(-12)
+            make.bottom.equalTo(-60)
+//            make.bottom.equalTo(-28)
         }
+        
+        let buttonWidth = 50.0
+        
+        circleButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(-60)
+            make.width.equalTo(buttonWidth)
+            make.height.equalTo(circleButton.snp.width)
+        }
+        circleButton.layer.cornerRadius = buttonWidth/2
     }
     
     
