@@ -9,6 +9,26 @@ import UIKit
 import NMapsMap
 import SnapKit
 import Alamofire
+import CircleMenu
+
+enum Menu: CaseIterable {
+    
+    case search
+    case vision
+    case userInfo
+    
+    var image: UIImage? {
+        switch self {
+        case .search:
+            return UIImage(systemName: "magnifyingglass")
+        case .vision:
+            return UIImage(systemName: "eye.fill")
+        case .userInfo:
+            return UIImage(systemName: "person.fill")
+        }
+    }
+    
+}
 
 class ViewController: UIViewController {
     
@@ -56,6 +76,10 @@ class ViewController: UIViewController {
         naverMapView.mapView.touchDelegate = self
         
         naverMapView.searchButton.addTarget(self, action: #selector(touchSearchPlaceButton), for: .touchUpInside)
+        
+        naverMapView.circleButton.delegate = self
+        
+        naverMapView.circleButton.buttonsCount = Menu.allCases.count
     }
     
     override func viewDidLoad() {
@@ -231,3 +255,29 @@ extension ViewController: NMFLocationManagerDelegate {
 }
 
 
+extension ViewController: CircleMenuDelegate {
+    
+    func circleMenu(_ circleMenu: CircleMenu, willDisplay button: UIButton, atIndex: Int) {
+        let menu = Menu.allCases[atIndex]
+        button.setImage(menu.image, for: .normal)
+        button.backgroundColor = .systemBackground
+    }
+    
+    func circleMenu(_ circleMenu: CircleMenu, buttonDidSelected button: UIButton, atIndex: Int) {
+        print(#function)
+        
+        let menu = Menu.allCases[atIndex]
+        switch menu {
+        case .search:
+            searchNearPlace()
+        case .vision:
+            break
+        case .userInfo:
+            break
+        }
+        
+        circleMenu.isSelected = false
+    }
+    
+    
+}
