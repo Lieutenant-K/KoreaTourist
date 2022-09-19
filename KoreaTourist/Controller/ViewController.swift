@@ -80,6 +80,27 @@ class ViewController: UIViewController {
         naverMapView.circleButton.delegate = self
         
         naverMapView.circleButton.buttonsCount = Menu.allCases.count
+        
+        
+    }
+    
+    func configureNavigation() {
+        
+        let appear = UINavigationBarAppearance()
+        appear.configureWithTransparentBackground()
+        appear.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+        
+        navigationItem.standardAppearance = appear
+        navigationItem.scrollEdgeAppearance = appear
+        
+        let label = BasePaddingLabel(value: 0)
+        label.text = "동작구"
+        label.font = .systemFont(ofSize: 26, weight: .heavy)
+        label.textColor = .secondaryLabel
+        
+        navigationItem.titleView = label
+        
+        
     }
     
     override func viewDidLoad() {
@@ -87,7 +108,7 @@ class ViewController: UIViewController {
         
         locationManager.add(self)
         
-        
+        configureNavigation()
     }
     
     
