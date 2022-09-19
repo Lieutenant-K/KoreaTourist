@@ -57,7 +57,7 @@ class MapViewController: BaseViewController {
             let cancel = UIAlertAction(title: "아니오", style: .default)
             let actions = [cancel, ok]
             
-            if marker.distance <= 100 {
+            if marker.distance <= marker.minimunDistance {
                 self?.showAlert(title: "이 장소를 발견하시겠어요?", actions: actions)
             } else {
                 self?.showAlert(title: "아직 발견할 수 없어요!", message: "100m 이내로 접근해주세요")
