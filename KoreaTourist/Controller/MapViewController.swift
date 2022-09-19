@@ -30,7 +30,7 @@ enum Menu: CaseIterable {
     
 }
 
-class ViewController: UIViewController {
+class MapViewController: BaseViewController {
     
     // MARK: - Properties
     
@@ -84,7 +84,7 @@ class ViewController: UIViewController {
         
     }
     
-    func configureNavigation() {
+    override func configureNavigationItem() {
         
         let appear = UINavigationBarAppearance()
         appear.configureWithTransparentBackground()
@@ -94,7 +94,7 @@ class ViewController: UIViewController {
         navigationItem.scrollEdgeAppearance = appear
         
         let label = BasePaddingLabel(value: 0)
-        label.text = "동작구"
+        label.text = "현재 지역"
         label.font = .systemFont(ofSize: 26, weight: .heavy)
         label.textColor = .secondaryLabel
         
@@ -108,7 +108,7 @@ class ViewController: UIViewController {
         
         locationManager.add(self)
         
-        configureNavigation()
+        configureNavigationItem()
     }
     
     
@@ -201,7 +201,7 @@ class ViewController: UIViewController {
 
 // MARK: - MapViewTouchDelegate
 
-extension ViewController: NMFMapViewTouchDelegate {
+extension MapViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         naverMapView.infoWindow.close()
@@ -212,7 +212,7 @@ extension ViewController: NMFMapViewTouchDelegate {
 
 // MARK: - LocationManagerDelegate
 
-extension ViewController: NMFLocationManagerDelegate {
+extension MapViewController: NMFLocationManagerDelegate {
     
     func checkAuthorization(auth: CLAuthorizationStatus) {
         
@@ -276,7 +276,7 @@ extension ViewController: NMFLocationManagerDelegate {
 }
 
 
-extension ViewController: CircleMenuDelegate {
+extension MapViewController: CircleMenuDelegate {
     
     func circleMenu(_ circleMenu: CircleMenu, willDisplay button: UIButton, atIndex: Int) {
         let menu = Menu.allCases[atIndex]

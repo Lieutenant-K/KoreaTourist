@@ -52,12 +52,11 @@ final class MapView: NMFNaverMapView {
         
         showZoomControls = false
         mapView.logoAlign = .rightTop
-        mapView.maxZoomLevel = 18
+        mapView.maxZoomLevel = 16
         mapView.minZoomLevel = 10
         mapView.mapType = .navi
         mapView.moveCamera(NMFCameraUpdate(position: defaultCameraPosition))
         mapView.positionMode = .direction
-        //                naverMapView.showLocationButton = true
         
         if traitCollection.userInterfaceStyle == .dark {
             mapView.backgroundImage = NMFDefaultBackgroundDarkImage
