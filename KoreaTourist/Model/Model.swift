@@ -63,7 +63,7 @@ class CommonPlaceInfo: Object, PlaceInfo, Codable {
     @Persisted var title: String
     @Persisted var areaCode: Int
     @Persisted var subAreaCode: Int
-    @Persisted var contentId: Int
+    @Persisted(primaryKey: true) var contentId: Int
     @Persisted var contentTypeId: String
     @Persisted var image: String
     @Persisted var thumbnail: String
@@ -79,6 +79,10 @@ class CommonPlaceInfo: Object, PlaceInfo, Codable {
     var contentType: ContentType {
         get { ContentType(rawValue: contentTypeId)! }
         set { contentTypeId = newValue.rawValue }
+    }
+    
+    var isDiscovered: Bool {
+        return discoverDate == nil ? false : true
     }
     
     var fullAddress: String {

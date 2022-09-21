@@ -44,26 +44,10 @@ final class MapViewController: BaseViewController {
     
     var currentMarkers = [NMFMarker]()
     
-    lazy var markerTouchHandler: NMFOverlayTouchHandler = { [weak self] marker in
-        if let marker = marker as? PlaceMarker {
-            
-            let ok = UIAlertAction(title: "네", style: .cancel) { _ in
-                self?.discoverPlace(about: marker)
-                
-            }
-            let cancel = UIAlertAction(title: "아니오", style: .default)
-            let actions = [cancel, ok]
-            
-            if marker.distance <= PlaceMarker.minimunDistance {
-                self?.showAlert(title: "이 장소를 발견하시겠어요?", actions: actions)
-            } else {
-                self?.showAlert(title: "아직 발견할 수 없어요!", message: "100m 이내로 접근해주세요")
-            }
-            
-            
-        }
-        return true
-    }
+    var undiscoverdMarkerHandler: NMFOverlayTouchHandler?
+    
+    var discoveredMarkerHandler: NMFOverlayTouchHandler?
+    
     
     // MARK: - LifeCycle
     
@@ -106,26 +90,114 @@ final class MapViewController: BaseViewController {
         locationManager.add(self)
         
         realm.printRealmFileURL()
+        
+        defineMarkerTouchHandler()
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print(#function)
-
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print(#function)
-
+        
         
     }
     
     // MARK: - Method
     
-
-    private func displayMarkers(markers: [PlaceMarker]) {
+    func defineMarkerTouchHandler() {
+        
+        undiscoverdMarkerHandler = { [weak self] marker in
+            if let marker = marker as? PlaceMarker {
+                
+                let ok = UIAlertAction(title: "네", style: .cancel) { _ in
+                    self?.discoverPlace(about: marker)
+                    
+                }
+                let cancel = UIAlertAction(title: "아니오", style: .default)
+                let actions = [cancel, ok]
+                
+                if marker.distance <= PlaceMarker.minimunDistance {
+                    self?.showAlert(title: "이 장소를 발견하시겠어요?", actions: actions)
+                } else {
+                    self?.showAlert(title: "아직 발견할 수 없어요!", message: "100m 이내로 접근해주세요")
+                }
+                
+                
+            }
+            return true
+        }
+        
+        discoveredMarkerHandler = { [weak self] marker in
+           // 이미 발견된 마커에 대한 핸들러
+            return true
+        }
+        
+    }
+    
+    func searchNearPlace() {
+        
+        APIManager.shared.requestNearPlace(pos: Circle.home) { [weak self] placeList in
+            
+            if placeList.count > 0 {
+                self?.createPlaceMarkers(placeList: placeList)
+                //                self?.updatePlaceMarker(placeList: placeList)
+            } else {
+                self?.showAlert(title: "500m 이내에 찾을 장소가 없습니다!")
+            }
+        }
+        
+    }
+    
+    private func discoverPlace(about marker: PlaceMarker) {
+        
+        realm.discoverPlace(with: marker.placeInfo.contentId)
+        marker.updateMarkerAppearnce()
+        marker.touchHandler = discoveredMarkerHandler
+        
+        present(PopupViewController(place: marker.placeInfo), animated: true)
+        naverMapView.mapView.positionMode = .normal
+        locationManager.stopUpdatingLocation()
+        
+    }
+    
+    private func createPlaceMarkers(placeList: [CommonPlaceInfo]) {
+        
+        let newPlace = realm.registerPlaces(using: placeList)
+        
+        let alertTitle = newPlace.newCount > 0 ? "\(newPlace.newCount)개의 새로운 장소를 찾았습니다!" : "새로운 장소를 찾지 못했습니다."
+        
+        showAlert(title: alertTitle)
+//        print(newPlace.newInfoList)
+        let markers = newPlace.fetchedInfo.map { (info) -> PlaceMarker in
+            let marker = PlaceMarker(place: info)
+            marker.touchHandler = info.isDiscovered ? discoveredMarkerHandler : undiscoverdMarkerHandler
+            return marker
+        }
+        
+        updatePlaceMarker(markers: markers)
+        
+    }
+    
+    private func updatePlaceMarker(markers: [PlaceMarker]) {
+        
+        currentMarkers.forEach { $0.mapView = nil }
+        
+        currentMarkers = markers
+        
+        displayMarkersOnMap(markers: markers)
+        
+        naverMapView.mapView.positionMode = .normal
+        locationManager.startUpdatingLocation()
+        
+    }
+    
+    private func displayMarkersOnMap(markers: [PlaceMarker]) {
         
         markers.forEach { $0.mapView = naverMapView.mapView }
         
@@ -141,57 +213,9 @@ final class MapViewController: BaseViewController {
         
     }
     
-    func searchNearPlace() {
-        
-        APIManager.shared.requestNearPlace(pos: Circle.home) { [weak self] placeList in
-            
-            if placeList.count > 0 {
-                self?.checkAlreadyFound(placeList: placeList)
-                self?.updatePlaceMarker(placeList: placeList)
-            } else {
-                self?.showAlert(title: "500m 이내에 찾을 장소가 없습니다!")
-            }
-        }
-        
-    }
-    
-    private func discoverPlace(about marker: PlaceMarker) {
-        
-//        repository.discoverPlace(contentId: marker.id)
-        
-        present(PopupViewController(place: marker.placeInfo), animated: true)
-        naverMapView.mapView.positionMode = .normal
-        locationManager.stopUpdatingLocation()
-        
-    }
-    
-    private func checkAlreadyFound(placeList: [CommonPlaceInfo]) {
-        
-        let newPlace = realm.addNewPlace(using: placeList)
-        
-        let alertTitle = newPlace > 0 ? "\(newPlace)개의 새로운 장소를 찾았습니다!" : "새로운 장소를 찾지 못했습니다."
-        
-        showAlert(title: alertTitle)
-        
-    }
-    
-    private func updatePlaceMarker(placeList: [CommonPlaceInfo]) {
-        
-        let markers = placeList.map { PlaceMarker(place: $0, touchHandler: self.markerTouchHandler) }
-        
-        currentMarkers.forEach { $0.mapView = nil }
-        
-        currentMarkers = markers
-        
-        displayMarkers(markers: markers)
-        
-        naverMapView.mapView.positionMode = .normal
-        locationManager.startUpdatingLocation()
-        
-    }
     
     private func updateMarkerDistance(pos: NMGLatLng) {
-     
+        
         currentMarkers.forEach { marker in
             if let marker = marker as? PlaceMarker {
                 let dis = marker.position.distance(to: pos)
@@ -207,12 +231,12 @@ final class MapViewController: BaseViewController {
     }
     
     // MARK: - Action Method
-   
+    
     
     @objc func touchSearchPlaceButton() {
         
         let infoWindowData = NMFInfoWindowDefaultTextSource.data()
-//        let infoWindowData = InfoWindowButton()
+        //        let infoWindowData = InfoWindowButton()
         naverMapView.infoWindow.dataSource = infoWindowData
         
         searchNearPlace()
@@ -262,7 +286,7 @@ extension MapViewController: NMFLocationManagerDelegate {
         print("ChangeAuthStatus")
         
         checkAuthorization(auth: status)
-
+        
         
     }
     
@@ -273,17 +297,17 @@ extension MapViewController: NMFLocationManagerDelegate {
         print("UpdateLocation", location.lat, location.lng)
         
         updateMarkerDistance(pos: location)
-
+        
     }
     /*
-    func locationManagerBackgroundLocationUpdatesDidTimeout(_ locationManager: NMFLocationManager!) {
-        print(#function)
-    }
-    
-    func locationManagerBackgroundLocationUpdatesDidAutomaticallyPause(_ locationManager: NMFLocationManager!) {
-        print(#function)
-    }
-    */
+     func locationManagerBackgroundLocationUpdatesDidTimeout(_ locationManager: NMFLocationManager!) {
+     print(#function)
+     }
+     
+     func locationManagerBackgroundLocationUpdatesDidAutomaticallyPause(_ locationManager: NMFLocationManager!) {
+     print(#function)
+     }
+     */
     
     func locationManagerDidStartLocationUpdates(_ locationManager: NMFLocationManager!) {
         print("StartLocationUpdates")

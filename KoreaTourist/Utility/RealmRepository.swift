@@ -10,7 +10,7 @@ import RealmSwift
 
 class RealmRepository {
     
-    let localRealm: Realm = {
+    private let localRealm: Realm = {
         var config = Realm.Configuration.defaultConfiguration
         config.deleteRealmIfMigrationNeeded = true
         
@@ -21,32 +21,49 @@ class RealmRepository {
         print(localRealm.configuration.fileURL?.path)
     }
     
-    func addNewPlace(using infoList: [CommonPlaceInfo]) -> Int {
+    func registerPlaces(using infoList: [CommonPlaceInfo]) -> (newCount: Int, fetchedInfo: [CommonPlaceInfo]) {
         
         var count = 0
         
-        infoList.forEach { place in
+        let newInfoList = infoList.map { (info) -> CommonPlaceInfo in
             
-            let isExist = localRealm.objects(CommonPlaceInfo.self).contains { $0.contentId == place.contentId
-            }
-            
-            if !isExist {
+            if let place = localRealm.object(ofType: CommonPlaceInfo.self, forPrimaryKey: info.contentId) {
+                do {
+                    try localRealm.write {
+                        place.dist = info.dist
+                    }
+                } catch {
+                    print("데이터 수정 오류")
+                }
+                return place
+            } else {
                 count += 1
                 do {
                     try localRealm.write {
-                        localRealm.add(place)
+                        localRealm.add(info)
                     }
                 } catch {
                     print("데이터 추가 오류")
                 }
-            } else {
-                print("이미 존재함")
+                return info
             }
-        
         }
         
-        return count
+        return (count, newInfoList)
         
+    }
+    
+    func discoverPlace(with contentId: Int) {
+        
+        guard let place = localRealm.object(ofType: CommonPlaceInfo.self, forPrimaryKey: contentId) else { return }
+        
+        do {
+            try localRealm.write({
+                place.discoverDate = Date()
+            })
+        } catch {
+            print("장소 발견 실패")
+        }
     }
     
     
