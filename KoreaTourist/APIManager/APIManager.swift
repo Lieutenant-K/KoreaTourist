@@ -13,7 +13,7 @@ class APIManager {
     
     static let shared = APIManager()
     
-    func requestNearPlace(pos: Circle, completionHandler: @escaping (_ data: [CommonPlaceInfo]) -> Void) {
+    func requestNearPlace(pos: Circle, completionHandler: @escaping (_ placeList: [CommonPlaceInfo]) -> Void) {
     
         let requestURL = BaseURL.service(.location(pos)).url
         
@@ -24,6 +24,14 @@ class APIManager {
                 completionHandler(sampleData)
                 
             }
+            
+            /*
+            if let dataList = try? JSONDecoder().decode([CommonPlaceInfo].self, from: json) {
+                
+                completionHandler(dataList)
+                
+            }
+            */
         }
     }
     

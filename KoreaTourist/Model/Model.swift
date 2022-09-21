@@ -7,6 +7,7 @@
 
 import Foundation
 import NMapsMap
+import RealmSwift
 
 protocol PlaceInfo {
     
@@ -50,20 +51,35 @@ struct Items<T:Codable>: Codable {
 }
 
 // MARK: - Item
-struct CommonPlaceInfo: Codable, PlaceInfo {
+
+class CommonPlaceInfo: Object, PlaceInfo, Codable {
     
-    let addr1, addr2: String
-    let cat1, cat2, cat3: String
-    let dist: Double
-    let title: String
-    let areaCode, subAreaCode, contentId: Int
-    let contentType: ContentType
-    let image, thumbnail: String
-    let lat, lng: Double
-    let zipcode: Int
-    let overview: String
-    let homepage : String
-    let tel, telName: String
+    @Persisted var addr1: String
+    @Persisted var addr2: String
+    @Persisted var cat1: String
+    @Persisted var cat2: String
+    @Persisted var cat3: String
+    @Persisted var dist: Double
+    @Persisted var title: String
+    @Persisted var areaCode: Int
+    @Persisted var subAreaCode: Int
+    @Persisted var contentId: Int
+    @Persisted var contentTypeId: String
+    @Persisted var image: String
+    @Persisted var thumbnail: String
+    @Persisted var lat: Double
+    @Persisted var lng: Double
+    @Persisted var zipcode: Int
+    @Persisted var overview: String
+    @Persisted var homepage : String
+    @Persisted var tel: String
+    @Persisted var telName: String
+    @Persisted var discoverDate: Date?
+    
+    var contentType: ContentType {
+        get { ContentType(rawValue: contentTypeId)! }
+        set { contentTypeId = newValue.rawValue }
+    }
     
     var fullAddress: String {
         [addr1, addr2, "(\(zipcode))"].joined(separator: " ")
@@ -86,7 +102,7 @@ struct CommonPlaceInfo: Codable, PlaceInfo {
         case areaCode = "areacode"
         case subAreaCode = "sigungucode"
         case contentId = "contentid"
-        case contentType = "contenttypeid"
+        case contentTypeId = "contenttypeid"
         case image = "firstimage"
         case thumbnail = "firstimage2"
         case lat = "mapy"
@@ -95,7 +111,8 @@ struct CommonPlaceInfo: Codable, PlaceInfo {
         
     }
     
-    init(from decoder: Decoder) throws {
+    required convenience init(from decoder: Decoder) throws {
+        self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)
         addr1 = try container.decode(String.self, forKey: .addr1)
         addr2 = try container.decode(String.self, forKey: .addr2)
@@ -108,7 +125,7 @@ struct CommonPlaceInfo: Codable, PlaceInfo {
         areaCode = Int(try container.decode(String.self, forKey: .areaCode)) ?? 0
         subAreaCode = Int(try container.decode(String.self, forKey: .subAreaCode)) ?? 0
         contentId = Int(try container.decode(String.self, forKey: .contentId)) ?? 0
-        contentType = try container.decode(ContentType.self, forKey: .contentType)
+        contentTypeId = try container.decode(String.self, forKey: .contentTypeId)
         image = try container.decode(String.self, forKey: .image)
         thumbnail = try container.decode(String.self, forKey: .thumbnail)
         lat = Double(try container.decode(String.self, forKey: .lat)) ?? 0
@@ -123,6 +140,7 @@ struct CommonPlaceInfo: Codable, PlaceInfo {
         telName = try container.decodeIfPresent(String.self, forKey: .telName) ?? ""
         
     }
+    
 }
 
 
@@ -368,8 +386,6 @@ enum ContentType: String, Codable {
     }
     
 }
-
-
 
 
 struct Circle {

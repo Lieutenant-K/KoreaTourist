@@ -105,6 +105,7 @@ final class MapViewController: BaseViewController {
         
         locationManager.add(self)
         
+        realm.printRealmFileURL()
     }
     
     
@@ -142,10 +143,13 @@ final class MapViewController: BaseViewController {
     
     func searchNearPlace() {
         
-        APIManager.shared.requestNearPlace(pos: Circle.home) { [weak self] data in
+        APIManager.shared.requestNearPlace(pos: Circle.home) { [weak self] placeList in
             
-            if data.count > 0 {
-                self?.updatePlaceMarker(placeList: data)
+            if placeList.count > 0 {
+                self?.checkAlreadyFound(placeList: placeList)
+                self?.updatePlaceMarker(placeList: placeList)
+            } else {
+                self?.showAlert(title: "500m 이내에 찾을 장소가 없습니다!")
             }
         }
         
@@ -161,16 +165,17 @@ final class MapViewController: BaseViewController {
         
     }
     
-    private func updatePlaceMarker(placeList: [CommonPlaceInfo]) {
+    private func checkAlreadyFound(placeList: [CommonPlaceInfo]) {
         
-        /*
-        let newPlace = RealmRepository.shared.addCommonPlaceList(infoList: placeList)
+        let newPlace = realm.addNewPlace(using: placeList)
         
         let alertTitle = newPlace > 0 ? "\(newPlace)개의 새로운 장소를 찾았습니다!" : "새로운 장소를 찾지 못했습니다."
         
         showAlert(title: alertTitle)
         
-        */
+    }
+    
+    private func updatePlaceMarker(placeList: [CommonPlaceInfo]) {
         
         let markers = placeList.map { PlaceMarker(place: $0, touchHandler: self.markerTouchHandler) }
         
