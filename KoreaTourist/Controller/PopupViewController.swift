@@ -9,12 +9,12 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class PopupViewController: BaseViewController {
+final class PopupViewController: BaseViewController {
     
     let popupView = PopupView()
     
     let placeInfo: CommonPlaceInfo
-   
+    
     override func loadView() {
         view = popupView
     }
@@ -42,17 +42,12 @@ class PopupViewController: BaseViewController {
     
     private func presentDetailViewController() {
         
-        APIManager.shared.requestCommonPlaceInfo(contentId: placeInfo.contentId) { data in
-            
-            DispatchQueue.main.async {
-                
-                weak var weakSelf = self
-            
-                if let weakSelf = weakSelf {
-                    let vc = DetailViewController(place: data)
-                    let navi = UINavigationController(rootViewController: vc)
-                    weakSelf.present(navi, animated: true)
-                }
+        APIManager.shared.requestCommonPlaceInfo(contentId: placeInfo.contentId) { [weak self] data in
+            if let weakSelf = self {
+                weakSelf.realm.updateCommonPlaceInfo(with: weakSelf.placeInfo, using: data)
+                let vc = DetailViewController(place: data)
+                let navi = UINavigationController(rootViewController: vc)
+                weakSelf.present(navi, animated: true)
             }
         }
         
@@ -66,9 +61,6 @@ class PopupViewController: BaseViewController {
         
         presentDetailViewController()
         
-//        self.dismiss(animated: true) { [weak self] in
-//            self?.presentingViewController?.present(UIViewController(), animated: true)
-//        }
     }
     
     init(place: CommonPlaceInfo) {
@@ -80,5 +72,5 @@ class PopupViewController: BaseViewController {
     
     
     
-
+    
 }

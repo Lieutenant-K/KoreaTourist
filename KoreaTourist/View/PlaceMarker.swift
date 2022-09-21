@@ -61,8 +61,7 @@ final class PlaceMarker: NMFMarker {
         captionMinZoom = 14
         captionRequestedWidth = 12
         subCaptionTextSize = 8
-        
-//        distance = placeInfo.dist
+    
         updateMarkerAppearnce()
         
     }
