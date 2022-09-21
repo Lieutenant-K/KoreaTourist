@@ -8,6 +8,8 @@
 import UIKit
 
 class BaseViewController: UIViewController {
+    
+    let realm = RealmRepository()
 
     override func viewDidLoad() {
         super.viewDidLoad()

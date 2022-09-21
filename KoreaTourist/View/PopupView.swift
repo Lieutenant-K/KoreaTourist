@@ -103,6 +103,7 @@ class PopupView: BaseView {
         
         $0.setTitle("세부정보 보기", for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
+        $0.setTitleColor(.label, for: .normal)
         
         
     }

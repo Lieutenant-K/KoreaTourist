@@ -10,9 +10,7 @@ import NMapsMap
 
 class PlaceMarker: NMFMarker {
     
-    var minimunDistance: Double {
-        100
-    }
+    static let minimunDistance: Double = 100
     
     let placeInfo: CommonPlaceInfo
     
@@ -20,7 +18,7 @@ class PlaceMarker: NMFMarker {
         didSet {
 //            print(#function)
             subCaptionText = "\(Int(distance))m"
-            if distance <= minimunDistance {
+            if distance <= Self.minimunDistance {
                 captionText = "발견 가능"
                 captionColor = .systemBlue
                 iconImage = NMF_MARKER_IMAGE_BLUE
