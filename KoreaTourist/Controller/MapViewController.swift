@@ -30,7 +30,7 @@ enum Menu: CaseIterable {
     
 }
 
-class MapViewController: BaseViewController {
+final class MapViewController: BaseViewController {
     
     // MARK: - Properties
     
@@ -48,10 +48,7 @@ class MapViewController: BaseViewController {
         if let marker = marker as? PlaceMarker {
             
             let ok = UIAlertAction(title: "네", style: .cancel) { _ in
-                self?.present(PopupViewController(place: marker.placeInfo), animated: true)
-                self?.naverMapView.mapView.positionMode = .normal
-                self?.locationManager.stopUpdatingLocation()
-//                self?.showAlertView()
+                self?.discoverPlace(about: marker)
                 
             }
             let cancel = UIAlertAction(title: "아니오", style: .default)
@@ -127,7 +124,7 @@ class MapViewController: BaseViewController {
     // MARK: - Method
     
 
-    func displayMarkers(markers: [PlaceMarker]) {
+    private func displayMarkers(markers: [PlaceMarker]) {
         
         markers.forEach { $0.mapView = naverMapView.mapView }
         
@@ -147,27 +144,48 @@ class MapViewController: BaseViewController {
         
         APIManager.shared.requestNearPlace(pos: Circle.home) { [weak self] data in
             
-            if data.count == 0 { return }
-            
-            let markers = data.map { PlaceMarker(place: $0, touchHandler: self?.markerTouchHandler) }
-            
-            DispatchQueue.main.async {
-                
-                self?.currentMarkers.forEach { $0.mapView = nil }
-                
-                self?.currentMarkers = markers
-                
-                self?.displayMarkers(markers: markers)
-                
-                self?.naverMapView.mapView.positionMode = .normal
-                self?.locationManager.startUpdatingLocation()
-                
+            if data.count > 0 {
+                self?.updatePlaceMarker(placeList: data)
             }
         }
         
     }
     
-    func updateMarkerDistance(pos: NMGLatLng) {
+    private func discoverPlace(about marker: PlaceMarker) {
+        
+//        repository.discoverPlace(contentId: marker.id)
+        
+        present(PopupViewController(place: marker.placeInfo), animated: true)
+        naverMapView.mapView.positionMode = .normal
+        locationManager.stopUpdatingLocation()
+        
+    }
+    
+    private func updatePlaceMarker(placeList: [CommonPlaceInfo]) {
+        
+        /*
+        let newPlace = RealmRepository.shared.addCommonPlaceList(infoList: placeList)
+        
+        let alertTitle = newPlace > 0 ? "\(newPlace)개의 새로운 장소를 찾았습니다!" : "새로운 장소를 찾지 못했습니다."
+        
+        showAlert(title: alertTitle)
+        
+        */
+        
+        let markers = placeList.map { PlaceMarker(place: $0, touchHandler: self.markerTouchHandler) }
+        
+        currentMarkers.forEach { $0.mapView = nil }
+        
+        currentMarkers = markers
+        
+        displayMarkers(markers: markers)
+        
+        naverMapView.mapView.positionMode = .normal
+        locationManager.startUpdatingLocation()
+        
+    }
+    
+    private func updateMarkerDistance(pos: NMGLatLng) {
      
         currentMarkers.forEach { marker in
             if let marker = marker as? PlaceMarker {

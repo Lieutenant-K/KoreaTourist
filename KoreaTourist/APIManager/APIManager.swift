@@ -104,7 +104,7 @@ class APIManager {
     
     func requestData(url: String, completionHandler: @escaping (Data) -> Void ) {
         
-        AF.request(url).validate(statusCode: 200...500).responseData(queue: .global()) { response in
+        AF.request(url).validate(statusCode: 200...500).responseData { response in
             switch response.result {
             case .success(let data):
                 
