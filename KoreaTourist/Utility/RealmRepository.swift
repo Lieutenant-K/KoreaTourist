@@ -66,8 +66,17 @@ class RealmRepository {
         }
     }
     
-    func updateCommonPlaceInfo(with to: CommonPlaceInfo, using from: CommonPlaceInfo) {
+    func addPlaceIntro(with to: CommonPlaceInfo, using from: Intro) {
         
+        do {
+            try localRealm.write {
+                to.intro = from
+            }
+        } catch {
+            
+        }
+        
+        /*
         do {
             try localRealm.write({
                 to.homepage = from.homepage
@@ -79,6 +88,7 @@ class RealmRepository {
         } catch {
             print("장소 업데이트 실패")
         }
+        */
         
     }
     

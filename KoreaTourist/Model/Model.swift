@@ -69,12 +69,13 @@ class CommonPlaceInfo: Object, PlaceInfo, Codable {
     @Persisted var thumbnail: String
     @Persisted var lat: Double
     @Persisted var lng: Double
-    @Persisted var zipcode: Int
-    @Persisted var overview: String
-    @Persisted var homepage : String
-    @Persisted var tel: String
-    @Persisted var telName: String
+//    @Persisted var zipcode: Int
+//    @Persisted var overview: String
+//    @Persisted var homepage : String
+//    @Persisted var tel: String
+//    @Persisted var telName: String
     @Persisted var discoverDate: Date?
+    @Persisted var intro: Intro?
     
     var contentType: ContentType {
         get { ContentType(rawValue: contentTypeId)! }
@@ -86,7 +87,7 @@ class CommonPlaceInfo: Object, PlaceInfo, Codable {
     }
     
     var fullAddress: String {
-        [addr1, addr2, "(\(zipcode))"].joined(separator: " ")
+        [addr1, addr2, "(\(intro?.zipcode))"].joined(separator: " ")
     }
     
     var position: NMGLatLng {
@@ -95,14 +96,14 @@ class CommonPlaceInfo: Object, PlaceInfo, Codable {
     
     var validateCell: [BaseInfoCell.Type] {
         var list = [OverviewInfoCell.self, AddressInfoCell.self, LocationInfoCell.self]
-        if !homepage.isEmpty {
+        if let intro = intro, intro.homepage.isEmpty {
             list.append(WebPageInfoCell.self)
         }
         return list
     }
     
     enum CodingKeys: String, CodingKey {
-        case addr1, addr2, cat1, cat2, cat3, dist, title, zipcode, overview, homepage, tel
+        case addr1, addr2, cat1, cat2, cat3, dist, title//, zipcode, overview, homepage, tel
         case areaCode = "areacode"
         case subAreaCode = "sigungucode"
         case contentId = "contentid"
@@ -111,7 +112,7 @@ class CommonPlaceInfo: Object, PlaceInfo, Codable {
         case thumbnail = "firstimage2"
         case lat = "mapy"
         case lng = "mapx"
-        case telName = "telname"
+        //case telName = "telname"
         
     }
     
@@ -123,8 +124,8 @@ class CommonPlaceInfo: Object, PlaceInfo, Codable {
         cat1 = try container.decode(String.self, forKey: .cat1)
         cat2 = try container.decode(String.self, forKey: .cat2)
         cat3 = try container.decode(String.self, forKey: .cat3)
-        dist = Double(try container.decodeIfPresent(String.self, forKey: .dist) ?? "") ?? 0
-//        dist = Double(try container.decode(String.self, forKey: .dist)) ?? 0
+//        dist = Double(try container.decodeIfPresent(String.self, forKey: .dist) ?? "") ?? 0
+        dist = Double(try container.decode(String.self, forKey: .dist)) ?? 0
         title = try container.decode(String.self, forKey: .title)
         areaCode = Int(try container.decode(String.self, forKey: .areaCode)) ?? 0
         subAreaCode = Int(try container.decode(String.self, forKey: .subAreaCode)) ?? 0
@@ -134,19 +135,43 @@ class CommonPlaceInfo: Object, PlaceInfo, Codable {
         thumbnail = try container.decode(String.self, forKey: .thumbnail)
         lat = Double(try container.decode(String.self, forKey: .lat)) ?? 0
         lng = Double(try container.decode(String.self, forKey: .lng)) ?? 0
-        zipcode = Int(try container.decodeIfPresent(String.self, forKey: .zipcode) ?? "") ?? 0
-        
-        overview = (try container.decodeIfPresent(String.self, forKey: .overview) ?? "").htmlEscaped.refine
-        
-        homepage = (try container.decodeIfPresent(String.self, forKey: .homepage) ?? "").htmlEscaped
-        
-        tel = try container.decodeIfPresent(String.self, forKey: .tel) ?? ""
-        telName = try container.decodeIfPresent(String.self, forKey: .telName) ?? ""
+//        zipcode = Int(try container.decodeIfPresent(String.self, forKey: .zipcode) ?? "") ?? 0
+//
+//        overview = (try container.decodeIfPresent(String.self, forKey: .overview) ?? "").htmlEscaped.refine
+//
+//        homepage = (try container.decodeIfPresent(String.self, forKey: .homepage) ?? "").htmlEscaped
+//
+//        tel = try container.decodeIfPresent(String.self, forKey: .tel) ?? ""
+//        telName = try container.decodeIfPresent(String.self, forKey: .telName) ?? ""
         
     }
     
 }
 
+class Intro: EmbeddedObject, Codable {
+    
+    @Persisted var zipcode: Int
+    @Persisted var overview: String
+    @Persisted var homepage : String
+    @Persisted var tel: String
+    @Persisted var telName: String
+    
+    enum CodingKeys: String, CodingKey {
+        case zipcode, overview, homepage, tel
+        case telName = "telname"
+    }
+    
+    required convenience init(from decoder: Decoder) throws {
+        self.init()
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        zipcode = Int(try container.decode(String.self, forKey: .zipcode)) ?? 0
+        overview = (try container.decode(String.self, forKey: .overview)).htmlEscaped.refine
+        homepage = (try container.decode(String.self, forKey: .homepage)).htmlEscaped
+        tel = try container.decode(String.self, forKey: .tel)
+        telName = try container.decode(String.self, forKey: .telName)
+    }
+    
+}
 
 struct TourPlaceInfo: Codable, PlaceInfo {
     

@@ -40,16 +40,32 @@ final class PopupViewController: BaseViewController {
         
     }
     
-    private func presentDetailViewController() {
+    private func checkPlaceIntro() {
         
-        APIManager.shared.requestCommonPlaceInfo(contentId: placeInfo.contentId) { [weak self] data in
+        if placeInfo.intro == nil {
+            addPlaceIntro()
+        } else {
+            presentDetailViewController()
+        }
+        
+    }
+    
+    private func addPlaceIntro() {
+        
+        APIManager.shared.requestPlaceIntro(contentId: placeInfo.contentId) { [weak self] data in
             if let weakSelf = self {
-                weakSelf.realm.updateCommonPlaceInfo(with: weakSelf.placeInfo, using: data)
-                let vc = DetailViewController(place: data)
-                let navi = UINavigationController(rootViewController: vc)
-                weakSelf.present(navi, animated: true)
+                weakSelf.realm.addPlaceIntro(with: weakSelf.placeInfo, using: data)
+                weakSelf.presentDetailViewController()
             }
         }
+        
+    }
+    
+    private func presentDetailViewController() {
+        
+        let vc = DetailViewController(place: placeInfo)
+        let navi = UINavigationController(rootViewController: vc)
+        present(navi, animated: true)
         
     }
     
@@ -59,7 +75,7 @@ final class PopupViewController: BaseViewController {
     
     @objc func touchDetailButton(_ sender: UIButton) {
         
-        presentDetailViewController()
+        checkPlaceIntro()
         
     }
     

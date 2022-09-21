@@ -35,13 +35,13 @@ class APIManager {
         }
     }
     
-    func requestCommonPlaceInfo(contentId: Int, completionHandler: @escaping (_ data: CommonPlaceInfo) -> Void) {
-        
+    func requestPlaceIntro(contentId: Int, completionHandler: @escaping (_ data: Intro) -> Void) {
+        print(#function)
         let requestURL = BaseURL.service(.commonInfo(contentId)).url
         
         requestData(url: requestURL) { data in
             
-            if let result = try? JSONDecoder().decode(Result<CommonPlaceInfo>.self, from: data), let info = result.response.body.items.item.first {
+            if let result = try? JSONDecoder().decode(Result<Intro>.self, from: data), let info = result.response.body.items.item.first {
                 
                 completionHandler(info)
                 

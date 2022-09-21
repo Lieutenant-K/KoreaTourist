@@ -203,7 +203,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
         case .common:
             switch cell {
             case let overview as OverviewInfoCell:
-                overview.contentLabel.text = commonInfo.overview
+                overview.contentLabel.text = commonInfo.intro?.overview
                 
             case let address as AddressInfoCell:
                 address.contentLabel.text = commonInfo.fullAddress
@@ -212,7 +212,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
                 map.marking(pos: commonInfo.position)
                 
             case let web as WebPageInfoCell:
-                web.contentLabel.text = commonInfo.homepage
+                web.contentLabel.text = commonInfo.intro?.homepage
 
             default:
                 break
