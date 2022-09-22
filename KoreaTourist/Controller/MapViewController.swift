@@ -50,7 +50,7 @@ final class MapViewController: BaseViewController {
     
     var isMarkerFilterOn = false {
         didSet {
-            filteringMarker(isOn: isMarkerFilterOn)
+            filteringMarker()
         }
     }
     
@@ -146,11 +146,9 @@ final class MapViewController: BaseViewController {
         
     }
     
-    func filteringMarker(isOn: Bool) {
+    func filteringMarker() {
         
-        
-        currentMarkers.forEach { $0.hidden = isOn ? ($0.placeInfo.isDiscovered ? true : false) : false }
-        
+        currentMarkers.forEach { $0.hidden = isMarkerFilterOn ? ($0.placeInfo.isDiscovered ? true : false) : false }
         
     }
     
@@ -184,7 +182,7 @@ final class MapViewController: BaseViewController {
         
         let newPlace = realm.registPlaces(using: placeList)
         
-        let alertTitle = newPlace.newCount > 0 ? "\(newPlace.newCount)개의 새로운 장소를 찾았습니다!" : "새로운 장소를 찾지 못했습니다."
+        let alertTitle = newPlace.newCount > 0 ? "\(newPlace.newCount)개의 새로운 장소를 찾았습니다!" : "새로 찾은 장소가 없습니다."
         
         showAlert(title: alertTitle)
 //        print(newPlace.newInfoList)
@@ -214,6 +212,8 @@ final class MapViewController: BaseViewController {
     private func displayMarkersOnMap(markers: [PlaceMarker]) {
         
         markers.forEach { $0.mapView = naverMapView.mapView }
+        
+        filteringMarker()
         
         let bounds = NMGLatLngBounds(latLngs: markers.map { $0.position } )
         
