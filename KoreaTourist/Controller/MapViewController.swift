@@ -42,11 +42,17 @@ final class MapViewController: BaseViewController {
     
     let locationManager = NMFLocationManager.sharedInstance()!
     
-    var currentMarkers = [NMFMarker]()
+    var currentMarkers = [PlaceMarker]()
     
     var undiscoverdMarkerHandler: NMFOverlayTouchHandler?
     
     var discoveredMarkerHandler: NMFOverlayTouchHandler?
+    
+    var isMarkerFilterOn = false {
+        didSet {
+            filteringMarker(isOn: isMarkerFilterOn)
+        }
+    }
     
     
     // MARK: - LifeCycle
@@ -140,6 +146,14 @@ final class MapViewController: BaseViewController {
         
     }
     
+    func filteringMarker(isOn: Bool) {
+        
+        
+        currentMarkers.forEach { $0.hidden = isOn ? ($0.placeInfo.isDiscovered ? true : false) : false }
+        
+        
+    }
+    
     func searchNearPlace() {
 //        let circle = Circle(x: <#T##Double#>, y: <#T##Double#>, radius: <#T##Int#>)
         APIManager.shared.requestNearPlace(pos: Circle.visitKorea) { [weak self] placeList in
@@ -217,10 +231,10 @@ final class MapViewController: BaseViewController {
     private func updateMarkerDistance(pos: NMGLatLng) {
         
         currentMarkers.forEach { marker in
-            if let marker = marker as? PlaceMarker {
-                let dis = marker.position.distance(to: pos)
-                marker.distance = dis
-            }
+            
+            let dis = marker.position.distance(to: pos)
+            marker.distance = dis
+            
         }
         
     }
@@ -327,6 +341,10 @@ extension MapViewController: CircleMenuDelegate {
     func circleMenu(_ circleMenu: CircleMenu, willDisplay button: UIButton, atIndex: Int) {
         let menu = Menu.allCases[atIndex]
         button.setImage(menu.image, for: .normal)
+        if menu == .vision && isMarkerFilterOn {
+            button.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+        }
+       
         button.backgroundColor = .white
     }
     
@@ -345,6 +363,7 @@ extension MapViewController: CircleMenuDelegate {
         case .search:
             searchNearPlace()
         case .vision:
+            isMarkerFilterOn.toggle()
             break
         case .userInfo:
             break
