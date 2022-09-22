@@ -8,17 +8,7 @@
 import UIKit
 import Kingfisher
 import Then
-import RealmSwift
-/*
- struct TotalPlaceInfo {
- 
- let commonInfo: CommonPlaceInfo
- var detailInfo: TourPlaceInfo?
- var extraInfo: ExtraPlaceInfo?
- var images: [DetailImage]?
- 
- }
- */
+
 enum Section {
         
     case common
@@ -67,12 +57,16 @@ final class DetailViewController: BaseViewController {
     
     lazy var placeInfoList: [PlaceInfo] = {
         return [commonInfo]
-    }()
+    }() {
+        didSet {
+            detailView.tableView.reloadData()
+        }
+    }
     
     let commonInfo: CommonPlaceInfo
     
 //    var detailInfo: TourPlaceInfo?
-    var extraInfo: ExtraPlaceInfo?
+//    var extraInfo: ExtraPlaceInfo?
     
     var images: [DetailImage] = []
     
@@ -118,18 +112,22 @@ final class DetailViewController: BaseViewController {
             print("디테일 데이터 응답 받았다!")
 //            print(data)
             
-            self?.realm.registPlaceDetail(info: data)
+            self?.receivedDetailInfo(info: data)
             
-            if let info = data as? PlaceInfo {
-                self?.placeInfoList.append(info)
-                
-                self?.detailView.tableView.reloadData()
-                
+            
+        }
+        
+    }
+    
+    private func receivedDetailInfo(info: Information) {
+        
+        realm.registPlaceInfo(info: info)
+        
+        if let info = info as? PlaceInfo {
+            placeInfoList.append(info)
+            
 //                self?.fetchExtraPlaceInfo()
-                self?.checkExtraInfo()
-            }
-            
-            
+            checkExtraInfo()
         }
         
     }
@@ -158,7 +156,21 @@ final class DetailViewController: BaseViewController {
     
     private func checkExtraInfo() {
         
+        if let extra = realm.loadPlaceInfo(infoType: ExtraPlaceInfo.self, contentId: commonInfo.contentId) {
+            placeInfoList.append(extra)
+        } else {
+            fetchExtraPlaceInfo()
+        }
         
+    }
+    
+    private func receivedExtraInfo(info: [ExtraPlaceElement]) {
+        
+        let extra = ExtraPlaceInfo(id: commonInfo.contentId, infoList: info)
+        
+        realm.registPlaceInfo(info: extra)
+        
+        placeInfoList.append(extra)
         
     }
     
@@ -166,19 +178,9 @@ final class DetailViewController: BaseViewController {
         
         APIManager.shared.requestExtraPlaceInfo(contentId: commonInfo.contentId, contentType: commonInfo.contentType) { [weak self] (data: [ExtraPlaceElement]) in
             
-            DispatchQueue.main.async {
-                
-                print("추가 정보 갱신")
-                
-                let extra = ExtraPlaceInfo(infoList: data)
-                
-                self?.extraInfo = extra
-                
-                self?.placeInfoList.append(extra)
-                
-                self?.detailView.tableView.reloadData()
-                
-            }
+            print("추가 정보 갱신")
+            
+            self?.receivedExtraInfo(info: data)
             
         }
         
@@ -317,12 +319,14 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
             */
             
         case .extra:
-            guard let extra = extraInfo else { break }
+            
+            guard let extra = realm.loadPlaceInfo(infoType: ExtraPlaceInfo.self, contentId: commonInfo.contentId) else { break }
             
             let extraCell = cell as? ExtraInfoCell
             
-            extraCell?.inputData(data: extra.infoList)
+            extraCell?.inputData(data: extra.list)
             tableView.reloadRows(at: [indexPath], with: .automatic)
+            
         }
         
         

@@ -335,23 +335,41 @@ class EventPlaceInfo: Information {
 }
 
 
-struct ExtraPlaceInfo: PlaceInfo {
+class ExtraPlaceInfo: Object, PlaceInfo {
     
-    let infoList: [ExtraPlaceElement]
+    @Persisted(primaryKey: true) var contentId: Int
+    @Persisted var infoList: List<ExtraPlaceElement>
     
     var validateCell: [BaseInfoCell.Type] {
         var validate = false
         infoList.forEach { validate = validate || $0.isValidate }
         return validate ? [ExtraInfoCell.self] : []
     }
+    
+    var list: [ExtraPlaceElement] {
+        get { infoList.map { $0 } }
+        set {
+            infoList.removeAll()
+            infoList.append(objectsIn: newValue)
+        }
+    }
+    
+    convenience init(id: Int, infoList: [ExtraPlaceElement]) {
+        self.init()
+        contentId = id
+        list = infoList
+//        let list = List<ExtraPlaceElement>()
+//        infoList.forEach { list.append($0) }
+//        self.infoList = list
+    }
 }
 
-struct ExtraPlaceElement: Codable, NeedValidate {
+class ExtraPlaceElement: EmbeddedObject, Codable, NeedValidate {
     
-    let contentId: Int
-    let contentType: ContentType
-    let infoText, infoTitle: String
-    let index, infoType: Int
+    @Persisted var infoText: String
+    @Persisted var infoTitle: String
+    @Persisted var index: Int
+    @Persisted var infoType: Int
     
     var isValidate: Bool {
         var validate = false
@@ -366,18 +384,15 @@ struct ExtraPlaceElement: Codable, NeedValidate {
     }
     
     enum CodingKeys: String, CodingKey {
-        case contentId = "contentid"
-        case contentType = "contenttypeid"
         case index = "serialnum"
         case infoTitle = "infoname"
         case infoText = "infotext"
         case infoType = "fldgubun"
     }
     
-    init(from decoder: Decoder) throws {
+    required convenience init(from decoder: Decoder) throws {
+        self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        contentId = Int(try container.decode(String.self, forKey: .contentId)) ?? 0
-        contentType = try container.decode(ContentType.self, forKey: .contentType)
         index = Int(try container.decode(String.self, forKey: .index)) ?? -1
         infoType = Int(try container.decode(String.self, forKey: .infoType)) ?? 0
         infoText = try container.decode(String.self, forKey: .infoText).htmlEscaped
