@@ -91,7 +91,7 @@ class CommonPlaceInfo: Information, PlaceInfo {
     var fullAddress: String {
         var address = [addr1, addr2]
         if let zip = intro?.zipcode {
-            address.append(String(zip))
+            address.append("(\(zip))")
         }
         return address.joined(separator: " ")
     }

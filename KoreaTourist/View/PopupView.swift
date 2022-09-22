@@ -76,6 +76,7 @@ class PopupView: BaseView {
         $0.textAlignment = .center
         $0.numberOfLines = 0
         $0.lineBreakMode = .byWordWrapping
+        $0.lineBreakStrategy = .hangulWordPriority
         $0.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         $0.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
@@ -83,11 +84,12 @@ class PopupView: BaseView {
     
     let descriptLabel = UILabel().then {
         
-        $0.font = .systemFont(ofSize: 18, weight: .medium)
+        $0.font = .systemFont(ofSize: 20, weight: .medium)
         $0.textColor = .secondaryLabel
         $0.textAlignment = .center
         $0.numberOfLines = 0
         $0.lineBreakMode = .byWordWrapping
+        $0.lineBreakStrategy = .hangulWordPriority
         
     }
     
@@ -103,7 +105,7 @@ class PopupView: BaseView {
         
         $0.setTitle("세부정보 보기", for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
-        $0.setTitleColor(.label, for: .normal)
+        $0.setTitleColor(.secondaryLabel, for: .normal)
         
         
     }

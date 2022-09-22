@@ -327,7 +327,7 @@ extension MapViewController: CircleMenuDelegate {
     func circleMenu(_ circleMenu: CircleMenu, willDisplay button: UIButton, atIndex: Int) {
         let menu = Menu.allCases[atIndex]
         button.setImage(menu.image, for: .normal)
-        button.backgroundColor = .systemBackground
+        button.backgroundColor = .white
     }
     
     func circleMenu(_ circleMenu: CircleMenu, buttonDidSelected button: UIButton, atIndex: Int) {

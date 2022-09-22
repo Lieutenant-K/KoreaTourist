@@ -28,7 +28,7 @@ final class PopupViewController: BaseViewController {
     private func configurePopupView() {
         
         popupView.titleLabel.text = placeInfo.title
-        popupView.descriptLabel.text = "\(placeInfo.addr1)\n\(placeInfo.addr2)"
+        popupView.descriptLabel.text = "\(placeInfo.addr1) \(placeInfo.addr2)"
         popupView.imageView.kf.setImage(with: URL(string: placeInfo.image))
         
     }

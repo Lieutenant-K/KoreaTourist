@@ -29,12 +29,12 @@ final class MapView: NMFNaverMapView {
         
         $0.setImage(UIImage(systemName: "list.bullet"), for: .normal)
         $0.setImage(UIImage(systemName: "xmark"), for: .selected)
-        $0.backgroundColor = .systemBackground
+        $0.backgroundColor = .white
         $0.startAngle = -90
         $0.endAngle = 90
         
         $0.layer.shadowOffset = .zero
-        $0.layer.shadowOpacity = 0.5
+        $0.layer.shadowOpacity = 0.3
         
     }
     
