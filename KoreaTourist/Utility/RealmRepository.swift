@@ -92,7 +92,7 @@ class RealmRepository {
         
     }
     
-    func registPlaceDetail<T: Object>(info: T) {
+    func registPlaceInfo<T: Object>(info: T) {
         
         do {
             try localRealm.write({

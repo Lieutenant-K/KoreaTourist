@@ -26,7 +26,7 @@ class APIManager {
             }
             
             /*
-            if let dataList = try? JSONDecoder().decode([CommonPlaceInfo].self, from: json) {
+            if let dataList = try? JSONDecoder().decode(Result<CommonPlaceInfo>.self, from: json) {
                 
                 completionHandler(dataList)
                 
