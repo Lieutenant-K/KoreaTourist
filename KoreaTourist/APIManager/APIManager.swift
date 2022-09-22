@@ -100,7 +100,7 @@ class APIManager {
                 
                 let info = result.response.body.items.item
                 
-                print(info)
+//                print(info)
                 completionHandler(info)
                 
             }

@@ -7,33 +7,46 @@
 
 import UIKit
 import Kingfisher
+import Then
+import RealmSwift
 /*
-struct TotalPlaceInfo {
-    
-    let commonInfo: CommonPlaceInfo
-    var detailInfo: TourPlaceInfo?
-    var extraInfo: ExtraPlaceInfo?
-    var images: [DetailImage]?
-    
-}
-*/
-enum Section: Int, CaseIterable {
-    
-    case common = 0
-    case detail = 1
-    case extra = 2
+ struct TotalPlaceInfo {
+ 
+ let commonInfo: CommonPlaceInfo
+ var detailInfo: TourPlaceInfo?
+ var extraInfo: ExtraPlaceInfo?
+ var images: [DetailImage]?
+ 
+ }
+ */
+enum Section {
+        
+    case common
+    case detail(ContentType)
+    case extra
     
     var typeOfCell: [BaseInfoCell.Type] {
         switch self {
         case .common:
+            
             return [OverviewInfoCell.self, AddressInfoCell.self, LocationInfoCell.self, WebPageInfoCell.self]
-        case .detail:
-            return [TimeInfoCell.self, EventInfoCell.self, OtherDetailInfoCell.self]
+        case .detail(let type):
+            switch type {
+            case .tour:
+                return [TimeInfoCell.self, EventInfoCell.self, OtherDetailInfoCell.self]
+            case .culture:
+                return []
+            case .event:
+                return []
+            }
         case .extra:
             return [ExtraInfoCell.self]
         }
     }
     
+    static func allCases(type: ContentType) -> [Self] {
+        return [Section.common, Section.detail(type), Section.extra]
+    }
     
     var title: String {
         switch self {
@@ -58,19 +71,26 @@ final class DetailViewController: BaseViewController {
     
     let commonInfo: CommonPlaceInfo
     
-    var detailInfo: TourPlaceInfo?
+//    var detailInfo: TourPlaceInfo?
     var extraInfo: ExtraPlaceInfo?
     
     var images: [DetailImage] = []
     
-    lazy var detailView: DetailView = {
-        let view = DetailView()
+    lazy var detailView = DetailView().then { view in
+        
         view.tableView.delegate = self
         view.tableView.dataSource = self
         view.imageHeaderView.collectionView.dataSource = self
         view.imageHeaderView.collectionView.delegate = self
-        return view
-    }()
+        
+        Section.allCases(type: commonInfo.contentType).forEach { section in
+            section.typeOfCell.forEach { type in
+                view.tableView.register(type, forCellReuseIdentifier: type.reuseIdentifier)
+            }
+        }
+        
+        
+    }
     
     // MARK: - LifeCycle
     
@@ -80,9 +100,8 @@ final class DetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        let type = commonInfo.contentType.modelType
-        
-        fetchDetailPlaceInfo()
+
+        checkDetailInfo()
         
         fetchDetailImages()
         
@@ -92,25 +111,54 @@ final class DetailViewController: BaseViewController {
     
     // MARK: - Method
     
-    private func fetchDetailPlaceInfo() {
+    private func fetchDetailPlaceInfo<T: Information>(type: T.Type) {
         
-        APIManager.shared.requestDetailPlaceInfo(contentId: commonInfo.contentId, contentType: commonInfo.contentType) { [weak self] (data: TourPlaceInfo) in
+        APIManager.shared.requestDetailPlaceInfo(contentId: commonInfo.contentId, contentType: commonInfo.contentType) { [weak self] (data: T) in
             
-            DispatchQueue.main.async {
-                
-                print("디테일 데이터 갱신")
-                
-                self?.detailInfo = data
-                
-                self?.placeInfoList.append(data)
+            print("디테일 데이터 응답 받았다!")
+//            print(data)
+            
+            self?.realm.registPlaceDetail(info: data)
+            
+            if let info = data as? PlaceInfo {
+                self?.placeInfoList.append(info)
                 
                 self?.detailView.tableView.reloadData()
                 
-                self?.fetchExtraPlaceInfo()
-
+//                self?.fetchExtraPlaceInfo()
+                self?.checkExtraInfo()
             }
             
+            
         }
+        
+    }
+    
+    func checkDetailInfo() {
+        
+        let type = commonInfo.contentType.detailInfoType
+        
+        if let detail = realm.loadPlaceInfo(infoType: type.self, contentId: commonInfo.contentId) as? PlaceInfo {
+            placeInfoList.append(detail)
+            checkExtraInfo()
+        } else {
+            switch type {
+            case let tour as TourPlaceInfo.Type:
+                fetchDetailPlaceInfo(type: tour.self)
+            case let culture as CulturePlaceInfo.Type:
+                fetchDetailPlaceInfo(type: culture.self)
+            case let event as EventPlaceInfo.Type:
+                fetchDetailPlaceInfo(type: event.self)
+            default:
+                break
+            }
+        }
+        
+    }
+    
+    private func checkExtraInfo() {
+        
+        
         
     }
     
@@ -129,7 +177,7 @@ final class DetailViewController: BaseViewController {
                 self?.placeInfoList.append(extra)
                 
                 self?.detailView.tableView.reloadData()
-
+                
             }
             
         }
@@ -149,7 +197,7 @@ final class DetailViewController: BaseViewController {
                 self?.detailView.imageHeaderView.pageControl.numberOfPages = images.count
                 
                 self?.detailView.imageHeaderView.collectionView.reloadSections([0])
-
+                
             }
             
         }
@@ -187,7 +235,8 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        placeInfoList[section].validateCell.count
+//        print(section, placeInfoList[section].validateCell.count)
+        return placeInfoList[section].validateCell.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -196,7 +245,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellType.reuseIdentifier, for: indexPath)
         
-        let section = Section.allCases[indexPath.section]
+        let section = Section.allCases(type: commonInfo.contentType)[indexPath.section]
         
         switch section {
             
@@ -213,29 +262,59 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
                 
             case let web as WebPageInfoCell:
                 web.contentLabel.text = commonInfo.intro?.homepage
-
+                
             default:
                 break
             }
             
-        case .detail:
+        case .detail(let type):
+            
+            switch type {
+            case .tour:
+                guard let detail = realm.loadPlaceInfo(infoType: TourPlaceInfo.self, contentId: commonInfo.contentId) else { break }
+                switch cell {
+                case let time as TimeInfoCell:
+                    time.inputData(data: detail.timeData)
+                    time.checkValidation()
+                    
+                case let event as EventInfoCell:
+                    event.inputData(data: detail.eventData)
+                    event.checkValidation()
+                    
+                case let other as OtherDetailInfoCell:
+                    other.inputData(data: detail.otherData)
+                    other.checkValidation()
+                default:
+                    break
+                }
+            case .culture:
+                break
+            case .event:
+                break
+            }
+             
+            
+            /*
             guard let detail = detailInfo else { break }
+//            guard let info = realm.loadPlaceInfo(infoType: commonInfo.contentType.detailInfoType, contentId: commonInfo.contentId) else { break }
+            
             switch cell {
             case let time as TimeInfoCell:
                 time.inputData(data: detail.timeData)
                 time.checkValidation()
-
+                
             case let event as EventInfoCell:
                 event.inputData(data: detail.eventData)
                 event.checkValidation()
-
+                
             case let other as OtherDetailInfoCell:
                 other.inputData(data: detail.otherData)
                 other.checkValidation()
-
+                
             default:
                 break
             }
+            */
             
         case .extra:
             guard let extra = extraInfo else { break }
@@ -265,7 +344,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        Section.allCases[section].title
+        Section.allCases(type: commonInfo.contentType)[section].title
     }
     
     
@@ -294,7 +373,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         detailView.imageHeaderView.pageControl.currentPage = page
         
-      }
+    }
     
     
     

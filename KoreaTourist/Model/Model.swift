@@ -9,6 +9,8 @@ import Foundation
 import NMapsMap
 import RealmSwift
 
+typealias Information = Object & Codable
+
 protocol PlaceInfo {
     
     var validateCell: [BaseInfoCell.Type] { get }
@@ -52,7 +54,7 @@ struct Items<T:Codable>: Codable {
 
 // MARK: - Item
 
-class CommonPlaceInfo: Object, PlaceInfo, Codable {
+class CommonPlaceInfo: Information, PlaceInfo {
     
     @Persisted var addr1: String
     @Persisted var addr2: String
@@ -87,7 +89,11 @@ class CommonPlaceInfo: Object, PlaceInfo, Codable {
     }
     
     var fullAddress: String {
-        [addr1, addr2, "(\(intro?.zipcode))"].joined(separator: " ")
+        var address = [addr1, addr2]
+        if let zip = intro?.zipcode {
+            address.append(String(zip))
+        }
+        return address.joined(separator: " ")
     }
     
     var position: NMGLatLng {
@@ -96,7 +102,7 @@ class CommonPlaceInfo: Object, PlaceInfo, Codable {
     
     var validateCell: [BaseInfoCell.Type] {
         var list = [OverviewInfoCell.self, AddressInfoCell.self, LocationInfoCell.self]
-        if let intro = intro, intro.homepage.isEmpty {
+        if let intro = intro, !intro.homepage.isEmpty {
             list.append(WebPageInfoCell.self)
         }
         return list
@@ -173,7 +179,7 @@ class Intro: EmbeddedObject, Codable {
     
 }
 
-struct TourPlaceInfo: Codable, PlaceInfo {
+class TourPlaceInfo: Information, PlaceInfo {
     
     struct TimeData: NeedValidate {
         
@@ -234,12 +240,23 @@ struct TourPlaceInfo: Codable, PlaceInfo {
         }
     }
     
-    let contentId: Int
-    let contentType: ContentType
-    let cultureHeritage, natureHeritage, recordHeritage: Bool
-    let contactNumber, openDate, restDate: String
-    let event, ageForEvent, capacity, availableSeason, availableTime: String
-    let parkingLot, strollerRentalInfo, isAvailablePet, isAvailableCreditCard: String
+    @Persisted(primaryKey: true) var contentId: Int
+    @Persisted var contentTypeId: String
+    @Persisted var cultureHeritage: Bool
+    @Persisted var natureHeritage:Bool
+    @Persisted var recordHeritage: Bool
+    @Persisted var contactNumber: String
+    @Persisted var openDate: String
+    @Persisted var restDate: String
+    @Persisted var event: String
+    @Persisted var ageForEvent: String
+    @Persisted var capacity: String
+    @Persisted var availableSeason: String
+    @Persisted var availableTime: String
+    @Persisted var parkingLot: String
+    @Persisted var strollerRentalInfo: String
+    @Persisted var isAvailablePet: String
+    @Persisted var isAvailableCreditCard: String
     
     var timeData: TimeData {
         TimeData(openDate: openDate, restDate: restDate, availableTime: availableTime, availableSeason: availableSeason)
@@ -261,7 +278,7 @@ struct TourPlaceInfo: Codable, PlaceInfo {
     
     enum CodingKeys: String, CodingKey {
         case contentId = "contentid"
-        case contentType = "contenttypeid"
+        case contentTypeId = "contenttypeid"
         case cultureHeritage = "heritage1"
         case natureHeritage = "heritage2"
         case recordHeritage = "heritage3"
@@ -280,10 +297,11 @@ struct TourPlaceInfo: Codable, PlaceInfo {
         
     }
     
-    init(from decoder: Decoder) throws {
+    required convenience init(from decoder: Decoder) throws {
+        self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)
         contentId = Int(try container.decode(String.self, forKey: .contentId)) ?? 0
-        contentType = try container.decode(ContentType.self, forKey: .contentType)
+        contentTypeId = try container.decode(String.self, forKey: .contentTypeId)
         cultureHeritage = try container.decode(String.self, forKey: .cultureHeritage) == "1"
         natureHeritage = try container.decode(String.self, forKey: .natureHeritage) == "1"
         recordHeritage = try container.decode(String.self, forKey: .recordHeritage) == "1"
@@ -302,13 +320,20 @@ struct TourPlaceInfo: Codable, PlaceInfo {
     }
 }
 
-struct CulturePlaceInfo: Codable {
+
+class CulturePlaceInfo: Information {
+    
+    @Persisted(primaryKey: true) var contentId: Int
+    @Persisted var contentTypeId: String
+    
     
 }
 
-struct EventPlaceInfo: Codable {
-    
+class EventPlaceInfo: Information {
+    @Persisted(primaryKey: true) var contentId: Int
+    @Persisted var contentTypeId: String
 }
+
 
 struct ExtraPlaceInfo: PlaceInfo {
     
@@ -403,7 +428,7 @@ enum ContentType: String, Codable {
         }
     }
     
-    var modelType: Any {
+    var detailInfoType: Information.Type {
         switch self {
         case .tour:
             return TourPlaceInfo.self

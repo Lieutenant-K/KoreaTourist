@@ -168,7 +168,7 @@ final class MapViewController: BaseViewController {
     
     private func createPlaceMarkers(placeList: [CommonPlaceInfo]) {
         
-        let newPlace = realm.registerPlaces(using: placeList)
+        let newPlace = realm.registPlaces(using: placeList)
         
         let alertTitle = newPlace.newCount > 0 ? "\(newPlace.newCount)개의 새로운 장소를 찾았습니다!" : "새로운 장소를 찾지 못했습니다."
         

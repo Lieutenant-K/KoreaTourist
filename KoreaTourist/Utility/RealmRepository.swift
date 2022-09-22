@@ -21,7 +21,7 @@ class RealmRepository {
         print(localRealm.configuration.fileURL?.path)
     }
     
-    func registerPlaces(using infoList: [CommonPlaceInfo]) -> (newCount: Int, fetchedInfo: [CommonPlaceInfo]) {
+    func registPlaces(using infoList: [CommonPlaceInfo]) -> (newCount: Int, fetchedInfo: [CommonPlaceInfo]) {
         
         var count = 0
         
@@ -92,5 +92,23 @@ class RealmRepository {
         
     }
     
+    func registPlaceDetail<T: Object>(info: T) {
+        
+        do {
+            try localRealm.write({
+                localRealm.add(info)
+            })
+        } catch {
+            print("디테일 장소 추가 실패")
+        }
+    }
+    
+    func isExist<T:Object>(infoType: T.Type, contentId: Int) -> Bool {
+        return localRealm.object(ofType: infoType, forPrimaryKey: contentId) == nil ? false : true
+    }
+    
+    func loadPlaceInfo<T: Object>(infoType: T.Type, contentId: Int) -> T? {
+        return localRealm.object(ofType: infoType, forPrimaryKey: contentId)
+    }
     
 }
