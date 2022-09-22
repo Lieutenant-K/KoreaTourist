@@ -284,7 +284,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
                 address.contentLabel.text = commonInfo.fullAddress
                 
             case let map as LocationInfoCell:
-                map.marking(pos: commonInfo.position)
+                map.marking(pos: commonInfo.position, date: commonInfo.discoverDate)
                 
             case let web as WebPageInfoCell:
                 web.contentLabel.text = commonInfo.intro?.homepage

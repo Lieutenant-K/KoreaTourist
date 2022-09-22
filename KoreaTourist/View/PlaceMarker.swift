@@ -33,22 +33,25 @@ final class PlaceMarker: NMFMarker {
         
         if placeInfo.isDiscovered {
             captionText = placeInfo.title
-            captionColor = .green
+            captionColor = .black
             subCaptionText = ""
-            iconImage = NMF_MARKER_IMAGE_GREEN
+            iconImage = NMF_MARKER_IMAGE_YELLOW
+            zIndex = 0
             return
         }
         
         subCaptionText = "\(Int(distance))m"
         
         if distance <= Self.minimunDistance {
-            captionText = "발견 가능"
+            captionText = "발견가능"
             captionColor = .systemBlue
+            zIndex = 2
             iconImage = NMF_MARKER_IMAGE_BLUE
         } else {
             captionText = "미발견"
             captionColor = .black
             iconImage = NMF_MARKER_IMAGE_GRAY
+            zIndex = 1
         }
         
     }
@@ -58,9 +61,10 @@ final class PlaceMarker: NMFMarker {
         position = NMGLatLng(lat: placeInfo.lat, lng: placeInfo.lng)
         iconImage = NMF_MARKER_IMAGE_GRAY
         isHideCollidedSymbols = true
+        isHideCollidedCaptions = true
         captionMinZoom = 14
-        captionRequestedWidth = 12
-        subCaptionTextSize = 8
+        captionRequestedWidth = 4
+        subCaptionTextSize = 10
     
         updateMarkerAppearnce()
         

@@ -19,19 +19,22 @@ class APIManager {
         
         requestData(url: requestURL) { json in
             
+            /*
             if let sample = dummy.data(using: .utf8), let sampleData = try? JSONDecoder().decode([CommonPlaceInfo].self, from: sample) {
                 
                 completionHandler(sampleData)
                 
-            }
+            }*/
             
-            /*
+            
             if let dataList = try? JSONDecoder().decode(Result<CommonPlaceInfo>.self, from: json) {
                 
-                completionHandler(dataList)
+                let data = dataList.response.body.items.item
+                
+                completionHandler(data)
                 
             }
-            */
+            
         }
     }
     

@@ -31,15 +31,23 @@ final class LocationInfoCell: BaseInfoCell {
        return view
     }()
     
-    func marking(pos: NMGLatLng) {
+    func marking(pos: NMGLatLng, date: Date?) {
         let marker = NMFMarker(position: pos, iconImage: NMF_MARKER_IMAGE_YELLOW)
         let position = NMFCameraPosition(pos, zoom: 15)
         mapView.moveCamera(NMFCameraUpdate(position: position))
         marker.isHideCollidedSymbols = true
-        marker.captionText = "2022년 22월 22일 발견"
         marker.captionTextSize = 14
         marker.captionOffset = 4
         marker.mapView = mapView
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = """
+                    yyyy년 MM월 dd일
+                    hh시 mm분
+                    발견
+                    """
+        formatter.locale = Locale(identifier: "ko_KR")
+        marker.captionText = date != nil ? formatter.string(from: date!) : "미발견"
     }
     
     override func configureCell() {

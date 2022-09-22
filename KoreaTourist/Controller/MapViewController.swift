@@ -141,8 +141,8 @@ final class MapViewController: BaseViewController {
     }
     
     func searchNearPlace() {
-        
-        APIManager.shared.requestNearPlace(pos: Circle.home) { [weak self] placeList in
+//        let circle = Circle(x: <#T##Double#>, y: <#T##Double#>, radius: <#T##Int#>)
+        APIManager.shared.requestNearPlace(pos: Circle.visitKorea) { [weak self] placeList in
             
             if placeList.count > 0 {
                 self?.createPlaceMarkers(placeList: placeList)
