@@ -68,7 +68,13 @@ final class DetailViewController: BaseViewController {
 //    var detailInfo: TourPlaceInfo?
 //    var extraInfo: ExtraPlaceInfo?
     
-    var images: [DetailImage] = []
+    var images: [PlaceImage] = [] {
+        didSet {
+            detailView.imageHeaderView.pageControl.numberOfPages = images.count
+            
+            detailView.imageHeaderView.collectionView.reloadSections([0])
+        }
+    }
     
     lazy var detailView = DetailView().then { view in
         
@@ -96,14 +102,16 @@ final class DetailViewController: BaseViewController {
         super.viewDidLoad()
 
         checkDetailInfo()
-        
-        fetchDetailImages()
-        
+        checkPlaceImages()
     }
     
     
     
     // MARK: - Method
+    
+    
+    
+    // MARK: Detail Place Information
     
     private func fetchDetailPlaceInfo<T: Information>(type: T.Type) {
         
@@ -132,7 +140,7 @@ final class DetailViewController: BaseViewController {
         
     }
     
-    func checkDetailInfo() {
+    private func checkDetailInfo() {
         
         let type = commonInfo.contentType.detailInfoType
         
@@ -153,6 +161,9 @@ final class DetailViewController: BaseViewController {
         }
         
     }
+    
+    
+    // MARK: Extra Place Information
     
     private func checkExtraInfo() {
         
@@ -186,23 +197,36 @@ final class DetailViewController: BaseViewController {
         
     }
     
-    private func fetchDetailImages() {
+    // MARK: Place Image Information
+    
+    private func checkPlaceImages() {
+        
+        if let images = realm.loadPlaceInfo(infoType: PlaceImageInfo.self, contentId: commonInfo.contentId) {
+            self.images = images.images
+        } else {
+            fetchPlaceImages()
+        }
+        
+    }
+    
+    private func fetchPlaceImages() {
         
         APIManager.shared.requestDetailImages(contentId: commonInfo.contentId) { [weak self] images in
             
-            DispatchQueue.main.async {
-                
-                print("이미지 데이터 fetch")
-                
-                self?.images = images
-                
-                self?.detailView.imageHeaderView.pageControl.numberOfPages = images.count
-                
-                self?.detailView.imageHeaderView.collectionView.reloadSections([0])
-                
-            }
+            print("이미지 데이터 fetch")
             
+            self?.receivedPlaceImageInfo(info: images)
         }
+        
+    }
+    
+    func receivedPlaceImageInfo(info: [PlaceImage]) {
+        
+        let placeImage = PlaceImageInfo(id: commonInfo.contentId, imageList: info)
+        
+        realm.registPlaceInfo(info: placeImage)
+        
+        self.images = info
         
     }
     

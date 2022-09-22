@@ -364,6 +364,26 @@ class ExtraPlaceInfo: Object, PlaceInfo {
     }
 }
 
+class PlaceImageInfo: Object {
+    
+    @Persisted(primaryKey: true) var contentId: Int
+    @Persisted var imageList: List<PlaceImage>
+    
+    var images: [PlaceImage] {
+        get { imageList.map { $0 } }
+        set {
+            imageList.removeAll()
+            imageList.append(objectsIn: newValue)
+        }
+    }
+    
+    convenience init(id: Int, imageList: [PlaceImage]) {
+        self.init()
+        contentId = id
+        images = imageList
+    }
+}
+
 class ExtraPlaceElement: EmbeddedObject, Codable, NeedValidate {
     
     @Persisted var infoText: String
@@ -400,25 +420,23 @@ class ExtraPlaceElement: EmbeddedObject, Codable, NeedValidate {
     }
 }
 
-struct DetailImage: Codable {
+class PlaceImage: EmbeddedObject, Codable {
     
-    let contentId: Int
-    let originalImage: String
-    let imageName: String
-    let smallImage: String
-    let serialNumber: String
+    @Persisted var originalImage: String
+    @Persisted var imageName: String
+    @Persisted var smallImage: String
+    @Persisted var serialNumber: String
     
     enum CodingKeys: String, CodingKey {
-        case contentId = "contentid"
         case originalImage = "originimgurl"
         case imageName = "imgname"
         case smallImage = "smallimageurl"
         case serialNumber = "serialnum"
     }
     
-    init(from decoder: Decoder) throws {
+    required convenience init(from decoder: Decoder) throws {
+        self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        contentId = Int(try container.decode(String.self, forKey: .contentId)) ?? 0
         originalImage = try container.decode(String.self, forKey: .originalImage)
         smallImage = try container.decode(String.self, forKey: .smallImage)
         imageName = try container.decode(String.self, forKey: .imageName)

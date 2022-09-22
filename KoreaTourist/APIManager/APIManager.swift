@@ -90,13 +90,13 @@ class APIManager {
         
     }
     
-    func requestDetailImages (contentId: Int, completionHandler: @escaping (_ data: [DetailImage]) -> Void) {
+    func requestDetailImages (contentId: Int, completionHandler: @escaping (_ data: [PlaceImage]) -> Void) {
         
         let requestURL = BaseURL.service(.detailImage(contentId)).url
         
         requestData(url: requestURL) { data in
             
-            if let result = try? JSONDecoder().decode(Result<DetailImage>.self, from: data) {
+            if let result = try? JSONDecoder().decode(Result<PlaceImage>.self, from: data) {
                 
                 let info = result.response.body.items.item
                 
