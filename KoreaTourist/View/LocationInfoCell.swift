@@ -43,7 +43,7 @@ final class LocationInfoCell: BaseInfoCell {
         let formatter = DateFormatter()
         formatter.dateFormat = """
                     yyyy년 MM월 dd일
-                    hh시 mm분
+                    HH시 mm분
                     발견
                     """
         formatter.locale = Locale(identifier: "ko_KR")

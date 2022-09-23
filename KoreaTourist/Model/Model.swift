@@ -71,11 +71,6 @@ class CommonPlaceInfo: Information, PlaceInfo {
     @Persisted var thumbnail: String
     @Persisted var lat: Double
     @Persisted var lng: Double
-//    @Persisted var zipcode: Int
-//    @Persisted var overview: String
-//    @Persisted var homepage : String
-//    @Persisted var tel: String
-//    @Persisted var telName: String
     @Persisted var discoverDate: Date?
     @Persisted var intro: Intro?
     
@@ -271,7 +266,6 @@ class TourPlaceInfo: Information, PlaceInfo {
     }
     
     var validateCell: [BaseInfoCell.Type] {
-//        var list = [BaseCell.Type]()
         let data: [NeedValidate] = [timeData, eventData, otherData]
         return data.filter { $0.isValidate == true }.map { $0.releativeCell }
     }
@@ -477,12 +471,13 @@ enum ContentType: String, Codable {
 
 struct Circle {
     
-    static let visitKorea = Circle(x: 126.981611, y: 37.568477, radius: 500)
-    static let home = Circle(x: 126.924378, y: 37.503886, radius: 500)
+    static let defaultRadius: Double = 500
+    static let visitKorea = Circle(x: 126.981611, y: 37.568477, radius: defaultRadius)
+    static let home = Circle(x: 126.924378, y: 37.503886, radius: defaultRadius)
     
     let x: Double
     let y: Double
-    let radius: Int
+    let radius: Double
     
 }
 

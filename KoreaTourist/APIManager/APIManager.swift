@@ -118,7 +118,7 @@ class APIManager {
         AF.request(url).validate(statusCode: 200...500).responseData { response in
             switch response.result {
             case .success(let data):
-                
+                print("request 성공 😁😁😁😁")
 //                let json = JSON(data)
 //                print(json)
                 completionHandler(data)

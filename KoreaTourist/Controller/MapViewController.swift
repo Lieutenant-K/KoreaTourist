@@ -11,6 +11,7 @@ import SnapKit
 import Alamofire
 import CircleMenu
 
+
 enum Menu: CaseIterable {
     
     case search
@@ -43,6 +44,8 @@ final class MapViewController: BaseViewController {
     let locationManager = NMFLocationManager.sharedInstance()!
     
     var currentMarkers = [PlaceMarker]()
+    
+    let circleOverlay = NMFCircleOverlay(NMGLatLng(lat: 0, lng: 0), radius: Circle.defaultRadius, fill: .systemBlue.withAlphaComponent(0.15))
     
     var undiscoverdMarkerHandler: NMFOverlayTouchHandler?
     
@@ -131,7 +134,7 @@ final class MapViewController: BaseViewController {
                 if marker.distance <= PlaceMarker.minimunDistance {
                     self?.showAlert(title: "이 장소를 발견하시겠어요?", actions: actions)
                 } else {
-                    self?.showAlert(title: "아직 발견할 수 없어요!", message: "100m 이내로 접근해주세요")
+                    self?.showAlert(title: "아직 발견할 수 없어요!", message: "\(Int(PlaceMarker.minimunDistance))m 이내로 접근해주세요")
                 }
                 
                 
@@ -160,7 +163,7 @@ final class MapViewController: BaseViewController {
                 self?.createPlaceMarkers(placeList: placeList)
                 //                self?.updatePlaceMarker(placeList: placeList)
             } else {
-                self?.showAlert(title: "500m 이내에 찾을 장소가 없습니다!")
+                self?.showAlert(title: "\(Int(Circle.defaultRadius)) 이내에 찾을 장소가 없습니다!")
             }
         }
         
@@ -204,6 +207,8 @@ final class MapViewController: BaseViewController {
         
         displayMarkersOnMap(markers: markers)
         
+        circleOverlay.mapView = nil
+        
         naverMapView.mapView.positionMode = .normal
         locationManager.startUpdatingLocation()
         
@@ -221,8 +226,9 @@ final class MapViewController: BaseViewController {
         camUpdate.animation = .easeOut
         camUpdate.animationDuration = 1
         
+        
         self.naverMapView.mapView.moveCamera(camUpdate) { bool in
-            print("업데이트 핸들러 호출!", bool)
+            print("카메라 업데이트 핸들러 호출!", bool)
         }
         
     }
@@ -236,6 +242,17 @@ final class MapViewController: BaseViewController {
             marker.distance = dis
             
         }
+        
+    }
+    
+    private func displaySearchedArea(pos: NMGLatLng) {
+        
+        print(#function)
+        
+        circleOverlay.center = pos
+        
+        circleOverlay.mapView = naverMapView.mapView
+        
         
     }
     
@@ -254,6 +271,7 @@ final class MapViewController: BaseViewController {
         naverMapView.infoWindow.dataSource = infoWindowData
         
         searchNearPlace()
+        
     }
     
     
@@ -310,18 +328,14 @@ extension MapViewController: NMFLocationManagerDelegate {
         
         print("UpdateLocation", location.lat, location.lng)
         
+        if circleOverlay.mapView == nil {
+            displaySearchedArea(pos: location)
+        }
+        
         updateMarkerDistance(pos: location)
         
     }
-    /*
-     func locationManagerBackgroundLocationUpdatesDidTimeout(_ locationManager: NMFLocationManager!) {
-     print(#function)
-     }
-     
-     func locationManagerBackgroundLocationUpdatesDidAutomaticallyPause(_ locationManager: NMFLocationManager!) {
-     print(#function)
-     }
-     */
+
     
     func locationManagerDidStartLocationUpdates(_ locationManager: NMFLocationManager!) {
         print("StartLocationUpdates")
@@ -361,6 +375,7 @@ extension MapViewController: CircleMenuDelegate {
         let menu = Menu.allCases[atIndex]
         switch menu {
         case .search:
+            naverMapView.mapView.positionMode = .disabled
             searchNearPlace()
         case .vision:
             isMarkerFilterOn.toggle()
