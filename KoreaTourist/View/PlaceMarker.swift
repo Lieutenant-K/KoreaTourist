@@ -11,7 +11,7 @@ import NMapsMap
 final class PlaceMarker: NMFMarker {
     
     // 디버그용
-    static let minimunDistance: Double = 100000000
+    static let minimunDistance: Double = 400
     
     let placeInfo: CommonPlaceInfo
     
@@ -62,6 +62,8 @@ final class PlaceMarker: NMFMarker {
         iconImage = NMF_MARKER_IMAGE_GRAY
         isHideCollidedSymbols = true
         isHideCollidedCaptions = true
+        iconPerspectiveEnabled = true
+        captionPerspectiveEnabled = true
         captionMinZoom = 14
         captionRequestedWidth = 4
         subCaptionTextSize = 10

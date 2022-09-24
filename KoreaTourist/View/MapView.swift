@@ -34,21 +34,46 @@ final class MapView: NMFNaverMapView {
     }
     
     
-    lazy var trackControl = NMFLocationButton().then {
-        
+    private lazy var trackControl = NMFLocationButton().then {
         $0.mapView = mapView
         
+    }
+    
+    private lazy var compass = NMFCompassView().then {
+        $0.mapView = mapView
+        $0.isUserInteractionEnabled = false
+    }
+    
+    let circleOverlay = NMFCircleOverlay(NMGLatLng(lat: 0, lng: 0), radius: Circle.defaultRadius).then {
+        $0.fillColor = .systemBlue.withAlphaComponent(0.05)
+        $0.outlineWidth = 2.5
+        $0.outlineColor = .white
+    }
+    
+    let navigateButton = UIButton(type: .system).then {
+        var config = UIButton.Configuration.plain()
+        config.imagePlacement = .leading
+        config.image = UIImage(systemName: "location.fill")
+        config.imagePadding = 8
+        config.cornerStyle = .large
+        config.title = "탐색모드로 돌아가기"
+        config.background.backgroundColor = .white
+        config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        
+        $0.configuration = config
+        $0.isHidden = true
     }
     
     private func configureMapView() {
         
         showZoomControls = false
+        showCompass = false
 //        showScaleBar = true
         mapView.logoAlign = .rightTop
         mapView.maxZoomLevel = 18
         mapView.minZoomLevel = 15
         mapView.maxTilt = maxTilt
-        mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -UIScreen.main.bounds.height/2, right: 0)
+        mapView.contentInset = contentInset
         mapView.setLayerGroup(NMF_LAYER_GROUP_BUILDING, isEnabled: false)
         mapView.symbolScale = 0.5
         mapView.mapType = .navi
@@ -70,6 +95,7 @@ final class MapView: NMFNaverMapView {
         mapView.isZoomGestureEnabled = false
         mapView.isRotateGestureEnabled = false
         mapView.isTiltGestureEnabled = false
+        mapView.isStopGestureEnabled = false
         
         if traitCollection.userInterfaceStyle == .dark {
             mapView.backgroundImage = NMFDefaultBackgroundDarkImage
@@ -81,12 +107,21 @@ final class MapView: NMFNaverMapView {
     
     private func configureButton() {
         
-        [trackControl, circleButton].forEach { addSubview($0) }
+        [trackControl, circleButton, compass, navigateButton].forEach { addSubview($0) }
         
         trackControl.snp.makeConstraints { make in
             make.leading.equalTo(28)
             make.bottom.equalTo(-60)
-
+        }
+        
+        compass.snp.makeConstraints { make in
+            make.leading.top.equalTo(safeAreaLayoutGuide).offset(10)
+//            make.bottom.equalTo(-60)
+        }
+        
+        navigateButton.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).offset(10)
+            make.centerX.equalToSuperview()
         }
         
         let buttonWidth = 50.0
@@ -116,29 +151,21 @@ final class MapView: NMFNaverMapView {
 
 extension MapView {
     
-    var maxTilt: Double {
-        return 63
+    var maxTilt: Double { 63 }
+    
+    var minTilt: Double { 13 }
+    
+    var contentInset: UIEdgeInsets {
+        UIEdgeInsets(top: 0, left: 0, bottom: -UIScreen.main.bounds.height/2, right: 0)
     }
     
-    var minTilt: Double {
-        return 13
-    }
+    var currentTilt: Double { mapView.cameraPosition.tilt }
     
-    var currentTilt: Double {
-        return mapView.cameraPosition.tilt
-    }
+    var currentZoom: Double { mapView.cameraPosition.zoom }
     
-    var currentZoom: Double {
-        return mapView.cameraPosition.zoom
-    }
+    var maxLocOverlaySize: CGFloat { 250 }
     
-    var maxLocOverlaySize: CGFloat {
-        250
-    }
-    
-    var minLocOverlaySize: CGFloat {
-        100
-    }
+    var minLocOverlaySize: CGFloat { 100 }
     
     var locOverlaySize: CGSize {
         
