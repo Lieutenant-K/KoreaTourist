@@ -15,15 +15,10 @@ final class MapView: NMFNaverMapView {
     
     let infoWindow = NMFInfoWindow()
     
-    lazy var searchButton = UIButton(type: .system).then {
-        
-        $0.setTitle("주변의 관광지 찾기", for: .normal)
-        $0.backgroundColor = .label
-        $0.setTitleColor(.systemBackground, for: .normal)
-        $0.clipsToBounds = true
-        $0.layer.cornerRadius = 12
+    let panGesture = UIPanGestureRecognizer()
     
-    }
+    let pinchGesture = UIPinchGestureRecognizer()
+    
     
     lazy var circleButton = CircleMenu(frame: .zero, normalIcon: "", selectedIcon: "", duration: 0.5, distance: 85).then {
         
@@ -47,38 +42,45 @@ final class MapView: NMFNaverMapView {
     
     private func configureMapView() {
         
-        // 서울시청 좌표
-        let defaultCameraPosition = NMFCameraPosition(NMGLatLng(lat: 37.56661, lng: 126.97839), zoom: 10, tilt: 0, heading: 0)
-        
         showZoomControls = false
+//        showScaleBar = true
         mapView.logoAlign = .rightTop
-        mapView.maxZoomLevel = 16
-        mapView.minZoomLevel = 10
+        mapView.maxZoomLevel = 18
+        mapView.minZoomLevel = 15
+        mapView.maxTilt = maxTilt
+        mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -UIScreen.main.bounds.height/2, right: 0)
+        mapView.setLayerGroup(NMF_LAYER_GROUP_BUILDING, isEnabled: false)
+        mapView.symbolScale = 0.5
         mapView.mapType = .navi
-        mapView.moveCamera(NMFCameraUpdate(position: defaultCameraPosition))
         mapView.positionMode = .direction
+        
+        // 서울시청 좌표
+        let defaultCameraPosition = NMFCameraPosition(NMGLatLng(lat: 37.56661, lng: 126.97839), zoom: mapView.maxZoomLevel, tilt: maxTilt, heading: 0)
+        mapView.moveCamera(NMFCameraUpdate(position: defaultCameraPosition))
+        
+        mapView.addGestureRecognizer(panGesture)
+        mapView.addGestureRecognizer(pinchGesture)
+        mapView.isScrollGestureEnabled = false
+        mapView.isZoomGestureEnabled = false
+        mapView.isRotateGestureEnabled = false
+        mapView.isTiltGestureEnabled = false
         
         if traitCollection.userInterfaceStyle == .dark {
             mapView.backgroundImage = NMFDefaultBackgroundDarkImage
             mapView.backgroundColor = NMFDefaultBackgroundDarkColor
             mapView.isNightModeEnabled = true
         }
+        
     }
     
     private func configureButton() {
         
-//        addSubview(searchButton)
-        
         [trackControl, circleButton].forEach { addSubview($0) }
         
-//        searchButton.snp.makeConstraints { make in
-//            make.leading.trailing.bottom.equalToSuperview().inset(28)
-//            make.height.equalTo(60)
-//        }
         trackControl.snp.makeConstraints { make in
             make.leading.equalTo(28)
             make.bottom.equalTo(-60)
-//            make.bottom.equalTo(-28)
+
         }
         
         let buttonWidth = 50.0
@@ -106,3 +108,23 @@ final class MapView: NMFNaverMapView {
 }
 
 
+extension MapView {
+    
+    var maxTilt: Double {
+        return 63
+    }
+    
+    var minTilt: Double {
+        return 13
+    }
+    
+    var currentTilt: Double {
+        return mapView.cameraPosition.tilt
+    }
+    
+    var currentZoom: Double {
+        return mapView.cameraPosition.zoom
+    }
+    
+    
+}

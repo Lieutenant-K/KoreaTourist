@@ -45,7 +45,11 @@ final class MapViewController: BaseViewController {
     
     var currentMarkers = [PlaceMarker]()
     
-    let circleOverlay = NMFCircleOverlay(NMGLatLng(lat: 0, lng: 0), radius: Circle.defaultRadius, fill: .systemBlue.withAlphaComponent(0.15))
+    let circleOverlay = NMFCircleOverlay(NMGLatLng(lat: 0, lng: 0), radius: Circle.defaultRadius).then {
+        $0.fillColor = .systemBlue.withAlphaComponent(0.15)
+        $0.outlineWidth = 2.5
+        $0.outlineColor = .white
+    }
     
     var undiscoverdMarkerHandler: NMFOverlayTouchHandler?
     
@@ -63,9 +67,12 @@ final class MapViewController: BaseViewController {
     override func loadView() {
         view = naverMapView
         
-        naverMapView.mapView.touchDelegate = self
         
-        naverMapView.searchButton.addTarget(self, action: #selector(touchSearchPlaceButton), for: .touchUpInside)
+        naverMapView.panGesture.addTarget(self, action: #selector(panning(_:)))
+        
+        naverMapView.pinchGesture.addTarget(self, action: #selector(pinch(_:)))
+        
+        naverMapView.mapView.touchDelegate = self
         
         naverMapView.circleButton.delegate = self
         
@@ -226,7 +233,6 @@ final class MapViewController: BaseViewController {
         camUpdate.animation = .easeOut
         camUpdate.animationDuration = 1
         
-        
         self.naverMapView.mapView.moveCamera(camUpdate) { bool in
             print("카메라 업데이트 핸들러 호출!", bool)
         }
@@ -274,6 +280,82 @@ final class MapViewController: BaseViewController {
         
     }
     
+    // MARK: Map Gesture
+    @objc func panning(_ sender: UIPanGestureRecognizer) {
+        
+
+        let translation = sender.translation(in: naverMapView.mapView)
+        let location = sender.location(in: naverMapView.mapView)
+        print("panning --------------------------")
+        print("translation:",translation)
+        print("location:",location)
+        
+        if sender.state == .began {
+                print("began")
+            } else if sender.state == .changed {
+                // rotating map camera
+
+                let bounds = naverMapView.mapView.bounds
+                let vector1 = CGVector(dx: location.x - bounds.midX, dy: location.y - bounds.midY)
+                let vector2 = CGVector(dx: vector1.dx + translation.x, dy: vector1.dy + translation.y)
+                let angle1 = atan2(vector1.dx, vector1.dy)
+                let angle2 = atan2(vector2.dx, vector2.dy)
+                let delta = (angle2 - angle1) * 180.0 / Double.pi
+                
+                let param = NMFCameraUpdateParams()
+                param.rotate(by: delta)
+                let update = NMFCameraUpdate(params: param)
+                naverMapView.mapView.moveCamera(update)
+                
+                
+//                print(delta)
+            } else if sender.state == .ended {
+                print("end")
+            }
+
+            sender.setTranslation(.zero, in: naverMapView.mapView)
+        
+    }
+    
+    @objc func pinch(_ sender: UIPinchGestureRecognizer) {
+        
+        let zoom = naverMapView.currentZoom
+        let tilt = naverMapView.currentTilt
+        
+        print("pinch-------------------------------------")
+        print("scale:", sender.scale)
+        print("zoom:", zoom)
+        print("tilt:", tilt)
+
+        let minZ = naverMapView.mapView.minZoomLevel
+        let maxZ = naverMapView.mapView.maxZoomLevel
+        
+        if sender.state == .began {
+            print("start")
+        } else if sender.state == .changed {
+            
+            let deltaZoom = sender.scale-1
+            let deltaTilt = (naverMapView.maxTilt - naverMapView.minTilt) * deltaZoom/(maxZ-minZ)
+            
+            let param = NMFCameraUpdateParams().then {
+                $0.zoom(by: deltaZoom)
+                if tilt + deltaTilt < naverMapView.minTilt {
+                    $0.tilt(to: naverMapView.minTilt)
+                } else {
+                    $0.tilt(by: deltaTilt)
+                }
+            }
+            
+            let update = NMFCameraUpdate(params: param)
+            naverMapView.mapView.moveCamera(update)
+
+        } else if sender.state == .ended {
+            print("ended")
+        }
+        
+        sender.scale = 1
+        
+    }
     
 }
 
