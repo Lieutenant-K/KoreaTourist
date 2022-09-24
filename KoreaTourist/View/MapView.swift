@@ -55,9 +55,15 @@ final class MapView: NMFNaverMapView {
         mapView.positionMode = .direction
         
         // 서울시청 좌표
-        let defaultCameraPosition = NMFCameraPosition(NMGLatLng(lat: 37.56661, lng: 126.97839), zoom: mapView.maxZoomLevel, tilt: maxTilt, heading: 0)
+        let baseLocation = NMGLatLng(lat: 37.56661, lng: 126.97839)
+        
+        let defaultCameraPosition = NMFCameraPosition(baseLocation, zoom: mapView.maxZoomLevel, tilt: maxTilt, heading: 0)
         mapView.moveCamera(NMFCameraUpdate(position: defaultCameraPosition))
         
+        mapView.locationOverlay.location = baseLocation
+        locOverlaySize = CGSize(width: maxLocOverlaySize, height: maxLocOverlaySize)
+        
+        // MARK: Gesture Configuration
         mapView.addGestureRecognizer(panGesture)
         mapView.addGestureRecognizer(pinchGesture)
         mapView.isScrollGestureEnabled = false
@@ -126,5 +132,24 @@ extension MapView {
         return mapView.cameraPosition.zoom
     }
     
+    var maxLocOverlaySize: CGFloat {
+        250
+    }
+    
+    var minLocOverlaySize: CGFloat {
+        100
+    }
+    
+    var locOverlaySize: CGSize {
+        
+        get {
+            let overlay = mapView.locationOverlay
+            return CGSize(width: overlay.iconWidth, height: overlay.iconHeight)
+        }
+        set {
+            mapView.locationOverlay.iconWidth = newValue.width
+            mapView.locationOverlay.iconHeight = newValue.height
+        }
+    }
     
 }

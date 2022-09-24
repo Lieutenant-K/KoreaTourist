@@ -321,33 +321,46 @@ final class MapViewController: BaseViewController {
         
         let zoom = naverMapView.currentZoom
         let tilt = naverMapView.currentTilt
+        let size = naverMapView.locOverlaySize.width
         
         print("pinch-------------------------------------")
         print("scale:", sender.scale)
         print("zoom:", zoom)
         print("tilt:", tilt)
 
-        let minZ = naverMapView.mapView.minZoomLevel
-        let maxZ = naverMapView.mapView.maxZoomLevel
+        let minZoom = naverMapView.mapView.minZoomLevel
+        let maxZoom = naverMapView.mapView.maxZoomLevel
+        
+        let minSize = naverMapView.minLocOverlaySize
+        let maxSize = naverMapView.maxLocOverlaySize
         
         if sender.state == .began {
             print("start")
         } else if sender.state == .changed {
             
             let deltaZoom = sender.scale-1
-            let deltaTilt = (naverMapView.maxTilt - naverMapView.minTilt) * deltaZoom/(maxZ-minZ)
+            let deltaTilt = (naverMapView.maxTilt - naverMapView.minTilt) * deltaZoom / (maxZoom-minZoom)
+            let deltaSize = (maxSize - minSize) * deltaZoom / (maxZoom - minZoom)
             
+            // Camera Update
             let param = NMFCameraUpdateParams().then {
                 $0.zoom(by: deltaZoom)
+                
                 if tilt + deltaTilt < naverMapView.minTilt {
                     $0.tilt(to: naverMapView.minTilt)
                 } else {
                     $0.tilt(by: deltaTilt)
                 }
+                
             }
             
             let update = NMFCameraUpdate(params: param)
             naverMapView.mapView.moveCamera(update)
+            
+            // Location Overlay Update
+            let newSize = size + deltaSize < minSize ? minSize : (size + deltaSize > maxSize ? maxSize : deltaSize + size)
+            naverMapView.locOverlaySize = CGSize(width: newSize, height: newSize)
+            
 
         } else if sender.state == .ended {
             print("ended")
