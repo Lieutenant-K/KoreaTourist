@@ -31,6 +31,65 @@ enum Menu: CaseIterable {
     
 }
 
+enum CameraMode: Equatable {
+    
+    case navigate
+    case search
+    case select(NMGLatLng)
+    
+    var iconImage: UIImage? {
+        switch self {
+        case .navigate:
+            return UIImage(systemName: "location.fill")
+        case .search:
+            return UIImage(systemName: "map.fill")
+        case .select:
+            return nil
+        }
+    }
+    
+    var isCenterd: Bool {
+        switch self {
+        case .navigate:
+            return false
+        default:
+            return true
+        }
+    }
+    
+    var isClosed: Bool {
+        switch self {
+        case .search:
+            return false
+        default:
+            return true
+        }
+    }
+    
+    var position: NMGLatLng? {
+        switch self {
+        case .select(let loc):
+            return loc
+        default:
+            guard let loc = CLLocationManager().location?.coordinate else { return nil}
+            return NMGLatLng(from: loc)
+        }
+    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+            switch (lhs, rhs) {
+            case (.navigate, .navigate),
+                 (.search, .search):
+                return true
+            case (.select(let lpos), .select(let rpos)):
+                return lpos == rpos
+            default:
+                return false
+            }
+        }
+    
+}
+
 final class MapViewController: BaseViewController {
     
     // MARK: - Properties
@@ -38,16 +97,16 @@ final class MapViewController: BaseViewController {
     // 한국관광공사 좌표
     let defaultX = 126.981611
     let defaultY = 37.568477
-    
+
     var naverMapView = MapView()
     
     let locationManager = NMFLocationManager()
     
     var currentMarkers = [PlaceMarker]()
     
-    var undiscoverdMarkerHandler: NMFOverlayTouchHandler?
+    var markerHandler: NMFOverlayTouchHandler?
     
-    var discoveredMarkerHandler: NMFOverlayTouchHandler?
+//    var discoveredMarkerHandler: NMFOverlayTouchHandler?
     
     var isMarkerFilterOn = false {
         didSet {
@@ -55,10 +114,39 @@ final class MapViewController: BaseViewController {
         }
     }
     
+    /*
     var isSearchMode: Bool = false {
         didSet {
-            naverMapView.navigateButton.isHidden = !isSearchMode
+            naverMapView.cameraButton.isHidden = !isSearchMode
             moveCamera(isSearch: isSearchMode)
+        }
+    }
+    */
+    
+    var cameraMode: CameraMode = .navigate {
+        willSet {
+            switch newValue {
+            case .navigate:
+                previousMode = previousMode != nil ? .search : nil
+            case .search:
+                previousMode = .navigate
+            case .select(_):
+                if cameraMode == .search || cameraMode == .navigate {
+                    previousMode = cameraMode
+                }
+            }
+        }
+        didSet { moveCamera(mode: cameraMode) }
+    }
+    
+    var previousMode: CameraMode? {
+        didSet {
+            if let pre = previousMode {
+                naverMapView.cameraButton.isHidden = false
+                naverMapView.cameraButton.setImage(pre.iconImage, for: .normal)
+            } else {
+                naverMapView.cameraButton.isHidden = true
+            }
         }
     }
     
@@ -72,7 +160,7 @@ final class MapViewController: BaseViewController {
         
         naverMapView.pinchGesture.addTarget(self, action: #selector(pinch(_:)))
         
-        naverMapView.navigateButton.addTarget(self, action: #selector(touchNavigateButton), for: .touchUpInside)
+        naverMapView.cameraButton.addTarget(self, action: #selector(touchPreviousCameraButton), for: .touchUpInside)
         
         naverMapView.mapView.touchDelegate = self
         
@@ -91,7 +179,7 @@ final class MapViewController: BaseViewController {
         
         realm.printRealmFileURL()
         
-        defineMarkerTouchHandler()
+        settingMarkerTouchHandler()
     }
     
     
@@ -129,32 +217,55 @@ final class MapViewController: BaseViewController {
         
     }
     
-    func defineMarkerTouchHandler() {
+    func settingMarkerTouchHandler() {
         
-        undiscoverdMarkerHandler = { [weak self] marker in
+        markerHandler = { [weak self] marker in
             if let marker = marker as? PlaceMarker {
                 
-                let ok = UIAlertAction(title: "네", style: .cancel) { _ in
-                    self?.discoverPlace(about: marker)
-                    
-                }
-                let cancel = UIAlertAction(title: "아니오", style: .default)
-                let actions = [cancel, ok]
-                
-                if marker.distance <= PlaceMarker.minimunDistance {
-                    self?.showAlert(title: "이 장소를 발견하시겠어요?", actions: actions)
+                if self?.cameraMode == .select(marker.position) {
+                    self?.showDiscoverAlert(target: marker)
                 } else {
-                    self?.showAlert(title: "아직 발견할 수 없어요!", message: "\(Int(PlaceMarker.minimunDistance))m 이내로 접근해주세요")
+                    self?.cameraMode = .select(marker.position)
                 }
-                
                 
             }
             return true
         }
         
+        /*
         discoveredMarkerHandler = { [weak self] marker in
            // 이미 발견된 마커에 대한 핸들러
+            
+            if let marker = marker as? PlaceMarker {
+                
+                self?.cameraMode = .select(marker.position)
+                
+                
+            }
             return true
+        }
+        */
+    }
+    
+    private func showDiscoverAlert(target marker: PlaceMarker) {
+        
+        if marker.placeInfo.isDiscovered {
+            print("이미 발견됨!!!!")
+            return
+        }
+        
+        let ok = UIAlertAction(title: "네", style: .cancel) { [weak self] _ in
+            self?.discoverPlace(about: marker)
+        }
+        
+        let cancel = UIAlertAction(title: "아니오", style: .default)
+        
+        let actions = [cancel, ok]
+        
+        if marker.distance <= PlaceMarker.minimunDistance {
+            showAlert(title: "이 장소를 발견하시겠어요?", actions: actions)
+        } else {
+            showAlert(title: "아직 발견할 수 없어요!", message: "\(Int(PlaceMarker.minimunDistance))m 이내로 접근해주세요")
         }
         
     }
@@ -163,7 +274,7 @@ final class MapViewController: BaseViewController {
         
         realm.discoverPlace(with: marker.placeInfo.contentId)
         marker.updateMarkerAppearnce()
-        marker.touchHandler = discoveredMarkerHandler
+//        marker.touchHandler = discoveredMarkerHandler
         
         present(PopupViewController(place: marker.placeInfo), animated: true)
         naverMapView.mapView.positionMode = .normal
@@ -184,7 +295,7 @@ final class MapViewController: BaseViewController {
             if placeList.count > 0 {
                 if let markers = self?.createPlaceMarkers(placeList: placeList) {
                     self?.updateAndDisplayMarker(markers: markers)
-                    self?.isSearchMode = true
+                    self?.cameraMode = .search
                 }
             } else {
                 self?.showAlert(title: "\(Int(Circle.defaultRadius)) 이내에 찾을 장소가 없습니다!")
@@ -205,7 +316,7 @@ final class MapViewController: BaseViewController {
 //        print(newPlace.newInfoList)
         let markers = newPlace.fetchedInfo.map { (info) -> PlaceMarker in
             let marker = PlaceMarker(place: info)
-            marker.touchHandler = info.isDiscovered ? discoveredMarkerHandler : undiscoverdMarkerHandler
+            marker.touchHandler = markerHandler
             return marker
         }
         
@@ -225,8 +336,9 @@ final class MapViewController: BaseViewController {
         
     }
     
-    private func moveCamera(isSearch: Bool) {
+    private func moveCamera(mode: CameraMode) {
         
+        /*
         if let loc = CLLocationManager().location?.coordinate {
             
             let inset: UIEdgeInsets = isSearch ? .zero : naverMapView.contentInset
@@ -252,29 +364,33 @@ final class MapViewController: BaseViewController {
             naverMapView.locOverlaySize = CGSize(width: size, height: size)
             
         }
-        
-        
-        /*
-        let point = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height)
-        
-        print(point)
-        let loc = naverMapView.mapView.projection.latlng(from: point)
-        let marker = NMFMarker(position: loc)
-        marker.mapView = naverMapView.mapView
         */
         
-        
-        /*
-        let bounds = NMGLatLngBounds(latLngs: markers.map { $0.position } )
-        
-        let camUpdate = NMFCameraUpdate(fit: bounds, padding: 40)
-        camUpdate.animation = .easeOut
-        camUpdate.animationDuration = 1
-        
-        self.naverMapView.mapView.moveCamera(camUpdate) { bool in
-            print("카메라 업데이트 핸들러 호출!", bool)
+        if let pos = mode.position {
+            
+            let inset: UIEdgeInsets = mode.isCenterd ? .zero : naverMapView.contentInset
+            let tilt = mode.isClosed ? naverMapView.maxTilt : naverMapView.minTilt
+            let zoom = mode.isClosed ? naverMapView.mapView.maxZoomLevel : naverMapView.mapView.minZoomLevel
+            let size = mode.isClosed ? naverMapView.maxLocOverlaySize : naverMapView.minLocOverlaySize
+            
+            naverMapView.mapView.contentInset = inset
+            
+            let param = NMFCameraUpdateParams()
+            param.tilt(to: tilt)
+            param.zoom(to: zoom)
+            param.scroll(to: pos)
+    
+            let update = NMFCameraUpdate(params: param)
+            update.animation = .easeOut
+            
+            naverMapView.mapView.moveCamera(update) { [weak self] bool in
+                print("카메라 전환 완료!!!!!!!", bool)
+                self?.naverMapView.mapView.positionMode = mode == .select(pos) ? .normal : .direction
+            }
+            
+            naverMapView.locOverlaySize = CGSize(width: size, height: size)
+            
         }
-        */
         
     }
     
@@ -324,8 +440,15 @@ final class MapViewController: BaseViewController {
         
     }
     
-    @objc func touchNavigateButton() {
-        isSearchMode = false
+    @objc func touchPreviousCameraButton() {
+        
+        if let pre = previousMode {
+            cameraMode = pre
+        } else {
+            cameraMode = .navigate
+            previousMode = nil
+        }
+        
     }
     
     // MARK: Map Gesture
@@ -523,7 +646,7 @@ extension MapViewController: CircleMenuDelegate {
         let menu = Menu.allCases[atIndex]
         switch menu {
         case .search:
-            naverMapView.mapView.positionMode = .disabled
+//            naverMapView.mapView.positionMode = .disabled
             searchNearPlace()
         case .vision:
             isMarkerFilterOn.toggle()

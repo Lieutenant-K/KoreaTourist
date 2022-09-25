@@ -50,7 +50,8 @@ final class MapView: NMFNaverMapView {
         $0.outlineColor = .white
     }
     
-    let navigateButton = UIButton(type: .system).then {
+    let cameraButton = UIButton(type: .system).then {
+        /*
         var config = UIButton.Configuration.plain()
         config.imagePlacement = .leading
         config.image = UIImage(systemName: "location.fill")
@@ -61,7 +62,12 @@ final class MapView: NMFNaverMapView {
         config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
         $0.configuration = config
+         */
+        $0.setImage(UIImage(systemName: "location.fill"), for: .normal)
         $0.isHidden = true
+        $0.backgroundColor = .white
+        $0.layer.shadowOffset = .zero
+        $0.layer.shadowOpacity = 0.3
     }
     
     private func configureMapView() {
@@ -107,7 +113,7 @@ final class MapView: NMFNaverMapView {
     
     private func configureButton() {
         
-        [trackControl, circleButton, compass, navigateButton].forEach { addSubview($0) }
+        [trackControl, circleButton, compass, cameraButton].forEach { addSubview($0) }
         
         trackControl.snp.makeConstraints { make in
             make.leading.equalTo(28)
@@ -119,11 +125,6 @@ final class MapView: NMFNaverMapView {
 //            make.bottom.equalTo(-60)
         }
         
-        navigateButton.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(10)
-            make.centerX.equalToSuperview()
-        }
-        
         let buttonWidth = 50.0
         
         circleButton.snp.makeConstraints { make in
@@ -132,7 +133,16 @@ final class MapView: NMFNaverMapView {
             make.width.equalTo(buttonWidth)
             make.height.equalTo(circleButton.snp.width)
         }
+        
+        cameraButton.snp.makeConstraints { make in
+            make.trailing.equalTo(-28)
+            make.bottom.equalTo(-60)
+            make.width.equalTo(buttonWidth)
+            make.height.equalTo(circleButton.snp.width)
+        }
+        
         circleButton.layer.cornerRadius = buttonWidth/2
+        cameraButton.layer.cornerRadius = buttonWidth/2
     }
     
     
