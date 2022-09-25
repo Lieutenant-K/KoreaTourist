@@ -10,6 +10,7 @@ import NMapsMap
 import SnapKit
 import Alamofire
 import CircleMenu
+import SideMenu
 
 
 enum Menu: CaseIterable {
@@ -162,6 +163,8 @@ final class MapViewController: BaseViewController {
         
         naverMapView.cameraButton.addTarget(self, action: #selector(touchPreviousCameraButton), for: .touchUpInside)
         
+        naverMapView.menuButton.addTarget(self, action: #selector(touchMenuButton), for: .touchUpInside)
+        
         naverMapView.mapView.touchDelegate = self
         
         naverMapView.circleButton.delegate = self
@@ -199,10 +202,10 @@ final class MapViewController: BaseViewController {
     // MARK: - Method
     
     override func configureNavigationItem() {
-        
+        /*
         let appear = UINavigationBarAppearance()
         appear.configureWithTransparentBackground()
-        appear.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+//        appear.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
         
         navigationItem.standardAppearance = appear
         navigationItem.scrollEdgeAppearance = appear
@@ -213,7 +216,7 @@ final class MapViewController: BaseViewController {
         label.textColor = .secondaryLabel
         
         navigationItem.titleView = label
-        
+        */
         
     }
     
@@ -451,6 +454,16 @@ final class MapViewController: BaseViewController {
             cameraMode = .navigate
             previousMode = nil
         }
+        
+    }
+    
+    @objc func touchMenuButton() {
+        
+        let vc = UIViewController()
+        let sideMenu = SideMenuNavigationController(rootViewController: vc)
+        sideMenu.presentationStyle = .menuSlideIn
+        sideMenu.blurEffectStyle = .systemUltraThinMaterial
+        present(sideMenu, animated: true)
         
     }
     

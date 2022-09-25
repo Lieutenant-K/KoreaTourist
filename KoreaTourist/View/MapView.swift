@@ -19,8 +19,23 @@ final class MapView: NMFNaverMapView {
     
     let pinchGesture = UIPinchGestureRecognizer()
     
+    let geoTitleLabel = UILabel().then {
+        $0.text = "현재 지역"
+        $0.font = .systemFont(ofSize: 26, weight: .heavy)
+        $0.textColor = .secondaryLabel
+        $0.backgroundColor = .clear
+        $0.textAlignment = .center
+        $0.numberOfLines = 1
+    }
     
-    lazy var circleButton = CircleMenu(frame: .zero, normalIcon: "", selectedIcon: "", duration: 0.5, distance: 85).then {
+    let menuButton = UIButton(type: .system).then {
+        $0.setImage(UIImage(systemName: "book.closed.fill"), for: .normal)
+        $0.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 24, weight: .bold), forImageIn: .normal)
+        $0.tintColor = .white
+        $0.backgroundColor = .clear
+    }
+    
+    let circleButton = CircleMenu(frame: .zero, normalIcon: "", selectedIcon: "", duration: 0.5, distance: 85).then {
         
         $0.setImage(UIImage(systemName: "list.bullet"), for: .normal)
         $0.setImage(UIImage(systemName: "xmark"), for: .selected)
@@ -75,7 +90,7 @@ final class MapView: NMFNaverMapView {
         showZoomControls = false
         showCompass = false
 //        showScaleBar = true
-        mapView.logoAlign = .rightTop
+        mapView.logoAlign = .rightBottom
         mapView.maxZoomLevel = 18
         mapView.minZoomLevel = 15
         mapView.maxTilt = maxTilt
@@ -113,7 +128,7 @@ final class MapView: NMFNaverMapView {
     
     private func configureButton() {
         
-        [trackControl, circleButton, compass, cameraButton].forEach { addSubview($0) }
+        [trackControl, circleButton, compass, cameraButton, geoTitleLabel, menuButton].forEach { addSubview($0) }
         
         trackControl.snp.makeConstraints { make in
             make.leading.equalTo(28)
@@ -121,8 +136,21 @@ final class MapView: NMFNaverMapView {
         }
         
         compass.snp.makeConstraints { make in
-            make.leading.top.equalTo(safeAreaLayoutGuide).offset(10)
+            make.top.equalTo(safeAreaLayoutGuide)
+            make.leading.equalTo(12)
 //            make.bottom.equalTo(-60)
+        }
+        
+        geoTitleLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(safeAreaLayoutGuide)
+            make.leading.greaterThanOrEqualTo(20)
+            make.trailing.lessThanOrEqualTo(-20)
+        }
+        
+        menuButton.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide)
+            make.trailing.equalTo(-12)
         }
         
         let buttonWidth = 50.0
