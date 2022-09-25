@@ -136,7 +136,7 @@ final class MapViewController: BaseViewController {
                 }
             }
         }
-        didSet { moveCamera(mode: cameraMode) }
+        didSet { updateCameraFrom(mode: cameraMode) }
     }
     
     var previousMode: CameraMode? {
@@ -336,7 +336,7 @@ final class MapViewController: BaseViewController {
         
     }
     
-    private func moveCamera(mode: CameraMode) {
+    private func updateCameraFrom(mode: CameraMode) {
         
         /*
         if let loc = CLLocationManager().location?.coordinate {
@@ -382,10 +382,13 @@ final class MapViewController: BaseViewController {
     
             let update = NMFCameraUpdate(params: param)
             update.animation = .easeOut
+            update.animationDuration = 0.7
             
-            naverMapView.mapView.moveCamera(update) { [weak self] bool in
-                print("카메라 전환 완료!!!!!!!", bool)
+            
+            naverMapView.moveCamera(update) { [weak self] in
+                
                 self?.naverMapView.mapView.positionMode = mode == .select(pos) ? .normal : .direction
+                
             }
             
             naverMapView.locOverlaySize = CGSize(width: size, height: size)
@@ -476,6 +479,8 @@ final class MapViewController: BaseViewController {
                 let param = NMFCameraUpdateParams()
                 param.rotate(by: delta)
                 let update = NMFCameraUpdate(params: param)
+                update.animation = .none
+
                 naverMapView.mapView.moveCamera(update)
                 
                 
@@ -526,6 +531,7 @@ final class MapViewController: BaseViewController {
             }
             
             let update = NMFCameraUpdate(params: param)
+            update.animation = .none
             naverMapView.mapView.moveCamera(update)
             
             // Location Overlay Update
@@ -621,6 +627,7 @@ extension MapViewController: NMFLocationManagerDelegate {
 }
 
 
+// MARK: - Circle Menu Delegate
 extension MapViewController: CircleMenuDelegate {
     
     func circleMenu(_ circleMenu: CircleMenu, willDisplay button: UIButton, atIndex: Int) {

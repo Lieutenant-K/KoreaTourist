@@ -145,6 +145,19 @@ final class MapView: NMFNaverMapView {
         cameraButton.layer.cornerRadius = buttonWidth/2
     }
     
+    func moveCamera(_ update: NMFCameraUpdate, completionHandler: @escaping () -> ()) {
+        
+        panGesture.isEnabled = false
+        pinchGesture.isEnabled = false
+        
+        mapView.moveCamera(update) { [weak self] bool in
+            print("카메라 전환 완료 👍👍👍👍👍", bool)
+            self?.panGesture.isEnabled = true
+            self?.pinchGesture.isEnabled = true
+            completionHandler()
+        }
+    }
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
