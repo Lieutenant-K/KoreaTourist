@@ -479,7 +479,6 @@ final class MapViewController: BaseViewController {
                 let param = NMFCameraUpdateParams()
                 param.rotate(by: delta)
                 let update = NMFCameraUpdate(params: param)
-                update.animation = .none
 
                 naverMapView.mapView.moveCamera(update)
                 
@@ -531,7 +530,6 @@ final class MapViewController: BaseViewController {
             }
             
             let update = NMFCameraUpdate(params: param)
-            update.animation = .none
             naverMapView.mapView.moveCamera(update)
             
             // Location Overlay Update

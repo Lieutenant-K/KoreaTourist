@@ -63,11 +63,15 @@ final class PlaceMarker: NMFMarker {
         isHideCollidedSymbols = true
         isHideCollidedCaptions = true
         iconPerspectiveEnabled = true
-        captionPerspectiveEnabled = true
-        captionMinZoom = 14
+//        captionPerspectiveEnabled = true
+        captionTextSize = 30
+        captionOffset = 4
+        subCaptionTextSize = 24
+//        captionMinZoom = 14
         captionRequestedWidth = 4
-        subCaptionTextSize = 10
-    
+//        width = 50
+//        height = 65
+        
         updateMarkerAppearnce()
         
     }
