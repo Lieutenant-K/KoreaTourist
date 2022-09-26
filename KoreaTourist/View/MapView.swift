@@ -48,11 +48,11 @@ final class MapView: NMFNaverMapView {
         
     }
     
-    
+    /*
     private lazy var trackControl = NMFLocationButton().then {
         $0.mapView = mapView
         
-    }
+    }*/
     
     private lazy var compass = NMFCompassView().then {
         $0.mapView = mapView
@@ -60,9 +60,10 @@ final class MapView: NMFNaverMapView {
     }
     
     let circleOverlay = NMFCircleOverlay(NMGLatLng(lat: 0, lng: 0), radius: Circle.defaultRadius).then {
-        $0.fillColor = .systemBlue.withAlphaComponent(0.05)
+//        $0.fillColor = .systemBlue.withAlphaComponent(0.05)
+        $0.fillColor = .clear
         $0.outlineWidth = 2.5
-        $0.outlineColor = .white
+        $0.outlineColor = .label.withAlphaComponent(0.5)
     }
     
     let cameraButton = UIButton(type: .system).then {
@@ -89,7 +90,7 @@ final class MapView: NMFNaverMapView {
         
         showZoomControls = false
         showCompass = false
-//        showScaleBar = true
+        showScaleBar = false
         mapView.logoAlign = .rightBottom
         mapView.maxZoomLevel = 18
         mapView.minZoomLevel = 15
@@ -98,7 +99,7 @@ final class MapView: NMFNaverMapView {
         mapView.setLayerGroup(NMF_LAYER_GROUP_BUILDING, isEnabled: false)
         mapView.symbolScale = 0.5
         mapView.mapType = .navi
-        mapView.positionMode = .direction
+//        mapView.positionMode = .direction
         
         // 서울시청 좌표
         let baseLocation = NMGLatLng(lat: 37.56661, lng: 126.97839)
@@ -107,6 +108,11 @@ final class MapView: NMFNaverMapView {
         mapView.moveCamera(NMFCameraUpdate(position: defaultCameraPosition))
         
         mapView.locationOverlay.location = baseLocation
+        mapView.locationOverlay.hidden = false
+//        mapView.locationOverlay.circleRadius = 100
+//        if let iconImage = UIImage(named: "navigation")?.imageWithColor(color: .systemBlue) {
+//            mapView.locationOverlay.icon = NMFOverlayImage(image: iconImage)
+//        }
         locOverlaySize = CGSize(width: maxLocOverlaySize, height: maxLocOverlaySize)
         
         // MARK: Gesture Configuration
@@ -128,12 +134,14 @@ final class MapView: NMFNaverMapView {
     
     private func configureButton() {
         
-        [trackControl, circleButton, compass, cameraButton, geoTitleLabel, menuButton].forEach { addSubview($0) }
+        [circleButton, compass, cameraButton, geoTitleLabel, menuButton].forEach { addSubview($0) }
         
+        /*
         trackControl.snp.makeConstraints { make in
             make.leading.equalTo(28)
             make.bottom.equalTo(-60)
         }
+        */
         
         compass.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide)
@@ -173,7 +181,7 @@ final class MapView: NMFNaverMapView {
         cameraButton.layer.cornerRadius = buttonWidth/2
     }
     
-    func moveCamera(_ update: NMFCameraUpdate, completionHandler: @escaping () -> ()) {
+    func moveCameraBlockGesture(_ update: NMFCameraUpdate, completionHandler: @escaping () -> ()) {
         
         panGesture.isEnabled = false
         pinchGesture.isEnabled = false
@@ -214,9 +222,9 @@ extension MapView {
     
     var currentZoom: Double { mapView.cameraPosition.zoom }
     
-    var maxLocOverlaySize: CGFloat { 250 }
+    var maxLocOverlaySize: CGFloat { 120 }
     
-    var minLocOverlaySize: CGFloat { 100 }
+    var minLocOverlaySize: CGFloat { 50 }
     
     var locOverlaySize: CGSize {
         

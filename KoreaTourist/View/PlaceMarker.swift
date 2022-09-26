@@ -11,7 +11,7 @@ import NMapsMap
 final class PlaceMarker: NMFMarker {
     
     // 디버그용
-    static let minimunDistance: Double = 400
+    static let minimumDistance: Double = 400
     
     let placeInfo: CommonPlaceInfo
     
@@ -31,35 +31,24 @@ final class PlaceMarker: NMFMarker {
     
     func updateMarkerAppearnce() {
         
-        if placeInfo.isDiscovered {
-            captionText = placeInfo.title
-            captionColor = .black
-            subCaptionText = ""
-            iconImage = NMF_MARKER_IMAGE_YELLOW
-            zIndex = 0
-            return
-        }
+        let color: UIColor = placeInfo.isDiscovered ? .discoverdMarker : (distance <= Self.minimumDistance ? .enabledMarker : .disabledMarker)
         
-        subCaptionText = "\(Int(distance))m"
+        captionText = placeInfo.isDiscovered ? placeInfo.title : (distance <= Self.minimumDistance ? "발견가능" : "미발견")
         
-        if distance <= Self.minimunDistance {
-            captionText = "발견가능"
-            captionColor = .systemBlue
-            zIndex = 2
-            iconImage = NMF_MARKER_IMAGE_BLUE
-        } else {
-            captionText = "미발견"
-            captionColor = .black
-            iconImage = NMF_MARKER_IMAGE_GRAY
-            zIndex = 1
-        }
+        subCaptionText = placeInfo.isDiscovered ? "" : "\(Int(distance))m"
+        
+        zIndex = placeInfo.isDiscovered ? 0 : (distance <= Self.minimumDistance ? 2 : 1)
+        
+        captionColor = color
+        iconTintColor = color
+        
         
     }
     
     private func configureMarker() {
         
         position = NMGLatLng(lat: placeInfo.lat, lng: placeInfo.lng)
-        iconImage = NMF_MARKER_IMAGE_GRAY
+        iconImage = NMF_MARKER_IMAGE_BLACK
         isHideCollidedSymbols = true
         isHideCollidedCaptions = true
         iconPerspectiveEnabled = true

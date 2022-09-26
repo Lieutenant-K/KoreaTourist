@@ -107,22 +107,11 @@ final class MapViewController: BaseViewController {
     
     var markerHandler: NMFOverlayTouchHandler?
     
-//    var discoveredMarkerHandler: NMFOverlayTouchHandler?
-    
     var isMarkerFilterOn = false {
         didSet {
             filteringMarker()
         }
     }
-    
-    /*
-    var isSearchMode: Bool = false {
-        didSet {
-            naverMapView.cameraButton.isHidden = !isSearchMode
-            moveCamera(isSearch: isSearchMode)
-        }
-    }
-    */
     
     var cameraMode: CameraMode = .navigate {
         willSet {
@@ -183,6 +172,7 @@ final class MapViewController: BaseViewController {
         realm.printRealmFileURL()
         
         settingMarkerTouchHandler()
+        
     }
     
     
@@ -235,19 +225,6 @@ final class MapViewController: BaseViewController {
             return true
         }
         
-        /*
-        discoveredMarkerHandler = { [weak self] marker in
-           // 이미 발견된 마커에 대한 핸들러
-            
-            if let marker = marker as? PlaceMarker {
-                
-                self?.cameraMode = .select(marker.position)
-                
-                
-            }
-            return true
-        }
-        */
     }
     
     private func showDiscoverAlert(target marker: PlaceMarker) {
@@ -265,10 +242,10 @@ final class MapViewController: BaseViewController {
         
         let actions = [cancel, ok]
         
-        if marker.distance <= PlaceMarker.minimunDistance {
+        if marker.distance <= PlaceMarker.minimumDistance {
             showAlert(title: "이 장소를 발견하시겠어요?", actions: actions)
         } else {
-            showAlert(title: "아직 발견할 수 없어요!", message: "\(Int(PlaceMarker.minimunDistance))m 이내로 접근해주세요")
+            showAlert(title: "아직 발견할 수 없어요!", message: "\(Int(PlaceMarker.minimumDistance))m 이내로 접근해주세요")
         }
         
     }
@@ -277,11 +254,10 @@ final class MapViewController: BaseViewController {
         
         realm.discoverPlace(with: marker.placeInfo.contentId)
         marker.updateMarkerAppearnce()
-//        marker.touchHandler = discoveredMarkerHandler
         
         present(PopupViewController(place: marker.placeInfo), animated: true)
-        naverMapView.mapView.positionMode = .normal
-        locationManager.stopUpdatingLocation()
+//        naverMapView.mapView.positionMode = .normal
+//        locationManager.stopUpdatingLocation()
         
     }
     
@@ -341,34 +317,6 @@ final class MapViewController: BaseViewController {
     
     private func updateCameraFrom(mode: CameraMode) {
         
-        /*
-        if let loc = CLLocationManager().location?.coordinate {
-            
-            let inset: UIEdgeInsets = isSearch ? .zero : naverMapView.contentInset
-            let tilt = isSearch ? naverMapView.minTilt : naverMapView.maxTilt
-            let zoom = isSearch ? naverMapView.mapView.minZoomLevel : naverMapView.mapView.maxZoomLevel
-            let size = isSearch ? naverMapView.minLocOverlaySize : naverMapView.maxLocOverlaySize
-            
-            naverMapView.mapView.contentInset = inset
-            
-            let param = NMFCameraUpdateParams()
-            param.tilt(to: tilt)
-            param.zoom(to: zoom)
-            param.scroll(to: NMGLatLng(from: loc))
-    
-            let update = NMFCameraUpdate(params: param)
-            update.animation = .easeOut
-            
-            naverMapView.mapView.moveCamera(update) { [weak self] bool in
-                print("카메라 전환 완료!!!!!!!", bool)
-                self?.naverMapView.mapView.positionMode = .direction
-            }
-            
-            naverMapView.locOverlaySize = CGSize(width: size, height: size)
-            
-        }
-        */
-        
         if let pos = mode.position {
             
             let inset: UIEdgeInsets = mode.isCenterd ? .zero : naverMapView.contentInset
@@ -382,15 +330,19 @@ final class MapViewController: BaseViewController {
             param.tilt(to: tilt)
             param.zoom(to: zoom)
             param.scroll(to: pos)
-    
+            
             let update = NMFCameraUpdate(params: param)
             update.animation = .easeOut
             update.animationDuration = 0.7
             
-            
-            naverMapView.moveCamera(update) { [weak self] in
+            locationManager.stopUpdatingLocation()
+            naverMapView.moveCameraBlockGesture(update) { [weak self] in
                 
-                self?.naverMapView.mapView.positionMode = mode == .select(pos) ? .normal : .direction
+                if mode == .select(pos) {
+                    self?.locationManager.stopUpdatingLocation()
+                } else {
+                    self?.locationManager.startUpdatingLocation()
+                }
                 
             }
             
@@ -494,6 +446,7 @@ final class MapViewController: BaseViewController {
                 let update = NMFCameraUpdate(params: param)
 
                 naverMapView.mapView.moveCamera(update)
+                naverMapView.mapView.locationOverlay.heading += delta
                 
                 
 //                print(delta)
@@ -588,18 +541,21 @@ extension MapViewController: NMFLocationManagerDelegate {
             // 설정으로 안내하는 코드
         case .authorizedAlways:
             print("always authorized")
-            naverMapView.mapView.positionMode = .direction
+            locationManager.startUpdatingLocation()
+//            naverMapView.mapView.positionMode = .direction
 //            print(locationManager.currentLatLng())
-//            locationManager.startUpdatingLocation()
             
         case .authorizedWhenInUse:
             print("authorized when in use")
             CLLocationManager().requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
 //            print(CLLocationManager().location)
-            naverMapView.mapView.positionMode = .direction
+//            naverMapView.mapView.positionMode = .direction
 //            print(CLLocationManager().location)
 //            locationManager.startUpdatingLocation()
 //            print(CLLocationManager().location)
+//            naverMapView.mapView.locationOverlay.icon = NMFOverlayImage(image: UIImage(systemName: "person.fill")!)
+//            print(naverMapView.mapView.locationOverlay.icon.image)
         default:
             print("default")
         }
@@ -619,6 +575,10 @@ extension MapViewController: NMFLocationManagerDelegate {
         let location = NMGLatLng(from: (locations.last as! CLLocation).coordinate)
         
         print("UpdateLocation", location.lat, location.lng)
+        
+        let update = NMFCameraUpdate(scrollTo: location)
+        naverMapView.mapView.moveCamera(update)
+        naverMapView.mapView.locationOverlay.location = location
         
         updateMarkerDistance(pos: location)
         
