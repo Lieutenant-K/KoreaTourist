@@ -120,7 +120,8 @@ class PopupView: BaseView {
     
     override func setBackground() {
         
-        backgroundColor = UIColor.black.withAlphaComponent(0.15)
+        backgroundColor = .clear
+        //UIColor.black.withAlphaComponent(0.15)
     }
     
     override func addSubviews() {
