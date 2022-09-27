@@ -287,7 +287,7 @@ final class MapViewController: BaseViewController {
     
     private func createPlaceMarkers(placeList: [CommonPlaceInfo]) -> [PlaceMarker] {
         
-        let newPlace = realm.registPlaces(using: placeList)
+        let newPlace = realm.registerPlaces(using: placeList)
         
         let alertTitle = newPlace.newCount > 0 ? "\(newPlace.newCount)개의 새로운 장소를 찾았습니다!" : "새로 찾은 장소가 없습니다."
         
@@ -647,6 +647,11 @@ extension MapViewController: CircleMenuDelegate {
             isMarkerFilterOn.toggle()
             break
         case .userInfo:
+            let vc = CollectionViewController()
+            let navi = UINavigationController(rootViewController: vc)
+            navi.modalPresentationStyle = .fullScreen
+            navi.modalTransitionStyle = .coverVertical
+            present(navi,animated: true)
             break
         }
     }

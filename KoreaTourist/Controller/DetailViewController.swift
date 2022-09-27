@@ -129,7 +129,7 @@ final class DetailViewController: BaseViewController {
     
     private func receivedDetailInfo(info: Information) {
         
-        realm.registPlaceInfo(info: info)
+        realm.registerPlaceInfo(info: info)
         
         if let info = info as? PlaceInfo {
             placeInfoList.append(info)
@@ -179,7 +179,7 @@ final class DetailViewController: BaseViewController {
         
         let extra = ExtraPlaceInfo(id: commonInfo.contentId, infoList: info)
         
-        realm.registPlaceInfo(info: extra)
+        realm.registerPlaceInfo(info: extra)
         
         placeInfoList.append(extra)
         
@@ -224,7 +224,7 @@ final class DetailViewController: BaseViewController {
         
         let placeImage = PlaceImageInfo(id: commonInfo.contentId, imageList: info)
         
-        realm.registPlaceInfo(info: placeImage)
+        realm.registerPlaceInfo(info: placeImage)
         
         self.images = info
         
