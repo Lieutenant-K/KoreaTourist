@@ -29,9 +29,9 @@ final class MapView: NMFNaverMapView {
     }
     
     let menuButton = UIButton(type: .system).then {
-        $0.setImage(UIImage(systemName: "book.closed.fill"), for: .normal)
-        $0.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 24, weight: .bold), forImageIn: .normal)
-        $0.tintColor = .white
+        $0.setImage(UIImage(systemName: "gearshape.circle.fill"), for: .normal)
+        $0.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 32, weight: .regular), forImageIn: .normal)
+        $0.tintColor = .secondaryLabel
         $0.backgroundColor = .clear
     }
     

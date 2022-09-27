@@ -11,6 +11,7 @@ import SnapKit
 import Alamofire
 import CircleMenu
 import SideMenu
+import CoreLocation
 
 
 enum Menu: CaseIterable {
@@ -379,6 +380,18 @@ final class MapViewController: BaseViewController {
         
     }
     
+    private func updateGeoTitle(loc: CLLocation) {
+        
+        CLGeocoder().reverseGeocodeLocation(loc, preferredLocale: Locale(identifier: "ko_KR")) { [weak self] placeMark, error in
+            
+            if let place = placeMark?.first {
+                self?.naverMapView.geoTitleLabel.text = [(place.locality ?? ""),(place.subLocality ?? "")].joined(separator: " ")
+            }
+            
+        }
+        
+    }
+    
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         let style = UITraitCollection.current.userInterfaceStyle
@@ -572,15 +585,18 @@ extension MapViewController: NMFLocationManagerDelegate {
     
     func locationManager(_ locationManager: NMFLocationManager!, didUpdateLocations locations: [Any]!) {
         
-        let location = NMGLatLng(from: (locations.last as! CLLocation).coordinate)
+        let location = (locations.last as! CLLocation)
+        let pos = NMGLatLng(from: location.coordinate)
         
-        print("UpdateLocation", location.lat, location.lng)
+        print("UpdateLocation", pos.lat, pos.lng)
         
-        let update = NMFCameraUpdate(scrollTo: location)
+        let update = NMFCameraUpdate(scrollTo: pos)
         naverMapView.mapView.moveCamera(update)
-        naverMapView.mapView.locationOverlay.location = location
+        naverMapView.mapView.locationOverlay.location = pos
         
-        updateMarkerDistance(pos: location)
+        updateMarkerDistance(pos: pos)
+        
+        updateGeoTitle(loc: location)
         
     }
 
