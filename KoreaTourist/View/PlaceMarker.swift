@@ -41,7 +41,9 @@ final class PlaceMarker: NMFMarker {
         
         captionColor = color
         iconTintColor = color
-        
+        captionHaloColor = .systemBackground
+        subCaptionHaloColor = .systemBackground
+        subCaptionColor = .label
         
     }
     
@@ -58,13 +60,14 @@ final class PlaceMarker: NMFMarker {
         subCaptionTextSize = 24
 //        captionMinZoom = 14
         captionRequestedWidth = 4
-        captionHaloColor = .systemBackground
-        subCaptionColor = .label
+        
 //        width = 50
 //        height = 65
         
         updateMarkerAppearnce()
         
     }
+    
+    
     
 }

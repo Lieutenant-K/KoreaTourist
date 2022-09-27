@@ -29,6 +29,9 @@ extension UIImage {
 
         return newImage!
     }
+    
+    static let naviIcon: UIImage = UIImage(named: "gps-navigation")!
+    
 }
 
 extension UIViewController {
@@ -129,10 +132,14 @@ extension NMFMapView {
 
 extension UIColor {
     
-    static let enabledMarker = UIColor(red: 248/255, green: 100/255, blue: 100/255, alpha: 1)
+    static let enabledMarker = UIColor(named: "enabledMarker")!
+    //UIColor(red: 248/255, green: 100/255, blue: 100/255, alpha: 1)
     
-    static let disabledMarker = UIColor(red: 69/255, green: 82/255, blue: 108/255, alpha: 1)
+    static let disabledMarker = UIColor(named: "disabledMarker")!
+    //UIColor(red: 69/255, green: 82/255, blue: 108/255, alpha: 1)
     
-    static let discoverdMarker = UIColor(red: 117/255, green: 86/255, blue: 86/255, alpha: 1)//UIColor(red: 84/255, green: 183/255, blue: 161/255, alpha: 1)
+    static let discoverdMarker = UIColor(named: "discoverdMarker")!
+    //UIColor(red: 117/255, green: 86/255, blue: 86/255, alpha: 1)
+    //UIColor(red: 84/255, green: 183/255, blue: 161/255, alpha: 1)
     
 }

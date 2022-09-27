@@ -33,6 +33,7 @@ final class MapView: NMFNaverMapView {
         $0.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 32, weight: .regular), forImageIn: .normal)
         $0.tintColor = .secondaryLabel
         $0.backgroundColor = .clear
+        $0.isHidden = true
     }
     
     let circleButton = CircleMenu(frame: .zero, normalIcon: "", selectedIcon: "", duration: 0.5, distance: 85).then {
@@ -63,7 +64,7 @@ final class MapView: NMFNaverMapView {
 //        $0.fillColor = .systemBlue.withAlphaComponent(0.05)
         $0.fillColor = .clear
         $0.outlineWidth = 2.5
-        $0.outlineColor = .label.withAlphaComponent(0.5)
+        $0.outlineColor = .secondaryLabel
     }
     
     let cameraButton = UIButton(type: .system).then {
@@ -110,9 +111,10 @@ final class MapView: NMFNaverMapView {
         mapView.locationOverlay.location = baseLocation
         mapView.locationOverlay.hidden = false
 //        mapView.locationOverlay.circleRadius = 100
-//        if let iconImage = UIImage(named: "navigation")?.imageWithColor(color: .systemBlue) {
-//            mapView.locationOverlay.icon = NMFOverlayImage(image: iconImage)
-//        }
+        mapView.locationOverlay.circleColor = .systemBlue.withAlphaComponent(0.1)
+        mapView.locationOverlay.circleRadius = 50
+        mapView.locationOverlay.icon = NMFOverlayImage(image: .naviIcon)
+        
         locOverlaySize = CGSize(width: maxLocOverlaySize, height: maxLocOverlaySize)
         
         // MARK: Gesture Configuration
@@ -193,6 +195,15 @@ final class MapView: NMFNaverMapView {
             completionHandler()
         }
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        let style = UITraitCollection.current.userInterfaceStyle
+        mapView.adjustInterfaceStyle(style: style)
+        circleOverlay.outlineColor = .secondaryLabel
+        mapView.locationOverlay.icon = NMFOverlayImage(image: .naviIcon)
+        
+        
+    }
 
     
     override init(frame: CGRect) {
@@ -222,9 +233,9 @@ extension MapView {
     
     var currentZoom: Double { mapView.cameraPosition.zoom }
     
-    var maxLocOverlaySize: CGFloat { 120 }
+    var maxLocOverlaySize: CGFloat { 85 }
     
-    var minLocOverlaySize: CGFloat { 50 }
+    var minLocOverlaySize: CGFloat { 40 }
     
     var locOverlaySize: CGSize {
         

@@ -10,7 +10,6 @@ import NMapsMap
 import SnapKit
 import Alamofire
 import CircleMenu
-import SideMenu
 import CoreLocation
 
 
@@ -394,8 +393,9 @@ final class MapViewController: BaseViewController {
     
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        let style = UITraitCollection.current.userInterfaceStyle
-        naverMapView.mapView.adjustInterfaceStyle(style: style)
+//        let style = UITraitCollection.current.userInterfaceStyle
+//        naverMapView.mapView.adjustInterfaceStyle(style: style)
+        currentMarkers.forEach { $0.updateMarkerAppearnce() }
     }
     
     // MARK: - Action Method
@@ -423,14 +423,15 @@ final class MapViewController: BaseViewController {
     }
     
     @objc func touchMenuButton() {
-        
+        /*
         let vc = UIViewController()
         let sideMenu = SideMenuNavigationController(rootViewController: vc)
         sideMenu.presentationStyle = .menuSlideIn
         sideMenu.blurEffectStyle = .systemUltraThinMaterial
         present(sideMenu, animated: true)
-        
+        */
     }
+    
     
     // MARK: Map Gesture
     @objc func panning(_ sender: UIPanGestureRecognizer) {
