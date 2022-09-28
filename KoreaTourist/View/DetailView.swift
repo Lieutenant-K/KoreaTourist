@@ -30,12 +30,6 @@ class DetailView: BaseView {
     
     lazy var tableView = UITableView().then { view in
 
-//        Section.allCases.forEach { section in
-//            section.typeOfCell.forEach { type in
-//                view.register(type, forCellReuseIdentifier: type.reuseIdentifier)
-//            }
-//        }
-        
         view.tableHeaderView = imageHeaderView
         view.backgroundColor = .clear
         

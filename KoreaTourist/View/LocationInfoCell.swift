@@ -29,6 +29,8 @@ final class LocationInfoCell: BaseInfoCell {
         
         mapView.moveCamera(NMFCameraUpdate(position: position))
         marker?.iconTintColor = .discoverdMarker
+        marker?.captionColor = .label
+        marker?.captionHaloColor = .systemBackground
         marker?.isHideCollidedSymbols = true
         marker?.captionTextSize = 14
         marker?.captionOffset = 4
@@ -70,6 +72,8 @@ final class LocationInfoCell: BaseInfoCell {
         let style = UITraitCollection.current.userInterfaceStyle
         mapView.adjustInterfaceStyle(style: style)
         marker?.iconTintColor = .discoverdMarker
+        marker?.captionColor = .label
+        marker?.captionHaloColor = .systemBackground
     }
 
 }

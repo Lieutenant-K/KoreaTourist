@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Then
 
 final class ImageHeaderView: BaseView {
 
@@ -17,14 +18,27 @@ final class ImageHeaderView: BaseView {
         return control
     }()
     
-    let collectionView: UICollectionView
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then {
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        $0.backgroundColor = .clear
+        $0.isPagingEnabled = true
+        $0.showsHorizontalScrollIndicator = false
+        $0.collectionViewLayout = layout
+    }
     
+    /*
     private func configureCollectionView() {
         
         collectionView.backgroundColor = .clear
         collectionView.isPagingEnabled = true
         
     }
+    */
     
     override func setBackground() {
         backgroundColor = .clear
@@ -46,18 +60,10 @@ final class ImageHeaderView: BaseView {
     }
     
     init(itemSize: CGSize) {
-        
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = itemSize
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
         super.init(frame: .zero)
-        
-        configureCollectionView()
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = itemSize
+//        configureCollectionView()
         
     }
     

@@ -303,18 +303,18 @@ class TourPlaceInfo: Information, PlaceInfo {
         cultureHeritage = try container.decode(String.self, forKey: .cultureHeritage) == "1"
         natureHeritage = try container.decode(String.self, forKey: .natureHeritage) == "1"
         recordHeritage = try container.decode(String.self, forKey: .recordHeritage) == "1"
-        contactNumber = try container.decode(String.self, forKey: .contactNumber)
-        openDate = try container.decode(String.self, forKey: .openDate)
-        restDate = try container.decode(String.self, forKey: .restDate)
-        event = try container.decode(String.self, forKey: .event)
-        ageForEvent = try container.decode(String.self, forKey: .ageForEvent)
+        contactNumber = try container.decode(String.self, forKey: .contactNumber).htmlEscaped
+        openDate = try container.decode(String.self, forKey: .openDate).htmlEscaped
+        restDate = try container.decode(String.self, forKey: .restDate).htmlEscaped
+        event = try container.decode(String.self, forKey: .event).htmlEscaped
+        ageForEvent = try container.decode(String.self, forKey: .ageForEvent).htmlEscaped
         capacity = try container.decode(String.self, forKey: .capacity)
-        availableSeason = try container.decode(String.self, forKey: .availableSeason)
-        availableTime = try container.decode(String.self, forKey: .availableTime)
-        parkingLot = try container.decode(String.self, forKey: .parkingLot)
-        strollerRentalInfo = try container.decode(String.self, forKey: .strollerRentalInfo)
-        isAvailableCreditCard = try container.decode(String.self, forKey: .isAvailableCreditCard)
-        isAvailablePet = try container.decode(String.self, forKey: .isAvailablePet)
+        availableSeason = try container.decode(String.self, forKey: .availableSeason).htmlEscaped
+        availableTime = try container.decode(String.self, forKey: .availableTime).htmlEscaped
+        parkingLot = try container.decode(String.self, forKey: .parkingLot).htmlEscaped
+        strollerRentalInfo = try container.decode(String.self, forKey: .strollerRentalInfo).htmlEscaped
+        isAvailableCreditCard = try container.decode(String.self, forKey: .isAvailableCreditCard).htmlEscaped
+        isAvailablePet = try container.decode(String.self, forKey: .isAvailablePet).htmlEscaped
     }
 }
 
