@@ -32,7 +32,7 @@ class CollectionViewController: BaseViewController {
     
     func fetchPlaceList() {
         
-        placeList = realm.fetchPlaces(type: CommonPlaceInfo.self).where({ $0.discoverDate != nil})
+        placeList = realm.fetchPlaces(type: CommonPlaceInfo.self).where({ $0.discoverDate != nil}).sorted(byKeyPath: "discoverDate", ascending: false)
         
     }
     
@@ -71,7 +71,15 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceCollectionCell.reuseIdentifier, for: indexPath) as? PlaceCollectionCell else { return UICollectionViewCell() }
         
         let place = placeList[indexPath.row]
-        cell.imageView.kf.setImage(with: URL(string: place.thumbnail))
+        
+        if place.isImageIncluded {
+            cell.imageView.kf.setImage(with: URL(string: place.thumbnail))
+        } else{
+            
+            cell.imageView.image = .noImage
+            cell.imageView.tintColor = .secondaryLabel
+        }
+        
         
         
         return cell
@@ -85,19 +93,6 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
         let vc = DetailViewController(place: place)
         
         navigationController?.pushViewController(vc, animated: true)
-        
-        /*
-        if place.intro != nil {
-            let vc = DetailViewController(place: place)
-            navigationController?.pushViewController(vc, animated: true)
-        } else {
-            APIManager.shared.requestPlaceIntro(contentId: place.contentId) { [weak self] data in
-                self?.realm.addPlaceIntro(with: place, using: data)
-                let vc = DetailViewController(place: place)
-                self?.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
-        */
         
     }
     
