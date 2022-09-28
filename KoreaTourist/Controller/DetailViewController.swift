@@ -67,6 +67,8 @@ final class DetailViewController: BaseViewController {
     
     var images: [PlaceImage] = [] {
         didSet {
+            detailView.tableView.tableHeaderView = detailView.imageHeaderView
+            
             detailView.imageHeaderView.pageControl.numberOfPages = images.count
             
             detailView.imageHeaderView.collectionView.reloadSections([0])
@@ -79,6 +81,10 @@ final class DetailViewController: BaseViewController {
         view.tableView.dataSource = self
         view.imageHeaderView.collectionView.dataSource = self
         view.imageHeaderView.collectionView.delegate = self
+        
+        if !commonInfo.isImageIncluded {
+            view.tableView.tableHeaderView = nil
+        }
         
         Section.allCases(type: commonInfo.contentType).forEach { section in
             section.typeOfCell.forEach { type in
@@ -312,6 +318,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         images.count > 0 ? images.count : 1
+//        images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -322,7 +329,7 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         cell.imageView.kf.indicatorType = .activity
         
-        cell.imageView.kf.setImage(with: URL(string: url))
+        cell.imageView.kf.setImage(with: URL(string: url), options: [.transition(.fade(1)), .forceTransition])
         
         return cell
     }

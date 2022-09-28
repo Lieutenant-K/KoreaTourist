@@ -10,18 +10,26 @@ import Then
 
 class PlaceCollectionCell: UICollectionViewCell {
     
-    let imageView = UIImageView().then {
-        $0.layer.cornerRadius = 10
+    let corner: CGFloat = 10
+    
+    lazy var imageView = UIImageView().then {
+        $0.layer.cornerRadius = corner
         $0.contentMode = .scaleAspectFill
-        $0.clipsToBounds = true
+//        $0.clipsToBounds = true
     }
     
     private func configureCell() {
-        layer.cornerRadius = 10
-        backgroundColor = .systemBlue
+        layer.cornerRadius = corner
+//        backgroundColor = .systemBlue
         
-        contentView.addSubview(imageView)
+        let blur = UIBlurEffect(style: .systemUltraThinMaterial)
+        let visual = UIVisualEffectView(effect: blur)
+        visual.layer.cornerRadius = corner
+        visual.clipsToBounds = true
+        contentView.addSubview(visual)
         
+        visual.snp.makeConstraints { $0.edges.equalToSuperview() }
+        visual.contentView.addSubview(imageView)
         imageView.snp.makeConstraints { $0.edges.equalToSuperview() }
         
     }

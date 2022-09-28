@@ -91,6 +91,10 @@ class CommonPlaceInfo: Information, PlaceInfo {
         return address.joined(separator: " ")
     }
     
+    var isImageIncluded: Bool {
+        return !image.isEmpty || !thumbnail.isEmpty
+    }
+    
     var position: NMGLatLng {
         NMGLatLng(lat: lat, lng: lng)
     }
