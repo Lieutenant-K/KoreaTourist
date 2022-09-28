@@ -320,6 +320,8 @@ extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         let url = images.count > 0 ? images[indexPath.row].originalImage : commonInfo.image
         
+        cell.imageView.kf.indicatorType = .activity
+        
         cell.imageView.kf.setImage(with: URL(string: url))
         
         return cell

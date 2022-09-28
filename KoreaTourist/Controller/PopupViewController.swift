@@ -29,6 +29,7 @@ final class PopupViewController: BaseViewController {
         
         popupView.titleLabel.text = placeInfo.title
         popupView.descriptLabel.text = "\(placeInfo.addr1) \(placeInfo.addr2)"
+        popupView.imageView.kf.indicatorType = .activity
         popupView.imageView.kf.setImage(with: URL(string: placeInfo.image))
         
     }
