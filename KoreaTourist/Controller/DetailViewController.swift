@@ -65,9 +65,6 @@ final class DetailViewController: BaseViewController {
     
     let commonInfo: CommonPlaceInfo
     
-//    var detailInfo: TourPlaceInfo?
-//    var extraInfo: ExtraPlaceInfo?
-    
     var images: [PlaceImage] = [] {
         didSet {
             detailView.imageHeaderView.pageControl.numberOfPages = images.count
@@ -100,8 +97,9 @@ final class DetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        checkDetailInfo()
+        
+        checkPlaceIntro()
+        checkDetailInfoType()
         checkPlaceImages()
     }
     
@@ -110,54 +108,45 @@ final class DetailViewController: BaseViewController {
     // MARK: - Method
     
     
+    // MARK: Introduce Information
+    
+    private func checkPlaceIntro() {
+        
+        realm.fetchPlaceIntro(place: commonInfo) { [weak self] in
+//            print("디테일 뷰컨에서 소개 정보 가져오기 완료")
+            self?.detailView.tableView.reloadData()
+        }
+        
+    }
+    
     
     // MARK: Detail Place Information
     
-    private func fetchDetailPlaceInfo<T: Information>(type: T.Type) {
+    private func fetchDetailInfo<T:Information>(infoType: T.Type) {
         
-        APIManager.shared.requestDetailPlaceInfo(contentId: commonInfo.contentId, contentType: commonInfo.contentType) { [weak self] (data: T) in
+        let id = commonInfo.contentId
+        let type = commonInfo.contentType
+        
+        realm.fetchPlaceDetail(type: infoType, contentId: id, contentType: type) { [weak self] place in
             
-            print("디테일 데이터 응답 받았다!")
-//            print(data)
-            
-            self?.receivedDetailInfo(info: data)
-            
-            
-        }
-        
-    }
-    
-    private func receivedDetailInfo(info: Information) {
-        
-        realm.registerPlaceInfo(info: info)
-        
-        if let info = info as? PlaceInfo {
-            placeInfoList.append(info)
-            
-//                self?.fetchExtraPlaceInfo()
-            checkExtraInfo()
-        }
-        
-    }
-    
-    private func checkDetailInfo() {
-        
-        let type = commonInfo.contentType.detailInfoType
-        
-        if let detail = realm.loadPlaceInfo(infoType: type.self, contentId: commonInfo.contentId) as? PlaceInfo {
-            placeInfoList.append(detail)
-            checkExtraInfo()
-        } else {
-            switch type {
-            case let tour as TourPlaceInfo.Type:
-                fetchDetailPlaceInfo(type: tour.self)
-            case let culture as CulturePlaceInfo.Type:
-                fetchDetailPlaceInfo(type: culture.self)
-            case let event as EventPlaceInfo.Type:
-                fetchDetailPlaceInfo(type: event.self)
-            default:
-                break
+            if let place = place as? PlaceInfo {
+                self?.placeInfoList.append(place)
+                self?.checkExtraInfoType()
             }
+            
+        }
+        
+    }
+    
+    private func checkDetailInfoType() {
+        
+        switch commonInfo.contentType {
+        case .tour:
+            fetchDetailInfo(infoType: TourPlaceInfo.self)
+        case .event:
+            fetchDetailInfo(infoType: EventPlaceInfo.self)
+        case .culture:
+            fetchDetailInfo(infoType: CulturePlaceInfo.self)
         }
         
     }
@@ -165,68 +154,30 @@ final class DetailViewController: BaseViewController {
     
     // MARK: Extra Place Information
     
-    private func checkExtraInfo() {
+    private func checkExtraInfoType() {
         
-        if let extra = realm.loadPlaceInfo(infoType: ExtraPlaceInfo.self, contentId: commonInfo.contentId) {
-            placeInfoList.append(extra)
-        } else {
-            fetchExtraPlaceInfo()
+        let id = commonInfo.contentId
+        let type = commonInfo.contentType
+        
+        switch commonInfo.contentType {
+        default:
+            realm.fetchPlaceExtra(contentId: id, contentType: type) { [weak self] in
+                
+                self?.placeInfoList.append($0)
+                
+            }
         }
         
     }
     
-    private func receivedExtraInfo(info: [ExtraPlaceElement]) {
-        
-        let extra = ExtraPlaceInfo(id: commonInfo.contentId, infoList: info)
-        
-        realm.registerPlaceInfo(info: extra)
-        
-        placeInfoList.append(extra)
-        
-    }
-    
-    private func fetchExtraPlaceInfo() {
-        
-        APIManager.shared.requestExtraPlaceInfo(contentId: commonInfo.contentId, contentType: commonInfo.contentType) { [weak self] (data: [ExtraPlaceElement]) in
-            
-            print("추가 정보 갱신")
-            
-            self?.receivedExtraInfo(info: data)
-            
-        }
-        
-    }
     
     // MARK: Place Image Information
     
     private func checkPlaceImages() {
         
-        if let images = realm.loadPlaceInfo(infoType: PlaceImageInfo.self, contentId: commonInfo.contentId) {
-            self.images = images.images
-        } else {
-            fetchPlaceImages()
+        realm.fetchPlaceImages(contentId: commonInfo.contentId) { [weak self] in
+            self?.images = $0
         }
-        
-    }
-    
-    private func fetchPlaceImages() {
-        
-        APIManager.shared.requestDetailImages(contentId: commonInfo.contentId) { [weak self] images in
-            
-            print("이미지 데이터 fetch")
-            
-            self?.receivedPlaceImageInfo(info: images)
-        }
-        
-    }
-    
-    func receivedPlaceImageInfo(info: [PlaceImage]) {
-        
-        let placeImage = PlaceImageInfo(id: commonInfo.contentId, imageList: info)
-        
-        realm.registerPlaceInfo(info: placeImage)
-        
-        self.images = info
         
     }
     
@@ -319,28 +270,6 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
                 break
             }
              
-            
-            /*
-            guard let detail = detailInfo else { break }
-//            guard let info = realm.loadPlaceInfo(infoType: commonInfo.contentType.detailInfoType, contentId: commonInfo.contentId) else { break }
-            
-            switch cell {
-            case let time as TimeInfoCell:
-                time.inputData(data: detail.timeData)
-                time.checkValidation()
-                
-            case let event as EventInfoCell:
-                event.inputData(data: detail.eventData)
-                event.checkValidation()
-                
-            case let other as OtherDetailInfoCell:
-                other.inputData(data: detail.otherData)
-                other.checkValidation()
-                
-            default:
-                break
-            }
-            */
             
         case .extra:
             

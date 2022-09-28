@@ -191,6 +191,9 @@ final class MapViewController: BaseViewController {
     
     // MARK: - Method
     
+    
+    
+    // MARK: Navigation Item
     override func configureNavigationItem() {
         /*
         let appear = UINavigationBarAppearance()
@@ -210,6 +213,8 @@ final class MapViewController: BaseViewController {
         
     }
     
+    
+    // MARK: Marker Touch Handler
     func settingMarkerTouchHandler() {
         
         markerHandler = { [weak self] marker in
@@ -227,10 +232,14 @@ final class MapViewController: BaseViewController {
         
     }
     
+    // MARK: Discover Place
     private func showDiscoverAlert(target marker: PlaceMarker) {
         
         if marker.placeInfo.isDiscovered {
             print("이미 발견됨!!!!")
+            let vc = DetailViewController(place: marker.placeInfo)
+            let navi = UINavigationController(rootViewController: vc)
+            present(navi, animated: true)
             return
         }
         
@@ -261,14 +270,36 @@ final class MapViewController: BaseViewController {
         
     }
     
-    func filteringMarker() {
-        
-        currentMarkers.forEach { $0.hidden = isMarkerFilterOn ? ($0.placeInfo.isDiscovered ? true : false) : false }
-        
-    }
     
+    // MARK: Search Near Place
     func searchNearPlace() {
-
+        
+        realm.fetchNearPlace { [weak self] newCount, placeList in
+            if placeList.count > 0 {
+                print(placeList)
+                let markers = placeList.map { (info) -> PlaceMarker in
+                    let marker = PlaceMarker(place: info)
+                    marker.touchHandler = self?.markerHandler
+                    return marker
+                }
+                
+                
+                self?.updateAndDisplayMarker(markers: markers)
+                self?.cameraMode = .search
+                
+                let alertTitle = newCount > 0 ? "\(newCount)개의 새로운 장소를 찾았습니다!" : "새로 찾은 장소가 없습니다."
+                
+                self?.showAlert(title: alertTitle)
+                
+            } else {
+                
+                self?.showAlert(title: "\(Int(Circle.defaultRadius)) 이내에 찾을 장소가 없습니다!")
+            }
+            
+            self?.displayAreaOnMap()
+        }
+        
+        /*
         APIManager.shared.requestNearPlace(pos: Circle.visitKorea) { [weak self] placeList in
             
             if placeList.count > 0 {
@@ -282,9 +313,25 @@ final class MapViewController: BaseViewController {
             
             self?.displayAreaOnMap()
         }
+         */
         
     }
     
+    private func displayAreaOnMap() {
+        
+        print(#function)
+        
+        if let loc = CLLocationManager().location?.coordinate {
+            
+            naverMapView.circleOverlay.center = NMGLatLng(from: loc)
+            
+            naverMapView.circleOverlay.mapView = naverMapView.mapView
+            
+        }
+        
+    }
+    
+    /*
     private func createPlaceMarkers(placeList: [CommonPlaceInfo]) -> [PlaceMarker] {
         
         let newPlace = realm.registerPlaces(using: placeList)
@@ -302,6 +349,9 @@ final class MapViewController: BaseViewController {
         return markers
         
     }
+    */
+    
+    // MARK: Update, Filtering Marker
     
     private func updateAndDisplayMarker(markers: [PlaceMarker]) {
         
@@ -315,6 +365,25 @@ final class MapViewController: BaseViewController {
         
     }
     
+    func filteringMarker() {
+        
+        currentMarkers.forEach { $0.hidden = isMarkerFilterOn ? ($0.placeInfo.isDiscovered ? true : false) : false }
+        
+    }
+    
+    private func updateMarkerDistance(pos: NMGLatLng) {
+        
+        currentMarkers.forEach { marker in
+            
+            let dis = marker.position.distance(to: pos)
+            marker.distance = dis
+            
+        }
+        
+    }
+    
+    
+    // MARK: Moving Camera (Camera Mode)
     private func updateCameraFrom(mode: CameraMode) {
         
         if let pos = mode.position {
@@ -353,31 +422,7 @@ final class MapViewController: BaseViewController {
     }
     
     
-    private func updateMarkerDistance(pos: NMGLatLng) {
-        
-        currentMarkers.forEach { marker in
-            
-            let dis = marker.position.distance(to: pos)
-            marker.distance = dis
-            
-        }
-        
-    }
-    
-    
-    private func displayAreaOnMap() {
-        
-        print(#function)
-        
-        if let loc = CLLocationManager().location?.coordinate {
-            
-            naverMapView.circleOverlay.center = NMGLatLng(from: loc)
-            
-            naverMapView.circleOverlay.mapView = naverMapView.mapView
-            
-        }
-        
-    }
+    // MARK: Geocoding
     
     private func updateGeoTitle(loc: CLLocation) {
         
@@ -391,25 +436,16 @@ final class MapViewController: BaseViewController {
         
     }
     
+    // MARK: User Interface Change
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-//        let style = UITraitCollection.current.userInterfaceStyle
-//        naverMapView.mapView.adjustInterfaceStyle(style: style)
+
         currentMarkers.forEach { $0.updateMarkerAppearnce() }
+        
     }
     
     // MARK: - Action Method
     
-    
-    @objc func touchSearchPlaceButton() {
-        
-        let infoWindowData = NMFInfoWindowDefaultTextSource.data()
-        //        let infoWindowData = InfoWindowButton()
-        naverMapView.infoWindow.dataSource = infoWindowData
-        
-        searchNearPlace()
-        
-    }
     
     @objc func touchPreviousCameraButton() {
         
@@ -434,6 +470,10 @@ final class MapViewController: BaseViewController {
     
     
     // MARK: Map Gesture
+    
+    
+    
+    // MARK: Panning
     @objc func panning(_ sender: UIPanGestureRecognizer) {
         
 
@@ -472,6 +512,7 @@ final class MapViewController: BaseViewController {
         
     }
     
+    // MARK: Pinch
     @objc func pinch(_ sender: UIPinchGestureRecognizer) {
         
         let zoom = naverMapView.currentZoom
@@ -542,6 +583,8 @@ extension MapViewController: NMFMapViewTouchDelegate {
 
 extension MapViewController: NMFLocationManagerDelegate {
     
+    
+    // MARK: Authorization
     func checkAuthorization(auth: CLAuthorizationStatus) {
         
         switch auth {
@@ -583,6 +626,8 @@ extension MapViewController: NMFLocationManagerDelegate {
         
         
     }
+    
+    // MARK: Update Location
     
     func locationManager(_ locationManager: NMFLocationManager!, didUpdateLocations locations: [Any]!) {
         

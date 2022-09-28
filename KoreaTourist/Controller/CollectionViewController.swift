@@ -13,7 +13,11 @@ class CollectionViewController: BaseViewController {
     
     let collectionView = CollectionView()
     
-    var placeList: Results<CommonPlaceInfo>!
+    var placeList: Results<CommonPlaceInfo>! {
+        didSet {
+            collectionView.placeItemView.reloadSections([0])
+        }
+    }
     
     override func loadView() {
         view = collectionView
@@ -23,7 +27,13 @@ class CollectionViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchPlaceList()
+    }
+    
+    func fetchPlaceList() {
+        
         placeList = realm.fetchPlaces(type: CommonPlaceInfo.self).where({ $0.discoverDate != nil})
+        
     }
     
     override func configureNavigationItem() {
@@ -31,6 +41,8 @@ class CollectionViewController: BaseViewController {
         title = "나의 컬렉션"
         
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        navigationItem.largeTitleDisplayMode = .always
         
         let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(touchCloseButton(_:)))
         
@@ -66,7 +78,28 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
         
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let place = placeList[indexPath.row]
+        
+        let vc = DetailViewController(place: place)
+        
+        navigationController?.pushViewController(vc, animated: true)
+        
+        /*
+        if place.intro != nil {
+            let vc = DetailViewController(place: place)
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            APIManager.shared.requestPlaceIntro(contentId: place.contentId) { [weak self] data in
+                self?.realm.addPlaceIntro(with: place, using: data)
+                let vc = DetailViewController(place: place)
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+        */
+        
+    }
     
     
     

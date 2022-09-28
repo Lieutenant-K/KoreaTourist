@@ -358,26 +358,6 @@ class ExtraPlaceInfo: Object, PlaceInfo {
     }
 }
 
-class PlaceImageInfo: Object {
-    
-    @Persisted(primaryKey: true) var contentId: Int
-    @Persisted var imageList: List<PlaceImage>
-    
-    var images: [PlaceImage] {
-        get { imageList.map { $0 } }
-        set {
-            imageList.removeAll()
-            imageList.append(objectsIn: newValue)
-        }
-    }
-    
-    convenience init(id: Int, imageList: [PlaceImage]) {
-        self.init()
-        contentId = id
-        images = imageList
-    }
-}
-
 class ExtraPlaceElement: EmbeddedObject, Codable, NeedValidate {
     
     @Persisted var infoText: String
@@ -411,6 +391,26 @@ class ExtraPlaceElement: EmbeddedObject, Codable, NeedValidate {
         infoType = Int(try container.decode(String.self, forKey: .infoType)) ?? 0
         infoText = try container.decode(String.self, forKey: .infoText).htmlEscaped
         infoTitle = try container.decode(String.self, forKey: .infoTitle).htmlEscaped
+    }
+}
+
+class PlaceImageInfo: Object {
+    
+    @Persisted(primaryKey: true) var contentId: Int
+    @Persisted var imageList: List<PlaceImage>
+    
+    var images: [PlaceImage] {
+        get { imageList.map { $0 } }
+        set {
+            imageList.removeAll()
+            imageList.append(objectsIn: newValue)
+        }
+    }
+    
+    convenience init(id: Int, imageList: [PlaceImage]) {
+        self.init()
+        contentId = id
+        images = imageList
     }
 }
 
@@ -471,7 +471,7 @@ enum ContentType: String, Codable {
 
 struct Circle {
     
-    static let defaultRadius: Double = 500
+    static let defaultRadius: Double = 2000
     static let visitKorea = Circle(x: 126.981611, y: 37.568477, radius: defaultRadius)
     static let home = Circle(x: 126.924378, y: 37.503886, radius: defaultRadius)
     
