@@ -32,6 +32,8 @@ extension UIImage {
     
     static let naviIcon: UIImage = UIImage(named: "gps-navigation")!
     
+    static let noImage: UIImage = UIImage(named: "noImage")!
+    
 }
 
 extension UIViewController {
@@ -86,7 +88,7 @@ extension String {
 //        var string = self
 //        let target = ["<br />", "<br>", "<b>", "<>"]
 //        target.forEach { string = string.replacingOccurrences(of: $0, with: "") }
-        return self.replacingOccurrences(of: ".", with: ".\n\n").trimmingCharacters(in: .whitespacesAndNewlines)
+        return self.replacingOccurrences(of: "다.", with: "다.\n\n").trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     var htmlEscaped: String {
