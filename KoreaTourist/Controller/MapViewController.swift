@@ -274,7 +274,14 @@ final class MapViewController: BaseViewController {
     // MARK: Search Near Place
     func searchNearPlace() {
         
-        realm.fetchNearPlace { [weak self] newCount, placeList in
+        guard let loc = CLLocationManager().location?.coordinate else {
+            showAlert(title: "현재 위치를 찾을 수 없습니다.")
+            return
+        }
+        
+        let circle = Circle(x: loc.longitude, y: loc.latitude, radius: Circle.defaultRadius)
+        
+        realm.fetchNearPlace(location: circle) { [weak self] newCount, placeList in
             if placeList.count > 0 {
                 print(placeList)
                 let markers = placeList.map { (info) -> PlaceMarker in

@@ -21,9 +21,9 @@ class RealmRepository {
         print(localRealm.configuration.fileURL?.path)
     }
     
-    func fetchNearPlace(completionHandler: @escaping (_ newCount: Int, _ placeList: [CommonPlaceInfo]) -> ()) {
-        
-        APIManager.shared.requestNearPlace(pos: Circle.visitKorea) { [weak self] placeList in
+    func fetchNearPlace(location: Circle, completionHandler: @escaping (_ newCount: Int, _ placeList: [CommonPlaceInfo]) -> ()) {
+    
+        APIManager.shared.requestNearPlace(pos: location) { [weak self] placeList in
             
             var count = 0
             

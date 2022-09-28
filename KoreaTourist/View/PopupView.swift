@@ -21,8 +21,8 @@ class PopupView: BaseView {
 //        $0.backgroundColor = .tertiarySystemGroupedBackground
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 16
-        $0.layer.borderWidth = 1.5
-        $0.layer.borderColor = UIColor.secondaryLabel.cgColor
+//        $0.layer.borderWidth = 1.5
+//        $0.layer.borderColor = UIColor.secondaryLabel.cgColor
         $0.text = "새로운 장소 발견!"
         
     }
