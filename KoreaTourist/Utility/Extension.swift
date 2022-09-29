@@ -145,3 +145,13 @@ extension UIColor {
     //UIColor(red: 84/255, green: 183/255, blue: 161/255, alpha: 1)
     
 }
+
+extension CGPoint {
+    
+    static let markerTop = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2 - 100)
+    
+    static let centerTop = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2 - 50)
+    
+    static let buttonTop = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*3/4)
+    
+}

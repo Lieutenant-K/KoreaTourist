@@ -11,6 +11,7 @@ import SnapKit
 import Alamofire
 import CircleMenu
 import CoreLocation
+import Toast
 
 
 enum Menu: CaseIterable {
@@ -236,7 +237,7 @@ final class MapViewController: BaseViewController {
     private func showDiscoverAlert(target marker: PlaceMarker) {
         
         if marker.placeInfo.isDiscovered {
-            print("이미 발견됨!!!!")
+//            print("이미 발견됨!!!!")
             let vc = DetailViewController(place: marker.placeInfo)
             let navi = UINavigationController(rootViewController: vc)
             present(navi, animated: true)
@@ -254,7 +255,11 @@ final class MapViewController: BaseViewController {
         if marker.distance <= PlaceMarker.minimumDistance {
             showAlert(title: "이 장소를 발견하시겠어요?", actions: actions)
         } else {
-            showAlert(title: "아직 발견할 수 없어요!", message: "\(Int(PlaceMarker.minimumDistance))m 이내로 접근해주세요")
+            
+            naverMapView.makeToast("\(Int(PlaceMarker.minimumDistance))m 이내로 접근해주세요", point: .markerTop, title: "아직 발견할 수 없어요!", image: nil, completion: nil)
+            
+            
+//            showAlert(title: "아직 발견할 수 없어요!", message: "\(Int(PlaceMarker.minimumDistance))m 이내로 접근해주세요")
         }
         
     }
@@ -274,54 +279,47 @@ final class MapViewController: BaseViewController {
     // MARK: Search Near Place
     func searchNearPlace() {
         
+        
         guard let loc = CLLocationManager().location?.coordinate else {
-            showAlert(title: "현재 위치를 찾을 수 없습니다.")
+//            showAlert(title: "현재 위치를 찾을 수 없습니다.")
+            naverMapView.makeToast("현재 위치를 찾을 수 없어요 🥲", point: .buttonTop, title: nil, image: nil, completion: nil)
             return
         }
         
         let circle = Circle(x: loc.longitude, y: loc.latitude, radius: Circle.defaultRadius)
         
-        realm.fetchNearPlace(location: circle) { [weak self] newCount, placeList in
+        let failure: () -> () = { [weak self] in
+            self?.naverMapView.makeToast("장소를 찾을 수 없어요 🥲", point: .buttonTop, title: nil, image: nil, completion: nil)
+        }
+        
+        realm.fetchNearPlace(location: circle, failureHandler: failure) { [weak self] newCount, placeList in
             if placeList.count > 0 {
-                print(placeList)
+//                print(placeList)
+                
                 let markers = placeList.map { (info) -> PlaceMarker in
                     let marker = PlaceMarker(place: info)
                     marker.touchHandler = self?.markerHandler
                     return marker
                 }
                 
-                
                 self?.updateAndDisplayMarker(markers: markers)
                 self?.cameraMode = .search
                 
-                let alertTitle = newCount > 0 ? "\(newCount)개의 새로운 장소를 찾았습니다!" : "새로 찾은 장소가 없습니다."
+                let title = newCount > 0 ? "\(newCount)개의 새로운 장소를 찾았어요!!" : "새로운 장소가 없어요!!"
                 
-                self?.showAlert(title: alertTitle)
+//                self?.showAlert(title: alertTitle)
+                self?.naverMapView.makeToast(title, point: .centerTop, title: nil, image: nil, completion: nil)
                 
             } else {
                 
-                self?.showAlert(title: "\(Int(Circle.defaultRadius)) 이내에 찾을 장소가 없습니다!")
+//                self?.showAlert(title: "\(Int(Circle.defaultRadius)) 이내에 찾을 장소가 없습니다!")
+                self?.naverMapView.makeToast("\(Int(Circle.defaultRadius))m 이내에 찾을 장소가 없습니다!")
             }
             
             self?.displayAreaOnMap()
         }
         
-        /*
-        APIManager.shared.requestNearPlace(pos: Circle.visitKorea) { [weak self] placeList in
             
-            if placeList.count > 0 {
-                if let markers = self?.createPlaceMarkers(placeList: placeList) {
-                    self?.updateAndDisplayMarker(markers: markers)
-                    self?.cameraMode = .search
-                }
-            } else {
-                self?.showAlert(title: "\(Int(Circle.defaultRadius)) 이내에 찾을 장소가 없습니다!")
-            }
-            
-            self?.displayAreaOnMap()
-        }
-         */
-        
     }
     
     private func displayAreaOnMap() {
@@ -338,25 +336,6 @@ final class MapViewController: BaseViewController {
         
     }
     
-    /*
-    private func createPlaceMarkers(placeList: [CommonPlaceInfo]) -> [PlaceMarker] {
-        
-        let newPlace = realm.registerPlaces(using: placeList)
-        
-        let alertTitle = newPlace.newCount > 0 ? "\(newPlace.newCount)개의 새로운 장소를 찾았습니다!" : "새로 찾은 장소가 없습니다."
-        
-        showAlert(title: alertTitle)
-//        print(newPlace.newInfoList)
-        let markers = newPlace.fetchedInfo.map { (info) -> PlaceMarker in
-            let marker = PlaceMarker(place: info)
-            marker.touchHandler = markerHandler
-            return marker
-        }
-        
-        return markers
-        
-    }
-    */
     
     // MARK: Update, Filtering Marker
     

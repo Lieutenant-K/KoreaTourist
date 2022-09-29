@@ -13,12 +13,12 @@ class APIManager {
     
     static let shared = APIManager()
     
-    func requestNearPlace(pos: Circle, completionHandler: @escaping (_ placeList: [CommonPlaceInfo]) -> Void) {
+    func requestNearPlace(pos: Circle, failureHandler: @escaping () -> (), completionHandler: @escaping (_ placeList: [CommonPlaceInfo]) -> Void ) {
     
         let requestURL = BaseURL.service(.location(pos)).url
         
         requestData(url: requestURL) { json in
-            
+//            print("주변의 찾은 장소가 없어요 ㅜㅜ")
             /*
             if let sample = dummy.data(using: .utf8), let sampleData = try? JSONDecoder().decode([CommonPlaceInfo].self, from: sample) {
                 
@@ -33,6 +33,8 @@ class APIManager {
                 
                 completionHandler(data)
                 
+            } else {
+                failureHandler()
             }
             
         }
