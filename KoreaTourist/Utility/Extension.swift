@@ -152,6 +152,6 @@ extension CGPoint {
     
     static let centerTop = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2 - 50)
     
-    static let buttonTop = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*3/4)
+    static let buttonTop = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*3/4 + 50)
     
 }
