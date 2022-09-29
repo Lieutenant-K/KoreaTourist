@@ -34,6 +34,7 @@ class APIManager {
                 completionHandler(data)
                 
             } else {
+                MapViewController.progressHUD.dismiss(animated: true)
                 failureHandler()
             }
             
@@ -120,12 +121,14 @@ class APIManager {
         AF.request(url).validate(statusCode: 200...500).responseData { response in
             switch response.result {
             case .success(let data):
+//                print(String(data: data, encoding: .utf8))
                 print("request 성공 😁😁😁😁")
 //                let json = JSON(data)
 //                print(json)
                 completionHandler(data)
                 
             case .failure(let error):
+                MapViewController.progressHUD.dismiss(animated: true)
                 print(error)
             }
         }

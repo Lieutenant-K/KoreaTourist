@@ -12,6 +12,7 @@ import Alamofire
 import CircleMenu
 import CoreLocation
 import Toast
+import JGProgressHUD
 
 
 enum Menu: CaseIterable {
@@ -73,7 +74,7 @@ enum CameraMode: Equatable {
         case .select(let loc):
             return loc
         default:
-            guard let loc = CLLocationManager().location?.coordinate else { return nil}
+            guard let loc = MapViewController.locationManager.location?.coordinate else { return nil}
             return NMGLatLng(from: loc)
         }
     }
@@ -102,7 +103,19 @@ final class MapViewController: BaseViewController {
 
     var naverMapView = MapView()
     
-    let locationManager = NMFLocationManager()
+    static let locationManager = CLLocationManager().then {
+        $0.desiredAccuracy = kCLLocationAccuracyBest
+        
+//        $0.distanceFilter = 1
+        
+    }
+    
+    static let progressHUD = JGProgressHUD(automaticStyle: ()).then {
+        $0.position = .center
+        $0.animation = JGProgressHUDFadeAnimation()
+        $0.indicatorView = JGProgressHUDIndeterminateIndicatorView()
+        $0.textLabel.text = "장소를 찾는 중..."
+    }
     
     var currentMarkers = [PlaceMarker]()
     
@@ -168,7 +181,13 @@ final class MapViewController: BaseViewController {
         super.viewDidLoad()
         print(#function)
         
-        locationManager.add(self)
+//        locationManager.add(self)
+        
+        if CLLocationManager.locationServicesEnabled() {
+            Self.locationManager.delegate = self
+        } else {
+            showAlert(title: "위치 서비스를 활성화 해주세요!")
+        }
         
         realm.printRealmFileURL()
         
@@ -179,6 +198,7 @@ final class MapViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         print(#function)
         
     }
@@ -280,7 +300,7 @@ final class MapViewController: BaseViewController {
     func searchNearPlace() {
         
         
-        guard let loc = CLLocationManager().location?.coordinate else {
+        guard let loc = Self.locationManager.location?.coordinate else {
 //            showAlert(title: "현재 위치를 찾을 수 없습니다.")
             naverMapView.makeToast("현재 위치를 찾을 수 없어요 🥲", point: .buttonTop, title: nil, image: nil, completion: nil)
             return
@@ -289,10 +309,16 @@ final class MapViewController: BaseViewController {
         let circle = Circle(x: loc.longitude, y: loc.latitude, radius: Circle.defaultRadius)
         
         let failure: () -> () = { [weak self] in
+
             self?.naverMapView.makeToast("장소를 찾을 수 없어요 🥲", point: .buttonTop, title: nil, image: nil, completion: nil)
         }
         
+        Self.progressHUD.show(in: naverMapView, animated: true)
+        
         realm.fetchNearPlace(location: circle, failureHandler: failure) { [weak self] newCount, placeList in
+            
+            Self.progressHUD.dismiss(animated: true)
+            
             if placeList.count > 0 {
 //                print(placeList)
                 
@@ -316,23 +342,21 @@ final class MapViewController: BaseViewController {
                 self?.naverMapView.makeToast("\(Int(Circle.defaultRadius))m 이내에 찾을 장소가 없습니다!")
             }
             
-            self?.displayAreaOnMap()
+            self?.displayAreaOnMap(location: loc)
         }
         
             
     }
     
-    private func displayAreaOnMap() {
+    private func displayAreaOnMap(location: CLLocationCoordinate2D) {
         
-        print(#function)
+//        print(#function)
         
-        if let loc = CLLocationManager().location?.coordinate {
+        naverMapView.circleOverlay.center = NMGLatLng(lat: location.latitude, lng: location.longitude)
+        
+        naverMapView.circleOverlay.mapView = naverMapView.mapView
             
-            naverMapView.circleOverlay.center = NMGLatLng(from: loc)
-            
-            naverMapView.circleOverlay.mapView = naverMapView.mapView
-            
-        }
+        
         
     }
     
@@ -390,13 +414,11 @@ final class MapViewController: BaseViewController {
             update.animation = .easeOut
             update.animationDuration = 0.7
             
-            locationManager.stopUpdatingLocation()
-            naverMapView.moveCameraBlockGesture(update) { [weak self] in
+            Self.locationManager.stopUpdatingLocation()
+            naverMapView.moveCameraBlockGesture(update) {
                 
-                if mode == .select(pos) {
-                    self?.locationManager.stopUpdatingLocation()
-                } else {
-                    self?.locationManager.startUpdatingLocation()
+                if mode == .navigate || mode == .search {
+                    Self.locationManager.startUpdatingLocation()
                 }
                 
             }
@@ -567,8 +589,8 @@ extension MapViewController: NMFMapViewTouchDelegate {
 
 // MARK: - LocationManagerDelegate
 
-extension MapViewController: NMFLocationManagerDelegate {
-    
+
+extension MapViewController: CLLocationManagerDelegate {
     
     // MARK: Authorization
     func checkAuthorization(auth: CLAuthorizationStatus) {
@@ -576,48 +598,41 @@ extension MapViewController: NMFLocationManagerDelegate {
         switch auth {
         case .notDetermined:
             print("not determined")
-            CLLocationManager().requestWhenInUseAuthorization()
+            Self.locationManager.requestWhenInUseAuthorization()
         case .restricted:
             print("restricted")
         case .denied:
-            print("denied", "위치 서비스를 켜주세요 ㅜㅜ")
+            print("denied")
+            showAlert(title: "위치 권한이 거부됐어요", message: "근처의 장소들을 찾기 위해서 위치 권한이 필요해요!")
             // 설정으로 안내하는 코드
         case .authorizedAlways:
             print("always authorized")
-            locationManager.startUpdatingLocation()
-//            naverMapView.mapView.positionMode = .direction
-//            print(locationManager.currentLatLng())
+            Self.locationManager.startUpdatingLocation()
             
         case .authorizedWhenInUse:
             print("authorized when in use")
-            CLLocationManager().requestAlwaysAuthorization()
-            locationManager.startUpdatingLocation()
-//            print(CLLocationManager().location)
-//            naverMapView.mapView.positionMode = .direction
-//            print(CLLocationManager().location)
-//            locationManager.startUpdatingLocation()
-//            print(CLLocationManager().location)
-//            naverMapView.mapView.locationOverlay.icon = NMFOverlayImage(image: UIImage(systemName: "person.fill")!)
-//            print(naverMapView.mapView.locationOverlay.icon.image)
+//            CLLocationManager().requestAlwaysAuthorization()
+            if Self.locationManager.accuracyAuthorization == .reducedAccuracy {
+                showAlert(title: "정확한 위치 정보를 허용해주세요!", message: "실제와 다른 위치가 검색될 수 있어요")
+            }
+            Self.locationManager.startUpdatingLocation()
         default:
             print("default")
         }
         
     }
     
-    func locationManager(_ locationManager: NMFLocationManager!, didChangeAuthStatus status: CLAuthorizationStatus) {
-        print("ChangeAuthStatus")
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         
-        checkAuthorization(auth: status)
+        let auth = manager.authorizationStatus
         
-        
+        checkAuthorization(auth: auth)
     }
     
-    // MARK: Update Location
-    
-    func locationManager(_ locationManager: NMFLocationManager!, didUpdateLocations locations: [Any]!) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        let location = (locations.last as! CLLocation)
+        guard let location = locations.last else { return }
+        
         let pos = NMGLatLng(from: location.coordinate)
         
         print("UpdateLocation", pos.lat, pos.lng)
@@ -631,16 +646,9 @@ extension MapViewController: NMFLocationManagerDelegate {
         updateGeoTitle(loc: location)
         
     }
-
     
-    func locationManagerDidStartLocationUpdates(_ locationManager: NMFLocationManager!) {
-        print("StartLocationUpdates")
-        
-    }
-    
-    func locationManagerDidStopLocationUpdates(_ locationManager: NMFLocationManager!) {
-        print("StopLocationUpdates")
-        
+    func locationManagerDidPauseLocationUpdates(_ manager: CLLocationManager) {
+        print(#function)
     }
     
 }
