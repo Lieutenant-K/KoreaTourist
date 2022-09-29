@@ -155,3 +155,14 @@ extension CGPoint {
     static let buttonTop = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*3/4 + 50)
     
 }
+
+extension UIAlertAction {
+    
+    static let goSettingAction = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+            if let settingURL = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(settingURL)
+            }
+        }
+    
+    
+}

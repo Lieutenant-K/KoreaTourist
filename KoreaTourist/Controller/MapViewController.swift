@@ -186,7 +186,9 @@ final class MapViewController: BaseViewController {
         if CLLocationManager.locationServicesEnabled() {
             Self.locationManager.delegate = self
         } else {
-            showAlert(title: "위치 서비스를 활성화 해주세요!")
+            let cancel = UIAlertAction(title: "확인", style: .default)
+            let ok: UIAlertAction = .goSettingAction
+            showAlert(title: "위치 서비스를 활성화 해주세요!", message: "사용자의 위치를 가져오려면 위치 서비스가 필요해요", actions: [cancel, ok])
         }
         
         realm.printRealmFileURL()
@@ -601,9 +603,14 @@ extension MapViewController: CLLocationManagerDelegate {
             Self.locationManager.requestWhenInUseAuthorization()
         case .restricted:
             print("restricted")
+            let cancel = UIAlertAction(title: "확인", style: .cancel)
+            let goSetting: UIAlertAction = .goSettingAction
+            showAlert(title: "위치 서비스를 사용할 권한이 없어요!", message: "자녀 보호 기능 등이 활성화 됐는지 확인해주세요", actions: [cancel, goSetting])
         case .denied:
             print("denied")
-            showAlert(title: "위치 권한이 거부됐어요", message: "근처의 장소들을 찾기 위해서 위치 권한이 필요해요!")
+            let cancel = UIAlertAction(title: "나가기", style: .destructive)
+            let ok: UIAlertAction = .goSettingAction
+            showAlert(title: "위치 정보에 대한 사용 권한이 거부됐어요", message: "근처의 장소들을 찾기 위해서는 사용자의 위치 데이터가 필요해요!", actions: [cancel, ok])
             // 설정으로 안내하는 코드
         case .authorizedAlways:
             print("always authorized")

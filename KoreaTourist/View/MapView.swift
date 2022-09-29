@@ -92,7 +92,7 @@ final class MapView: NMFNaverMapView {
         showZoomControls = false
         showCompass = false
         showScaleBar = false
-        mapView.logoAlign = .rightBottom
+        mapView.logoAlign = .rightTop
         mapView.maxZoomLevel = 18
         mapView.minZoomLevel = 15
         mapView.maxTilt = maxTilt
