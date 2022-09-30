@@ -23,6 +23,7 @@ class CollectionView: BaseView {
         layout.itemSize = CGSize(width: sizeValue, height: sizeValue)
         
         $0.register(PlaceCollectionCell.self, forCellWithReuseIdentifier: PlaceCollectionCell.reuseIdentifier)
+        $0.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseIdentifier)
         
     }
     

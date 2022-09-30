@@ -13,6 +13,24 @@ class APIManager {
     
     static let shared = APIManager()
     
+    func requestAreaCode(completionHandler: @escaping ([AreaCode]) -> ()) {
+        
+        let requestURL = BaseURL.service(.areaCode).url
+        
+        requestData(url: requestURL) { data in
+            
+            if let result = try? JSONDecoder().decode(Result<AreaCode>.self, from: data) {
+                
+                let codeList = result.response.body.items.item
+                
+                completionHandler(codeList)
+                
+            }
+            
+        }
+        
+    }
+    
     func requestNearPlace(pos: Circle, failureHandler: @escaping () -> (), completionHandler: @escaping (_ placeList: [CommonPlaceInfo]) -> Void ) {
     
         let requestURL = BaseURL.service(.location(pos)).url

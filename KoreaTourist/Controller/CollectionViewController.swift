@@ -11,11 +11,19 @@ import Kingfisher
 
 class CollectionViewController: BaseViewController {
     
+    
+    
     let collectionView = CollectionView()
     
-    var placeList: Results<CommonPlaceInfo>! {
+    var regionList: Results<AreaCode>? {
         didSet {
             collectionView.placeItemView.reloadSections([0])
+        }
+    }
+    
+    var placeList: Results<CommonPlaceInfo>? {
+        didSet {
+            collectionView.placeItemView.reloadSections([1])
         }
     }
     
@@ -28,6 +36,16 @@ class CollectionViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchPlaceList()
+        fetchAreaList()
+        
+    }
+    
+    func fetchAreaList() {
+        
+        realm.fetchAreaCode { [weak self] codeList in
+            self?.regionList = codeList
+        }
+//        print(regionList.count)
     }
     
     func fetchPlaceList() {
@@ -56,39 +74,107 @@ class CollectionViewController: BaseViewController {
         
     }
     
-
+    
 }
 
-extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        2
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        placeList.count
+        section == 0 ? (regionList?.count ?? 0) : (placeList?.count ?? 0)
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceCollectionCell.reuseIdentifier, for: indexPath) as? PlaceCollectionCell else { return UICollectionViewCell() }
-        
-        let place = placeList[indexPath.row]
-        
-        
-        cell.imageView.kf.setImage(with: URL(string: place.thumbnail), placeholder: UIImage(systemName: "photo")?.applyingSymbolConfiguration(.init(pointSize: 70)), options: [.transition(.fade(0.5))])
-        cell.imageView.contentMode = place.isImageIncluded ? .scaleAspectFill : .center
-        
-        
-        
-        return cell
+        if indexPath.section == 0 {
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else { return UICollectionViewCell() }
+            
+            if let region = regionList?[indexPath.row].name {
+                cell.label.text = region
+            }
+            
+            return cell
+            
+            
+        } else {
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceCollectionCell.reuseIdentifier, for: indexPath) as? PlaceCollectionCell else { return UICollectionViewCell() }
+            
+            if let place = placeList?[indexPath.row] {
+                
+                if place.isImageIncluded {
+                    cell.imageView.kf.setImage(with: URL(string: place.thumbnail), options: [.transition(.fade(0.5))])
+                    cell.imageView.contentMode = .scaleAspectFill
+                } else {
+                    cell.imageView.image = UIImage(systemName: "photo")
+                    cell.imageView.contentMode = .center
+                }
+                
+                
+            }
+            
+            return cell
+            
+        }
         
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let place = placeList[indexPath.row]
+        if indexPath.section == 0 {
+            
+            if let regionId = regionList?[indexPath.row].id {
+                placeList = realm.fetchPlaces(type: CommonPlaceInfo.self).where {
+                    $0.discoverDate != nil && $0.areaCode == regionId
+                }.sorted(byKeyPath: "discoverDate", ascending: false)
+            }
+            
+        } else {
+            
+            if let place = placeList?[indexPath.row] {
+                
+                let vc = DetailViewController(place: place)
+                
+                navigationController?.pushViewController(vc, animated: true)
+                
+            }
+            
+        }
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let vc = DetailViewController(place: place)
+        if indexPath.section == 0 {
+            
+            let label = CategoryCell.SizingLabel
+            
+            label.text = regionList?[indexPath.row].name ?? ""
+            
+            return label.intrinsicContentSize
+            
+        } else {
+            
+            let layout = collectionViewLayout as! UICollectionViewFlowLayout
+            
+            return layout.itemSize
+            
+        }
         
-        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        
+        guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else { return 0 }
+        
+        let space = layout.minimumInteritemSpacing
+        
+        return section == 0 ? space/2 : space
         
     }
     

@@ -65,7 +65,7 @@ fileprivate enum QueryString {
             case .location(let position):
                 return "numOfRows=500&pageNo=1&mapX=\(position.x)&mapY=\(position.y)&radius=\(position.radius)&listYN=Y&contentTypeId=12&arrange=E"
             case .areaCode:
-                return "numOfRows=50&pageNo=1"
+                return "numOfRows=20&pageNo=1"
             case .commonInfo(let id):
                 return "contentId=\(id)&overviewYN=Y&catcodeYN=Y&addrinfoYN=Y&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&mapinfoYN=Y"
             case .typeInfo(let id, let type):
@@ -83,37 +83,3 @@ fileprivate enum QueryString {
     }
     
 }
-
-/*
-enum EndPoint {
-    
-    case location(Circle)
-    case areaCode
-    case commonInfo(Int)
-    case typeInfo(Int, Int)
-    case extraInfo(Int, Int)
-    
-    private var baseURL: String {
-        "https://apis.data.go.kr/B551011/KorService/"
-    }
-    
-    var url: String {
-        switch self {
-        case .location(let position):
-            return baseURL + "locationBasedList?" + "serviceKey=\(APIKey.tourAPIKey)&numOfRows=50&pageNo=1&MobileOS=IOS&MobileApp=Test&_type=json&mapX=\(position.x)&mapY=\(position.y)&radius=\(position.radius)&listYN=Y&contentTypeId=12&arrange=E"
-        case .areaCode:
-            return baseURL
-        case .commonInfo(let id):
-            return baseURL + "detailCommon?" + "serviceKey=\(APIKey.tourAPIKey)&MobileOS=IOS&MobileApp=AppTest&contentId=\(id)&_type=json&overviewYN=Y&catcodeYN=Y&addrinfoYN=Y&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&mapinfoYN=Y"
-        case .typeInfo(let id, let type):
-            return baseURL + "detailIntro?" + "serviceKey=\(APIKey.tourAPIKey)&MobileOS=IOS&MobileApp=AppTest&contentId=\(id)&_type=json&contentTypeId=\(type)"
-        case .extraInfo(let id, let type):
-            return baseURL + "detailInfo?" + "serviceKey=\(APIKey.tourAPIKey)&MobileOS=IOS&MobileApp=AppTest&contentId=\(id)&_type=json&contentTypeId=\(type)"
-        
-        }
-        
-        
-    }
-    
-}
-*/

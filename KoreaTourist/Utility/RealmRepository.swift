@@ -21,6 +21,34 @@ class RealmRepository {
         print(localRealm.configuration.fileURL?.path)
     }
     
+    func fetchAreaCode(completionHandler: @escaping (Results<AreaCode>) -> ()) {
+        
+        let codeList = localRealm.objects(AreaCode.self)
+        
+        if codeList.isEmpty {
+            
+            APIManager.shared.requestAreaCode { [weak self] list in
+                
+                list.forEach { code in
+                    do {
+                        try self?.localRealm.write({
+                            self?.localRealm.add(code)
+                        })
+                    } catch {
+                        print("지역 코드 추가 에러")
+                    }
+                }
+                
+                if let codeList = self?.localRealm.objects(AreaCode.self) {
+                    completionHandler(codeList)
+                }
+            }
+        } else {
+            completionHandler(codeList)
+        }
+        
+    }
+    
     func fetchNearPlace(location: Circle, failureHandler: @escaping () -> (), completionHandler: @escaping (_ newCount: Int, _ placeList: [CommonPlaceInfo]) -> ()) {
     
         APIManager.shared.requestNearPlace(pos: location, failureHandler: failureHandler) { [weak self] placeList in
