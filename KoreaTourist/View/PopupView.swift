@@ -66,7 +66,7 @@ class PopupView: BaseView {
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
         $0.contentMode = .scaleAspectFill
-        
+        $0.tintColor = .secondaryLabel
     }
     
     let titleLabel = UILabel().then {

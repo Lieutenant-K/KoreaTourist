@@ -30,7 +30,7 @@ final class PopupViewController: BaseViewController {
         popupView.titleLabel.text = placeInfo.title
         popupView.descriptLabel.text = "\(placeInfo.addr1) \(placeInfo.addr2)"
         popupView.imageView.kf.indicatorType = .activity
-        popupView.imageView.kf.setImage(with: URL(string: placeInfo.image))
+        popupView.imageView.kf.setImage(with: URL(string: placeInfo.image), placeholder: UIImage(systemName: "photo")?.applyingSymbolConfiguration(.init(weight: .light)), options: [.transition(.fade(0.5))])
         
     }
     

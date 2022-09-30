@@ -15,6 +15,7 @@ class PlaceCollectionCell: UICollectionViewCell {
     lazy var imageView = UIImageView().then {
         $0.layer.cornerRadius = corner
         $0.contentMode = .scaleAspectFill
+        $0.tintColor = .secondaryLabel
 //        $0.clipsToBounds = true
     }
     

@@ -154,6 +154,8 @@ extension CGPoint {
     
     static let buttonTop = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height*3/4 + 50)
     
+    static let top = CGPoint(x: UIScreen.main.bounds.width/2, y: 120)
+    
 }
 
 extension UIAlertAction {

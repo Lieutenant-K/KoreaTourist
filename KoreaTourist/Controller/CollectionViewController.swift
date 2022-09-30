@@ -72,13 +72,9 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
         
         let place = placeList[indexPath.row]
         
-        if place.isImageIncluded {
-            cell.imageView.kf.setImage(with: URL(string: place.thumbnail))
-        } else{
-            
-            cell.imageView.image = .noImage
-            cell.imageView.tintColor = .secondaryLabel
-        }
+        
+        cell.imageView.kf.setImage(with: URL(string: place.thumbnail), placeholder: UIImage(systemName: "photo")?.applyingSymbolConfiguration(.init(pointSize: 70)), options: [.transition(.fade(0.5))])
+        cell.imageView.contentMode = place.isImageIncluded ? .scaleAspectFill : .center
         
         
         

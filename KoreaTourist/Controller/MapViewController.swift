@@ -183,13 +183,7 @@ final class MapViewController: BaseViewController {
         
 //        locationManager.add(self)
         
-        if CLLocationManager.locationServicesEnabled() {
-            Self.locationManager.delegate = self
-        } else {
-            let cancel = UIAlertAction(title: "확인", style: .default)
-            let ok: UIAlertAction = .goSettingAction
-            showAlert(title: "위치 서비스를 활성화 해주세요!", message: "사용자의 위치를 가져오려면 위치 서비스가 필요해요", actions: [cancel, ok])
-        }
+        checkLocationService()
         
         realm.printRealmFileURL()
         
@@ -214,7 +208,17 @@ final class MapViewController: BaseViewController {
     
     // MARK: - Method
     
-    
+    private func checkLocationService() {
+        
+        if CLLocationManager.locationServicesEnabled() {
+            Self.locationManager.delegate = self
+        } else {
+            let cancel = UIAlertAction(title: "확인", style: .default)
+            let ok: UIAlertAction = .goSettingAction
+            showAlert(title: "위치 서비스를 활성화 해주세요!", message: "사용자의 위치를 가져오려면 위치 서비스가 필요해요", actions: [cancel, ok])
+        }
+        
+    }
     
     // MARK: Navigation Item
     override func configureNavigationItem() {
@@ -312,7 +316,7 @@ final class MapViewController: BaseViewController {
         
         let failure: () -> () = { [weak self] in
 
-            self?.naverMapView.makeToast("장소를 찾을 수 없어요 🥲", point: .buttonTop, title: nil, image: nil, completion: nil)
+            self?.naverMapView.makeToast("장소를 찾을 수 없어요 🥲", point: .top, title: nil, image: nil, completion: nil)
         }
         
         Self.progressHUD.show(in: naverMapView, animated: true)
@@ -333,14 +337,14 @@ final class MapViewController: BaseViewController {
                 self?.updateAndDisplayMarker(markers: markers)
                 self?.cameraMode = .search
                 
-                let title = newCount > 0 ? "\(newCount)개의 새로운 장소를 찾았어요!!" : "새로운 장소가 없어요!!"
+                let title = newCount > 0 ? "\(newCount)개의 새로운 장소를 찾았어요!!" : "새로운 장소를 찾지 못했어요!"
                 
-//                self?.showAlert(title: alertTitle)
-                self?.naverMapView.makeToast(title, point: .centerTop, title: nil, image: nil, completion: nil)
+
+                self?.naverMapView.makeToast(title, point: .top, title: nil, image: nil, completion: nil)
                 
             } else {
                 
-//                self?.showAlert(title: "\(Int(Circle.defaultRadius)) 이내에 찾을 장소가 없습니다!")
+
                 self?.naverMapView.makeToast("\(Int(Circle.defaultRadius))m 이내에 찾을 장소가 없습니다!")
             }
             
