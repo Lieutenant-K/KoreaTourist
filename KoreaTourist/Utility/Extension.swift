@@ -76,7 +76,7 @@ extension UITableViewCell {
     }
 }
 
-extension UICollectionViewCell {
+extension UICollectionReusableView {
     static var reuseIdentifier: String {
         return String(describing: self)
     }

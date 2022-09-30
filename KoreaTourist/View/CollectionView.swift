@@ -22,8 +22,10 @@ class CollectionView: BaseView {
         let sizeValue = (UIScreen.main.bounds.width - 4*space) / 3
         layout.itemSize = CGSize(width: sizeValue, height: sizeValue)
         
+        $0.register(CollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionHeaderView.reuseIdentifier)
         $0.register(PlaceCollectionCell.self, forCellWithReuseIdentifier: PlaceCollectionCell.reuseIdentifier)
         $0.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseIdentifier)
+        
         
     }
     

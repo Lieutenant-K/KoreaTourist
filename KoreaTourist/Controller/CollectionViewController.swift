@@ -77,6 +77,8 @@ class CollectionViewController: BaseViewController {
     
 }
 
+
+// MARK: - CollectionView DataSource, Delegate
 extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -178,6 +180,23 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionHeaderView.reuseIdentifier, for: indexPath) as? CollectionHeaderView else { return UICollectionReusableView() }
+        
+        let places = realm.fetchPlaces(type: CommonPlaceInfo.self)
+        let discovered = places.where { $0.discoverDate != nil }
+        
+        view.label.text = "발견한 장소: \(discovered.count) 찾은 장소: \(places.count)"
+        
+        return view
+        
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        section == 0 ? CGSize(width: 0, height: 32) : .zero
+        
+    }
     
 }
