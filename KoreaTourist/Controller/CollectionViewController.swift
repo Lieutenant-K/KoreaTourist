@@ -64,13 +64,25 @@ class CollectionViewController: BaseViewController {
         
         let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(touchCloseButton(_:)))
         
+        let settingButton = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(touchSettingButton(_:)))
+        
         navigationItem.leftBarButtonItem = closeButton
+        
+        navigationItem.rightBarButtonItem = settingButton
+        
+        navigationItem.backButtonTitle = "뒤로"
         
     }
     
     @objc func touchCloseButton(_ sender: UIBarButtonItem) {
         
         self.dismiss(animated: true)
+        
+    }
+    
+    @objc func touchSettingButton(_ sender: UIBarButtonItem) {
+        
+        navigationController?.pushViewController(SettingViewController(), animated: true)
         
     }
     
