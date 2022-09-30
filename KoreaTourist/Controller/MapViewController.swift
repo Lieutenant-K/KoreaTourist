@@ -123,6 +123,8 @@ final class MapViewController: BaseViewController {
     
     var isMarkerFilterOn = false {
         didSet {
+            let active = isMarkerFilterOn ? "활성화" : "비활성화"
+            naverMapView.makeToast("미발견 마커만 보기 ", point: .top, title: active, image: nil, completion: nil)
             filteringMarker()
         }
     }
