@@ -34,7 +34,7 @@ final class SettingViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .systemBackground
         view.addSubview(tableView)
         
         tableView.snp.makeConstraints { $0.edges.equalTo(view.safeAreaLayoutGuide)

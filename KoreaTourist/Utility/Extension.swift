@@ -32,7 +32,9 @@ extension UIImage {
     
     static let naviIcon: UIImage = UIImage(named: "gps-navigation")!
     
-    static let noImage: UIImage = UIImage(named: "noImage")!
+    static let binoculars: UIImage = UIImage(named: "binoculars")!
+    
+    static let map: UIImage = UIImage(named: "map")!
     
 }
 
