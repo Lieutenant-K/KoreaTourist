@@ -25,13 +25,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         style.titleAlignment = .center
         style.messageAlignment = .center
         ToastManager.shared.style = style
+        ToastManager.shared.isTapToDismissEnabled = true
+        ToastManager.shared.duration = 1.5
         
-        let vc = MapViewController()
+        
+        let notFirst = UserDefaults.standard.bool(forKey: "notFirst")
+        
+        let vc = notFirst ? MapViewController() : OnBoardingViewController() //MapViewController()
 //        let navi = UINavigationController(rootViewController: vc)
         
         window = UIWindow(windowScene: scene)
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
+        
+        UserDefaults.standard.set(true, forKey: "notFirst")
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

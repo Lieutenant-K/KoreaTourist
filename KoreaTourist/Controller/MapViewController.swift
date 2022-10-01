@@ -124,7 +124,7 @@ final class MapViewController: BaseViewController {
     var isMarkerFilterOn = false {
         didSet {
             let active = isMarkerFilterOn ? "활성화" : "비활성화"
-            naverMapView.makeToast("미발견 마커만 보기 ", point: .top, title: active, image: nil, completion: nil)
+            naverMapView.makeToast("미발견 장소만 보기 ", point: .top, title: active, image: nil, completion: nil)
             filteringMarker()
         }
     }
@@ -310,7 +310,7 @@ final class MapViewController: BaseViewController {
         
         guard let loc = Self.locationManager.location?.coordinate else {
 //            showAlert(title: "현재 위치를 찾을 수 없습니다.")
-            naverMapView.makeToast("현재 위치를 찾을 수 없어요 🥲", point: .buttonTop, title: nil, image: nil, completion: nil)
+            naverMapView.makeToast("위치 서비스가 활성화 됐는지 확인해주세요", point: .top, title: "현재 위치를 찾을 수 없어요 :(", image: nil, completion: nil)
             return
         }
         

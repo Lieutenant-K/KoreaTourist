@@ -11,7 +11,7 @@ import NMapsMap
 final class PlaceMarker: NMFMarker {
     
     // 디버그용
-    static let minimumDistance: Double = 2000
+    static let minimumDistance: Double = 100
     
     let placeInfo: CommonPlaceInfo
     

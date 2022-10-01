@@ -54,6 +54,10 @@ struct Items<T:Codable>: Codable {
 
 // MARK: - Item
 
+
+
+// MARK: Common Place Info
+
 class CommonPlaceInfo: Information, PlaceInfo {
     
     @Persisted var addr1: String
@@ -153,6 +157,8 @@ class CommonPlaceInfo: Information, PlaceInfo {
     
 }
 
+// MARK: Intro
+
 class Intro: EmbeddedObject, Codable {
     
     @Persisted var zipcode: Int
@@ -177,6 +183,8 @@ class Intro: EmbeddedObject, Codable {
     }
     
 }
+
+// MARK: Tour Place Info
 
 class TourPlaceInfo: Information, PlaceInfo {
     
@@ -333,6 +341,8 @@ class EventPlaceInfo: Information {
 }
 
 
+// MARK: Extra Place Info
+
 class ExtraPlaceInfo: Object, PlaceInfo {
     
     @Persisted(primaryKey: true) var contentId: Int
@@ -398,6 +408,9 @@ class ExtraPlaceElement: EmbeddedObject, Codable, NeedValidate {
     }
 }
 
+
+// MARK: Place Image Info
+
 class PlaceImageInfo: Object {
     
     @Persisted(primaryKey: true) var contentId: Int
@@ -442,6 +455,9 @@ class PlaceImage: EmbeddedObject, Codable {
     }
 }
 
+
+// MARK: Area Code
+
 class AreaCode: Object, Codable {
     
     @Persisted(primaryKey: true) var id: Int
@@ -462,6 +478,8 @@ class AreaCode: Object, Codable {
     }
     
 }
+
+// MARK: Content Type
 
 enum ContentType: String, Codable {
     
@@ -493,10 +511,11 @@ enum ContentType: String, Codable {
     
 }
 
+// MARK: Circle
 
 struct Circle {
     
-    static let defaultRadius: Double = 2000
+    static let defaultRadius: Double = 500
     static let visitKorea = Circle(x: 126.981611, y: 37.568477, radius: defaultRadius)
     static let home = Circle(x: 126.924378, y: 37.503886, radius: defaultRadius)
     

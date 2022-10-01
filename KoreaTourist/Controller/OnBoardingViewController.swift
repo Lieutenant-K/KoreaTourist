@@ -86,6 +86,20 @@ final class OnBoardingViewController: BaseViewController {
         }
         view.bringSubviewToFront(button)
         
+        button.addTarget(self, action: #selector(touchButton(_:)), for: .touchUpInside)
+        
+    }
+    
+    @objc private func touchButton(_ sender: UIButton) {
+        
+        if let delegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            
+            delegate.window?.rootViewController = MapViewController()
+            delegate.window?.makeKeyAndVisible()
+            
+        }
+        
+        
     }
 
 }
