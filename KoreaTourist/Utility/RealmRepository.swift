@@ -9,11 +9,9 @@ import UIKit
 import RealmSwift
 
 class RealmRepository {
-    
+
     private let localRealm: Realm = {
         var config = Realm.Configuration.defaultConfiguration
-        config.deleteRealmIfMigrationNeeded = true
-        
         return try! Realm(configuration: config)
     }()
     
