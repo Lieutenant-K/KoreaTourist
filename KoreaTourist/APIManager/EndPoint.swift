@@ -73,7 +73,7 @@ fileprivate enum QueryString {
             case .extraInfo(let id, let type):
                 return "contentId=\(id)&contentTypeId=\(type.rawValue)"
             case .detailImage(let id):
-                return "numOfRows=50&pageNo=1&contentId=\(id)&imageYN=Y&subImageYN=Y"
+                return "numOfRows=20&pageNo=1&contentId=\(id)&imageYN=Y&subImageYN=Y"
             }
         }
     }
