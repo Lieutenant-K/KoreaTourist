@@ -63,7 +63,7 @@ fileprivate enum QueryString {
         case .query(let serviceType):
             switch serviceType {
             case .location(let position):
-                return "numOfRows=500&pageNo=1&mapX=\(position.x)&mapY=\(position.y)&radius=\(position.radius)&listYN=Y&contentTypeId=12&arrange=E"
+                return "numOfRows=30&pageNo=1&mapX=\(position.x)&mapY=\(position.y)&radius=\(position.radius)&listYN=Y&contentTypeId=12&arrange=E"
             case .areaCode:
                 return "numOfRows=20&pageNo=1"
             case .commonInfo(let id):
