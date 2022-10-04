@@ -47,7 +47,7 @@ class RealmRepository {
         
     }
     
-    func fetchNearPlace(location: Circle, failureHandler: @escaping () -> (), completionHandler: @escaping (_ newCount: Int, _ placeList: [CommonPlaceInfo]) -> ()) {
+    func fetchNearPlace(location: Circle, failureHandler: @escaping (FailureReason) -> (), completionHandler: @escaping (_ newCount: Int, _ placeList: [CommonPlaceInfo]) -> ()) {
     
         APIManager.shared.requestNearPlace(pos: location, failureHandler: failureHandler) { [weak self] placeList in
             
@@ -82,39 +82,6 @@ class RealmRepository {
         
     }
     
-    /*
-    func registerPlaces(using infoList: [CommonPlaceInfo]) -> (newCount: Int, fetchedInfo: [CommonPlaceInfo]) {
-        
-        var count = 0
-        
-        let newInfoList = infoList.map { (info) -> CommonPlaceInfo in
-            
-            if let place = localRealm.object(ofType: CommonPlaceInfo.self, forPrimaryKey: info.contentId) {
-                do {
-                    try localRealm.write {
-                        place.dist = info.dist
-                    }
-                } catch {
-                    print("데이터 수정 오류")
-                }
-                return place
-            } else {
-                count += 1
-                do {
-                    try localRealm.write {
-                        localRealm.add(info)
-                    }
-                } catch {
-                    print("데이터 추가 오류")
-                }
-                return info
-            }
-        }
-        
-        return (count, newInfoList)
-        
-    }
-    */
     
     func discoverPlace(with contentId: Int) {
         
@@ -129,52 +96,6 @@ class RealmRepository {
         }
     }
     
-    /*
-    func addPlaceIntro(with to: CommonPlaceInfo, using from: Intro) {
-        
-        do {
-            try localRealm.write {
-                to.intro = from
-            }
-        } catch {
-            
-        }
-        
-        /*
-        do {
-            try localRealm.write({
-                to.homepage = from.homepage
-                to.overview = from.overview
-                to.tel = from.tel
-                to.telName = from.telName
-                to.zipcode = from.zipcode
-            })
-        } catch {
-            print("장소 업데이트 실패")
-        }
-        */
-        
-    }
-    */
-    
-    /*
-    func registerPlaceInfo<T: Object>(info: T) {
-        
-        do {
-            try localRealm.write({
-                localRealm.add(info)
-            })
-        } catch {
-            print("장소 정보 등록 실패")
-        }
-    }
-    */
-    
-    /*
-    func isExist<T:Object>(infoType: T.Type, contentId: Int) -> Bool {
-        return localRealm.object(ofType: infoType, forPrimaryKey: contentId) == nil ? false : true
-    }
-    */
     
     func loadPlaceInfo<T: Object>(infoType: T.Type, contentId: Int) -> T? {
         return localRealm.object(ofType: infoType, forPrimaryKey: contentId)

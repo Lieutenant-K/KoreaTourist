@@ -525,6 +525,29 @@ struct Circle {
     
 }
 
+// MARK: - XMLDecoding
+
+struct XMLHeader: Codable {
+    
+    let errMsg: String
+    let returnAuthMsg: String
+    let returnReasonCode: String
+    
+}
+
+struct ServiceResponse: Codable {
+    
+    let cmmMsgHeader: XMLHeader
+    
+}
+
+enum FailureReason {
+    
+    case apiError(ServiceResponse)
+    case noData
+    
+}
+
 let dummy = """
                 [
                     {

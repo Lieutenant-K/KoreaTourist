@@ -316,9 +316,24 @@ final class MapViewController: BaseViewController {
         
         let circle = Circle(x: loc.longitude, y: loc.latitude, radius: Circle.defaultRadius)
         
-        let failure: () -> () = { [weak self] in
-
-            self?.naverMapView.makeToast("장소를 찾을 수 없어요 🥲", point: .top, title: nil, image: nil, completion: nil)
+        let failure: (FailureReason) -> () = { [weak self] reason in
+            
+            var message = ""
+            var title = ""
+            
+            switch reason {
+            case .noData:
+                title = "주변에서 특별한 장소를 찾지 못했어요"
+                message = "다른 새로운 곳에서 다시 시도해보세요!"
+            case .apiError(let error):
+                title = "서버에서 문제가 발생했어요"
+                message = "에러: \(error.cmmMsgHeader.errMsg)\n나중에 다시 시도해주세요"
+                
+            }
+            
+            Self.progressHUD.dismiss(animated: true)
+            
+            self?.naverMapView.makeToast(message, point: .top, title: title, image: nil, completion: nil)
         }
         
         Self.progressHUD.show(in: naverMapView, animated: true)
@@ -346,8 +361,8 @@ final class MapViewController: BaseViewController {
                 
             } else {
                 
-
                 self?.naverMapView.makeToast("\(Int(Circle.defaultRadius))m 이내에 찾을 장소가 없습니다!")
+                
             }
             
             self?.displayAreaOnMap(location: loc)

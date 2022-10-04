@@ -8,6 +8,8 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import XMLCoder
+
 
 class APIManager {
     
@@ -31,29 +33,26 @@ class APIManager {
         
     }
     
-    func requestNearPlace(pos: Circle, failureHandler: @escaping () -> (), completionHandler: @escaping (_ placeList: [CommonPlaceInfo]) -> Void ) {
+    func requestNearPlace(pos: Circle, failureHandler: @escaping (FailureReason) -> (), completionHandler: @escaping (_ placeList: [CommonPlaceInfo]) -> Void ) {
     
         let requestURL = BaseURL.service(.location(pos)).url
         
-        requestData(url: requestURL) { json in
-//            print("주변의 찾은 장소가 없어요 ㅜㅜ")
-            /*
-            if let sample = dummy.data(using: .utf8), let sampleData = try? JSONDecoder().decode([CommonPlaceInfo].self, from: sample) {
-                
-                completionHandler(sampleData)
-                
-            }*/
+        requestData(url: requestURL) { result in
             
-            
-            if let dataList = try? JSONDecoder().decode(Result<CommonPlaceInfo>.self, from: json) {
+            if let dataList = try? JSONDecoder().decode(Result<CommonPlaceInfo>.self, from: result) {
                 
                 let data = dataList.response.body.items.item
                 
                 completionHandler(data)
                 
+            } else if let error = try? XMLDecoder().decode(ServiceResponse.self, from: result) {
+            
+                failureHandler(.apiError(error))
+                
             } else {
-                MapViewController.progressHUD.dismiss(animated: true)
-                failureHandler()
+                
+                failureHandler(.noData)
+                
             }
             
         }
@@ -139,10 +138,12 @@ class APIManager {
         AF.request(url).validate(statusCode: 200...500).responseData { response in
             switch response.result {
             case .success(let data):
-//                print(String(data: data, encoding: .utf8))
+
                 print("request 성공 😁😁😁😁")
-//                let json = JSON(data)
-//                print(json)
+
+                if let data = try? XMLDecoder().decode(ServiceResponse.self, from: data) {
+                    // 에러 메시지 처리
+                }
                 completionHandler(data)
                 
             case .failure(let error):
