@@ -11,6 +11,19 @@ import SnapKit
 
 class CollectionView: BaseView {
     
+    lazy var backgroundView = UIView().then { view in
+        
+        let label = UILabel().then {
+            $0.font = .systemFont(ofSize: 24, weight: .semibold)
+            $0.text = "아직 발견된 장소가 없어요 :("
+            $0.textColor = .placeholderText
+            $0.textAlignment = .center
+        }
+        
+        view.addSubview(label)
+        label.snp.makeConstraints { $0.center.equalToSuperview() }
+    }
+    
     let placeItemView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
         
         let layout = $0.collectionViewLayout as! UICollectionViewFlowLayout

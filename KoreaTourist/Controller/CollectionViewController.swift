@@ -23,6 +23,7 @@ class CollectionViewController: BaseViewController {
     
     var placeList: Results<CommonPlaceInfo>? {
         didSet {
+            collectionView.placeItemView.backgroundView = placeList?.count ?? 0 > 0 ? nil : collectionView.backgroundView
             collectionView.placeItemView.reloadSections([1])
         }
     }
