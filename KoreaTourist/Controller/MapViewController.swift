@@ -191,6 +191,7 @@ final class MapViewController: BaseViewController {
         
         settingMarkerTouchHandler()
         
+//        Self.locationManager.startUpdatingHeading()
     }
     
     
@@ -677,6 +678,12 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManagerDidPauseLocationUpdates(_ manager: CLLocationManager) {
         print(#function)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        print("true Heading", newHeading.trueHeading)
+        print("magnetic Heading", newHeading.magneticHeading)
+        print(newHeading.headingAccuracy)
     }
     
 }
