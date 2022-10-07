@@ -49,6 +49,8 @@ final class MapView: NMFNaverMapView {
         
     }
     
+    let headTrackingButton = UIButton(type: .system)
+    
     /*
     private lazy var trackControl = NMFLocationButton().then {
         $0.mapView = mapView
