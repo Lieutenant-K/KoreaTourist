@@ -162,15 +162,11 @@ final class MapViewController: BaseViewController {
     override func loadView() {
         view = naverMapView
         
-        naverMapView.panGesture.addTarget(self, action: #selector(panning(_:)))
-        
-        naverMapView.pinchGesture.addTarget(self, action: #selector(pinch(_:)))
-        
         naverMapView.cameraButton.addTarget(self, action: #selector(touchPreviousCameraButton), for: .touchUpInside)
         
-        naverMapView.menuButton.addTarget(self, action: #selector(touchMenuButton), for: .touchUpInside)
+//        naverMapView.menuButton.addTarget(self, action: #selector(touchMenuButton), for: .touchUpInside)
         
-        naverMapView.compass.gestureRecognizers?.first?.addTarget(self, action: #selector(touchCompass(_:)))
+        naverMapView.trackButton.addTarget(self, action: #selector(touchTrackButton(_:)), for: .touchUpInside)
         
         naverMapView.mapView.touchDelegate = self
         
@@ -501,113 +497,17 @@ final class MapViewController: BaseViewController {
         present(sideMenu, animated: true)
         */
     }
+
     
-    @objc func touchCompass(_ sender: UITapGestureRecognizer) {
-        print(#function)
-        let update = NMFCameraUpdate(heading: 0)
-        update.animationDuration = 0.5
-        update.animation = .easeOut
-        naverMapView.mapView.locationOverlay.heading = 0
-        naverMapView.moveCameraBlockGesture(update) {
-//            print("나침반 초기화 완료")
+    @objc func touchTrackButton(_ sender: UIButton) {
+        
+        if CLLocationManager.headingAvailable() {
+            
+            sender.isSelected.toggle()
+            
+        } else {
+            showAlert(title: "방향 추적 기능을 사용하실 수 없어요!")
         }
-    }
-    
-    
-    // MARK: Map Gesture
-    
-    
-    
-    // MARK: Panning
-    @objc func panning(_ sender: UIPanGestureRecognizer) {
-        
-
-        let translation = sender.translation(in: naverMapView.mapView)
-        let location = sender.location(in: naverMapView.mapView)
-        print("panning --------------------------")
-        print("translation:",translation)
-        print("location:",location)
-        
-        if sender.state == .began {
-                print("began")
-            } else if sender.state == .changed {
-                // rotating map camera
-
-                let bounds = naverMapView.mapView.bounds
-                let vector1 = CGVector(dx: location.x - bounds.midX, dy: location.y - bounds.midY)
-                let vector2 = CGVector(dx: vector1.dx + translation.x, dy: vector1.dy + translation.y)
-                let angle1 = atan2(vector1.dx, vector1.dy)
-                let angle2 = atan2(vector2.dx, vector2.dy)
-                let delta = (angle2 - angle1) * 180.0 / Double.pi
-                
-                let param = NMFCameraUpdateParams()
-                param.rotate(by: delta)
-                let update = NMFCameraUpdate(params: param)
-
-                naverMapView.mapView.moveCamera(update)
-                naverMapView.mapView.locationOverlay.heading += delta
-                
-                
-//                print(delta)
-            } else if sender.state == .ended {
-                print("end")
-            }
-
-            sender.setTranslation(.zero, in: naverMapView.mapView)
-        
-    }
-    
-    // MARK: Pinch
-    @objc func pinch(_ sender: UIPinchGestureRecognizer) {
-        
-        let zoom = naverMapView.currentZoom
-        let tilt = naverMapView.currentTilt
-        let size = naverMapView.locOverlaySize.width
-        
-        print("pinch-------------------------------------")
-        print("scale:", sender.scale)
-        print("zoom:", zoom)
-        print("tilt:", tilt)
-
-        let minZoom = naverMapView.mapView.minZoomLevel
-        let maxZoom = naverMapView.mapView.maxZoomLevel
-        
-        let minSize = naverMapView.minLocOverlaySize
-        let maxSize = naverMapView.maxLocOverlaySize
-        
-        if sender.state == .began {
-            print("start")
-        } else if sender.state == .changed {
-            
-            let deltaZoom = sender.scale-1
-            let deltaTilt = (naverMapView.maxTilt - naverMapView.minTilt) * deltaZoom / (maxZoom-minZoom)
-            let deltaSize = (maxSize - minSize) * deltaZoom / (maxZoom - minZoom)
-            
-            // Camera Update
-            let param = NMFCameraUpdateParams().then {
-                $0.zoom(by: deltaZoom)
-                
-                if tilt + deltaTilt < naverMapView.minTilt {
-                    $0.tilt(to: naverMapView.minTilt)
-                } else {
-                    $0.tilt(by: deltaTilt)
-                }
-                
-            }
-            
-            let update = NMFCameraUpdate(params: param)
-            naverMapView.mapView.moveCamera(update)
-            
-            // Location Overlay Update
-            let newSize = size + deltaSize < minSize ? minSize : (size + deltaSize > maxSize ? maxSize : deltaSize + size)
-            naverMapView.locOverlaySize = CGSize(width: newSize, height: newSize)
-            
-
-        } else if sender.state == .ended {
-            print("ended")
-        }
-        
-        sender.scale = 1
         
     }
     
@@ -694,9 +594,16 @@ extension MapViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        print("true Heading", newHeading.trueHeading)
-        print("magnetic Heading", newHeading.magneticHeading)
+        let heading = newHeading.trueHeading
+        print("___________________true Heading", heading)
+//        print("magnetic Heading", newHeading.magneticHeading)
         print(newHeading.headingAccuracy)
+        
+        let update = NMFCameraUpdate(heading: heading)
+        naverMapView.mapView.moveCamera(update)
+        
+        naverMapView.mapView.locationOverlay.heading = heading
+        
     }
     
 }
