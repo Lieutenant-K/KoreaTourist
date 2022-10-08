@@ -38,7 +38,9 @@ final class MapView: NMFNaverMapView {
     
     let circleButton = CircleMenu(frame: .zero, normalIcon: "", selectedIcon: "", duration: 0.5, distance: 85).then {
         
-        let image = UIImage(systemName: "list.bullet")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25, weight: .semibold))
+        
+        let image: UIImage = .backpack
+//        UIImage(systemName: "list.bullet")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25, weight: .semibold))
         
         let selectImage = UIImage(systemName: "xmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25, weight: .medium))
         
@@ -47,13 +49,14 @@ final class MapView: NMFNaverMapView {
         $0.backgroundColor = .white
         $0.startAngle = -90
         $0.endAngle = 90
+        $0.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
         $0.layer.shadowOffset = .zero
         $0.layer.shadowOpacity = 0.3
         
     }
     
-    let trackButton = HeadTrackButton(type: .custom)
+    lazy var trackButton = HeadTrackButton(location: mapView.locationOverlay)
     
     
     lazy var compass = NMFCompassView().then {
@@ -141,7 +144,7 @@ final class MapView: NMFNaverMapView {
         mapView.locationOverlay.hidden = false
         mapView.locationOverlay.circleColor = .systemBlue.withAlphaComponent(0.1)
         mapView.locationOverlay.circleRadius = 50
-        mapView.locationOverlay.icon = NMFOverlayImage(image: .naviIcon)
+        mapView.locationOverlay.icon = NMFOverlayImage(image: .location)
         
         locOverlaySize = CGSize(width: maxLocOverlaySize, height: maxLocOverlaySize)
         
@@ -361,7 +364,7 @@ final class MapView: NMFNaverMapView {
         let style = UITraitCollection.current.userInterfaceStyle
         mapView.adjustInterfaceStyle(style: style)
         circleOverlay.outlineColor = .secondaryLabel
-        mapView.locationOverlay.icon = NMFOverlayImage(image: .naviIcon)
+//        mapView.locationOverlay.icon = NMFOverlayImage(image: .naviIcon)
         
         
     }
@@ -396,9 +399,9 @@ extension MapView {
     
     var currentZoom: Double { mapView.cameraPosition.zoom }
     
-    var maxLocOverlaySize: CGFloat { 85 }
+    var maxLocOverlaySize: CGFloat { 60 }
     
-    var minLocOverlaySize: CGFloat { 40 }
+    var minLocOverlaySize: CGFloat { 30 }
     
     var locOverlaySize: CGSize {
         

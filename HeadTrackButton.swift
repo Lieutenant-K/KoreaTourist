@@ -6,15 +6,20 @@
 //
 
 import UIKit
+import NMapsMap
 
 final class HeadTrackButton: UIButton {
+    
+    weak var locationOverlay: NMFLocationOverlay?
     
     override var isSelected: Bool {
         didSet {
             if isSelected {
                 MapViewController.locationManager.startUpdatingHeading()
+                locationOverlay?.icon = NMFOverlayImage(image: .navigation)
             } else {
                 MapViewController.locationManager.stopUpdatingHeading()
+                locationOverlay?.icon  = NMFOverlayImage(image: .location)
             }
         }
     }
@@ -35,6 +40,10 @@ final class HeadTrackButton: UIButton {
         
     }
     
+    convenience init(location: NMFLocationOverlay) {
+        self.init(type: .custom)
+        locationOverlay = location
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

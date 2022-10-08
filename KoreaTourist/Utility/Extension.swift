@@ -30,11 +30,15 @@ extension UIImage {
         return newImage!
     }
     
-    static let naviIcon: UIImage = UIImage(named: "gps-navigation")!
+    static let navigation: UIImage = UIImage(named: "navigation")!
+    
+    static let location:UIImage = UIImage(named: "location")!
     
     static let binoculars: UIImage = UIImage(named: "binoculars")!
     
     static let map: UIImage = UIImage(named: "map")!
+     
+    static let backpack: UIImage = UIImage(named: "backpack")!
     
 }
 
