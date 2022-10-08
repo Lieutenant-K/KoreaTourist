@@ -170,6 +170,8 @@ final class MapViewController: BaseViewController {
         
         naverMapView.menuButton.addTarget(self, action: #selector(touchMenuButton), for: .touchUpInside)
         
+        naverMapView.compass.gestureRecognizers?.first?.addTarget(self, action: #selector(touchCompass(_:)))
+        
         naverMapView.mapView.touchDelegate = self
         
         naverMapView.circleButton.delegate = self
@@ -498,6 +500,17 @@ final class MapViewController: BaseViewController {
         sideMenu.blurEffectStyle = .systemUltraThinMaterial
         present(sideMenu, animated: true)
         */
+    }
+    
+    @objc func touchCompass(_ sender: UITapGestureRecognizer) {
+        print(#function)
+        let update = NMFCameraUpdate(heading: 0)
+        update.animationDuration = 0.5
+        update.animation = .easeOut
+        naverMapView.mapView.locationOverlay.heading = 0
+        naverMapView.moveCameraBlockGesture(update) {
+//            print("나침반 초기화 완료")
+        }
     }
     
     

@@ -57,9 +57,9 @@ final class MapView: NMFNaverMapView {
         
     }*/
     
-    private lazy var compass = NMFCompassView().then {
+    lazy var compass = NMFCompassView().then {
         $0.mapView = mapView
-        $0.isUserInteractionEnabled = false
+        $0.gestureRecognizers = [UITapGestureRecognizer()]
     }
     
     let circleOverlay = NMFCircleOverlay(NMGLatLng(lat: 0, lng: 0), radius: Circle.defaultRadius).then {
