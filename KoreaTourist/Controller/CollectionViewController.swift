@@ -67,9 +67,11 @@ class CollectionViewController: BaseViewController {
         
         let settingButton = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(touchSettingButton(_:)))
         
+        let worldMapButton = UIBarButtonItem(image: UIImage(systemName: "map.fill"), style: .plain, target: self, action: #selector(touchWorldMapButton(_:)))
+        
         navigationItem.leftBarButtonItem = closeButton
         
-        navigationItem.rightBarButtonItem = settingButton
+        navigationItem.rightBarButtonItems = [settingButton, worldMapButton]
         
         navigationItem.backButtonTitle = "뒤로"
         
@@ -84,6 +86,12 @@ class CollectionViewController: BaseViewController {
     @objc func touchSettingButton(_ sender: UIBarButtonItem) {
         
         navigationController?.pushViewController(SettingViewController(), animated: true)
+        
+    }
+    
+    @objc func touchWorldMapButton(_ sender: UIBarButtonItem) {
+        
+        navigationController?.pushViewController(UIViewController(), animated: true)
         
     }
     
