@@ -187,6 +187,8 @@ final class DetailViewController: BaseViewController {
         
     }
     
+    // MARK: - Helper Method
+    
     override func configureNavigationItem() {
         
         let appear = UINavigationBarAppearance()
@@ -197,6 +199,7 @@ final class DetailViewController: BaseViewController {
         navigationItem.scrollEdgeAppearance = appear
         
         navigationController?.navigationBar.prefersLargeTitles = true
+        
         title = commonInfo.title
         
     }
