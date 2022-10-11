@@ -65,9 +65,13 @@ class CollectionViewController: BaseViewController {
         
         let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(touchCloseButton(_:)))
         
-        let settingButton = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(touchSettingButton(_:)))
+        let settingButton = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: self, action: #selector(touchSettingButton(_:)))
         
-        let worldMapButton = UIBarButtonItem(image: UIImage(systemName: "map.fill"), style: .plain, target: self, action: #selector(touchWorldMapButton(_:)))
+        let button  = UIButton(type: .system)
+        button.setImage(.map, for: .normal)
+        button.addTarget(self, action: #selector(touchWorldMapButton(_:)), for: .touchUpInside)
+        button.snp.makeConstraints {$0.size.equalTo(27) }
+        let worldMapButton = UIBarButtonItem(customView: button)
         
         navigationItem.leftBarButtonItem = closeButton
         
@@ -91,7 +95,7 @@ class CollectionViewController: BaseViewController {
     
     @objc func touchWorldMapButton(_ sender: UIBarButtonItem) {
         
-        navigationController?.pushViewController(UIViewController(), animated: true)
+        navigationController?.pushViewController(WorldMapViewController(), animated: true)
         
     }
     
