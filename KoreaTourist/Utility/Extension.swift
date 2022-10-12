@@ -146,7 +146,7 @@ extension UIColor {
     static let disabledMarker = UIColor(named: "disabledMarker")!
     //UIColor(red: 69/255, green: 82/255, blue: 108/255, alpha: 1)
     
-    static let discoverdMarker = UIColor(named: "discoverdMarker")!
+    static let discoverdMarker = UIColor(named: "discoveredMarker")!
     //UIColor(red: 117/255, green: 86/255, blue: 86/255, alpha: 1)
     //UIColor(red: 84/255, green: 183/255, blue: 161/255, alpha: 1)
     
