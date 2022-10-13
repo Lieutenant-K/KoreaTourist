@@ -42,9 +42,7 @@ final class MapView: NMFNaverMapView {
     
     let circleButton = CircleMenu(frame: .zero, normalIcon: "", selectedIcon: "", duration: 0.5, distance: 85).then {
         
-        
         let image: UIImage = .backpack
-//        UIImage(systemName: "list.bullet")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25, weight: .semibold))
         
         let selectImage = UIImage(systemName: "xmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25, weight: .medium))
         
@@ -370,11 +368,13 @@ final class MapView: NMFNaverMapView {
         
     }
     
-    func deviceOrientationDidChange(mode: CameraMode) {
+    // MARK: Landscape Update Method
+    
+    func deviceOrientationDidChange(mode: CameraMode, orient: UIDeviceOrientation) {
         
         updateMapView(mode: mode)
         
-        updateSubviews()
+        updateSubviews(orient: orient)
         
     }
     
@@ -396,13 +396,11 @@ final class MapView: NMFNaverMapView {
         
     }
     
-    private func updateSubviews() {
+    private func updateSubviews(orient: UIDeviceOrientation) {
         
-        let orientation = UIDevice.current.orientation
+        updateTopViews(orient: orient)
         
-        updateTopViews(orient: orientation)
-        
-        updateBottomViews(orient: orientation)
+        updateBottomViews(orient: orient)
         
     }
     
@@ -430,6 +428,7 @@ final class MapView: NMFNaverMapView {
         let bottom: CGFloat = orient == .portrait ? 60 : 30
         buttonInset.bottom = bottom
         
+        updateCircleButton(orient: orient)
         
         trackButton.snp.updateConstraints { make in
             make.leading.bottom.equalToSuperview().inset(buttonInset)
@@ -466,6 +465,19 @@ final class MapView: NMFNaverMapView {
             }
             
         }
+        
+    }
+    
+    private func updateCircleButton(orient: UIDeviceOrientation) {
+        
+        let end: Float = orient == .portrait ? 90 : 0
+        let dist: Float = orient == .portrait ? 85 : 100
+        
+        circleButton.startAngle = -90
+        circleButton.endAngle = end
+        circleButton.distance = dist
+        circleButton.subButtonsRadius = 20
+        circleButton.hideButtons(0)
         
     }
     

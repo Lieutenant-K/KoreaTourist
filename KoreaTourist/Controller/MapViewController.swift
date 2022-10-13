@@ -485,9 +485,11 @@ final class MapViewController: BaseViewController {
         
         let orientation = UIDevice.current.orientation
         
-        print(UIScreen.main.bounds)
+//        print("isValid",orientation.isValidInterfaceOrientation)
         
-        naverMapView.deviceOrientationDidChange(mode: cameraMode)
+        if orientation.isValidInterfaceOrientation {
+            naverMapView.deviceOrientationDidChange(mode: cameraMode, orient: orientation)
+        }
         
     }
     
