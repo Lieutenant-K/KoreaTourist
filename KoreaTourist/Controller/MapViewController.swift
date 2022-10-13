@@ -181,7 +181,7 @@ final class MapViewController: BaseViewController {
         super.viewDidLoad()
         print(#function)
         
-//        locationManager.add(self)
+        addObservers()
         
         checkLocationService()
         
@@ -189,7 +189,6 @@ final class MapViewController: BaseViewController {
         
         settingMarkerTouchHandler()
         
-//        Self.locationManager.startUpdatingHeading()
     }
     
     
@@ -208,6 +207,12 @@ final class MapViewController: BaseViewController {
     }
     
     // MARK: - Method
+    
+    private func addObservers() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
+        
+    }
     
     private func checkLocationService() {
         
@@ -475,6 +480,16 @@ final class MapViewController: BaseViewController {
     }
     
     // MARK: - Action Method
+    
+    @objc private func deviceOrientationChanged() {
+        
+        let orientation = UIDevice.current.orientation
+        
+        print(UIScreen.main.bounds)
+        
+        naverMapView.deviceOrientationDidChange(mode: cameraMode)
+        
+    }
     
     
     @objc func touchPreviousCameraButton() {

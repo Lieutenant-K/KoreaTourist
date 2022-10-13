@@ -15,6 +15,10 @@ final class MapView: NMFNaverMapView {
     
     // MARK: - Properties
     
+    private let buttonWidth: CGFloat = 50
+    private var buttonInset = UIEdgeInsets(top: 0, left: 28, bottom: 60, right: 28)
+    
+    
     let infoWindow = NMFInfoWindow()
     
     let geoTitleLabel = UILabel().then {
@@ -206,24 +210,21 @@ final class MapView: NMFNaverMapView {
     
     private func setBottomViews() {
         
-        let buttonWidth = 50.0
-        let inset = UIEdgeInsets(top: 0, left: 28, bottom: 60, right: 28)
-        
         circleButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(inset)
+            make.bottom.equalToSuperview().inset(buttonInset)
             make.width.equalTo(buttonWidth)
             make.height.equalTo(circleButton.snp.width)
         }
         
         cameraButton.snp.makeConstraints { make in
-            make.trailing.bottom.equalToSuperview().inset(inset)
+            make.trailing.bottom.equalToSuperview().inset(buttonInset)
             make.width.equalTo(buttonWidth)
-            make.height.equalTo(circleButton.snp.width)
+            make.height.equalTo(cameraButton.snp.width)
         }
         
         trackButton.snp.makeConstraints { make in
-            make.leading.bottom.equalToSuperview().inset(inset)
+            make.leading.bottom.equalToSuperview().inset(buttonInset)
             make.width.equalTo(buttonWidth)
             make.height.equalTo(trackButton.snp.width)
         }
@@ -366,6 +367,105 @@ final class MapView: NMFNaverMapView {
         circleOverlay.outlineColor = .secondaryLabel
 //        mapView.locationOverlay.icon = NMFOverlayImage(image: .naviIcon)
         
+        
+    }
+    
+    func deviceOrientationDidChange(mode: CameraMode) {
+        
+        updateMapView(mode: mode)
+        
+        updateSubviews()
+        
+    }
+    
+    private func updateMapView(mode: CameraMode) {
+        
+        var location: NMGLatLng
+        
+        switch mode {
+        case .select(let loc):
+            location = loc
+        default:
+            location = mapView.locationOverlay.location
+        }
+        
+        let update = NMFCameraUpdate(scrollTo: location)
+        
+        mapView.contentInset = mode == .navigate ? contentInset : .zero
+        mapView.moveCamera(update)
+        
+    }
+    
+    private func updateSubviews() {
+        
+        let orientation = UIDevice.current.orientation
+        
+        updateTopViews(orient: orientation)
+        
+        updateBottomViews(orient: orientation)
+        
+    }
+    
+    private func updateTopViews(orient: UIDeviceOrientation){
+        
+        let top: CGFloat = orient == .portrait ? 0 : 12
+        let left: CGFloat = orient == .portrait ? 12 : 28
+        
+        let inset = UIEdgeInsets(top: top, left: left, bottom: 0, right: 0)
+        
+        compass.snp.updateConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).inset(inset)
+            make.leading.equalToSuperview().inset(inset)
+        }
+        
+        geoTitleLabel.snp.updateConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).inset(inset)
+        }
+        
+        
+    }
+    
+    private func updateBottomViews(orient: UIDeviceOrientation) {
+        
+        let bottom: CGFloat = orient == .portrait ? 60 : 30
+        buttonInset.bottom = bottom
+        
+        
+        trackButton.snp.updateConstraints { make in
+            make.leading.bottom.equalToSuperview().inset(buttonInset)
+        }
+        
+        if orient == .portrait {
+            
+            circleButton.snp.remakeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.bottom.equalToSuperview().inset(buttonInset)
+                make.width.equalTo(buttonWidth)
+                make.height.equalTo(circleButton.snp.width)
+            }
+            
+            cameraButton.snp.remakeConstraints { make in
+                make.trailing.bottom.equalToSuperview().inset(buttonInset)
+                make.width.equalTo(buttonWidth)
+                make.height.equalTo(cameraButton.snp.width)
+            }
+            
+        } else {
+            
+            circleButton.snp.remakeConstraints { make in
+                make.trailing.bottom.equalToSuperview().inset(buttonInset)
+                make.width.equalTo(buttonWidth)
+                make.height.equalTo(circleButton.snp.width)
+            }
+            
+            cameraButton.snp.remakeConstraints { make in
+                make.leading.equalTo(trackButton.snp.trailing).offset(buttonInset.left + buttonWidth/2)
+                make.bottom.equalToSuperview().inset(buttonInset)
+                make.width.equalTo(buttonWidth)
+                make.height.equalTo(cameraButton.snp.width)
+            }
+            
+        }
         
     }
     
