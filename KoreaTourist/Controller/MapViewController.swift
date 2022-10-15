@@ -105,7 +105,6 @@ final class MapViewController: BaseViewController {
     
     static let locationManager = CLLocationManager().then {
         $0.desiredAccuracy = kCLLocationAccuracyBest
-        
 //        $0.distanceFilter = 1
         
     }
@@ -488,6 +487,18 @@ final class MapViewController: BaseViewController {
 //        print("isValid",orientation.isValidInterfaceOrientation)
         
         if orientation.isValidInterfaceOrientation {
+            
+            switch orientation {
+            case .portrait:
+                Self.locationManager.headingOrientation = .portrait
+            case .landscapeLeft:
+                Self.locationManager.headingOrientation = .landscapeLeft
+            case .landscapeRight:
+                Self.locationManager.headingOrientation = .landscapeRight
+            default:
+                break
+            }
+            
             naverMapView.deviceOrientationDidChange(mode: cameraMode, orient: orientation)
         }
         
