@@ -32,8 +32,8 @@ class CollectionView: BaseView {
         layout.minimumInteritemSpacing = space
         layout.minimumLineSpacing = space
         layout.sectionInset = UIEdgeInsets(top: space, left: space, bottom: space, right: space)
-        let sizeValue = (UIScreen.main.bounds.width - 4*space) / 3
-        layout.itemSize = CGSize(width: sizeValue, height: sizeValue)
+//        let sizeValue = (UIScreen.main.bounds.width - 4*space) / 3
+//        layout.itemSize = CGSize(width: sizeValue, height: sizeValue)
         
         $0.register(CollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionHeaderView.reuseIdentifier)
         $0.register(PlaceCollectionCell.self, forCellWithReuseIdentifier: PlaceCollectionCell.reuseIdentifier)
@@ -41,6 +41,7 @@ class CollectionView: BaseView {
         
         
     }
+    
     
     override func addSubviews() {
         addSubview(placeItemView)

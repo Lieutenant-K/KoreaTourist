@@ -187,9 +187,19 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
             
         } else {
             
-            let layout = collectionViewLayout as! UICollectionViewFlowLayout
+            let space = (collectionViewLayout as! UICollectionViewFlowLayout).minimumInteritemSpacing
             
-            return layout.itemSize
+            if let orient = view.window?.windowScene?.interfaceOrientation {
+                
+                let width = collectionView.bounds.width
+                
+                let sizeValue = orient.isLandscape ? (width - 6*space) / 5 : (width - 4*space) / 3
+                
+                return CGSize(width: sizeValue, height: sizeValue)
+                
+            } else {
+                return .zero
+            }
             
         }
         
