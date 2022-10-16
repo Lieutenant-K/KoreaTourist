@@ -488,16 +488,7 @@ final class MapViewController: BaseViewController {
         
         if orientation.isValidInterfaceOrientation {
             
-            switch orientation {
-            case .portrait:
-                Self.locationManager.headingOrientation = .portrait
-            case .landscapeLeft:
-                Self.locationManager.headingOrientation = .landscapeLeft
-            case .landscapeRight:
-                Self.locationManager.headingOrientation = .landscapeRight
-            default:
-                break
-            }
+            Self.locationManager.changeHeadingOrientation(with: orientation)
             
             naverMapView.deviceOrientationDidChange(mode: cameraMode, orient: orientation)
         }

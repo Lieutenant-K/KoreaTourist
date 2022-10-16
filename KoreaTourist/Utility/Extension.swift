@@ -8,6 +8,7 @@
 import UIKit
 import Kingfisher
 import NMapsMap
+import CoreLocation
 
 extension UIImage {
     
@@ -172,5 +173,34 @@ extension UIAlertAction {
             }
         }
     
+    
+}
+
+extension CLLocationManager {
+    
+    func changeHeadingOrientation(with device: UIDeviceOrientation) {
+        
+        switch device {
+        case .unknown:
+            self.headingOrientation = .unknown
+        case .portrait:
+            self.headingOrientation = .portrait
+        case .portraitUpsideDown:
+            self.headingOrientation = .portraitUpsideDown
+        case .landscapeLeft:
+            self.headingOrientation = .landscapeLeft
+        case .landscapeRight:
+            self.headingOrientation = .landscapeRight
+        case .faceUp:
+            self.headingOrientation = .faceUp
+        case .faceDown:
+            self.headingOrientation = .faceDown
+        default:
+            break
+        }
+        
+        
+        
+    }
     
 }
