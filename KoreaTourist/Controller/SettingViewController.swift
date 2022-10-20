@@ -14,14 +14,16 @@ import SafariServices
 
 final class SettingViewController: BaseViewController {
     
-    private let reuseIdentifier = "cell"
-    
     private let cellTitles = ["오픈소스 라이브러리", "문의하기", "개인정보 처리방침", "앱 버전"]
+    
+    private var dataSource: UICollectionViewDiffableDataSource<Int, String>!
 
-    private lazy var tableView = UITableView().then {
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then {
+        
+        let config = UICollectionLayoutListConfiguration(appearance: .plain)
+        $0.collectionViewLayout = UICollectionViewCompositionalLayout.list(using: config)
         $0.delegate = self
-        $0.dataSource = self
-        $0.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+
     }
     
     override func configureNavigationItem() {
@@ -35,41 +37,48 @@ final class SettingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        view.addSubview(tableView)
+        view.addSubview(collectionView)
         
-        tableView.snp.makeConstraints { $0.edges.equalTo(view.safeAreaLayoutGuide)
+        collectionView.snp.makeConstraints { $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
+        
+        configureCollectionView()
+        
+    }
+    
+    func configureCollectionView() {
+        
+        var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, String> = UICollectionView.CellRegistration { cell, indexPath, itemIdentifier in
+            
+            var config = UIListContentConfiguration.valueCell()
+            config.text = itemIdentifier
+            config.prefersSideBySideTextAndSecondaryText = false
+            config.secondaryText = itemIdentifier == "앱 버전" ? "1.0.1" : nil
+            cell.accessories = itemIdentifier != "앱 버전" ? [.disclosureIndicator()] : []
+            cell.contentConfiguration = config
+            
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+            
+            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
+            
+            return cell
+            
+        })
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Int, String>()
+        snapshot.appendSections([0])
+        snapshot.appendItems(cellTitles)
+        dataSource.apply(snapshot)
         
     }
 
 }
 
-extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
+extension SettingViewController: UICollectionViewDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellTitles.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-        
-        var config = UIListContentConfiguration.sidebarCell()
-        
-        config.text = cellTitles[indexPath.row]
-        config.textProperties.color = .label
-        config.textProperties.font = .systemFont(ofSize: 18, weight: .regular)
-        
-        
-        config.secondaryText = indexPath.row == 3 ? "1.0.0" : ""
-        
-        cell.contentConfiguration = config
-        cell.accessoryType = .disclosureIndicator
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         switch indexPath.row {
             
@@ -90,8 +99,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
     }
-    
-    
     
 }
 
