@@ -48,7 +48,7 @@ final class SettingViewController: BaseViewController {
     
     func configureCollectionView() {
         
-        var cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, String> = UICollectionView.CellRegistration { cell, indexPath, itemIdentifier in
+        let cellRegistration: UICollectionView.CellRegistration<UICollectionViewListCell, String> = UICollectionView.CellRegistration { cell, indexPath, itemIdentifier in
             
             var config = UIListContentConfiguration.valueCell()
             config.text = itemIdentifier
@@ -137,8 +137,6 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
         default:
             title = "예상하지 못한 에러가 발생했습니다."
         }
-//        showAlert(title: text)
-//        print(result, error)
         self.dismiss(animated: true) { [weak self] in
             self?.showAlert(title: title, message: message)
         }
