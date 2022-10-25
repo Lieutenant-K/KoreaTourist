@@ -74,18 +74,16 @@ class CollectionViewController: BaseViewController {
             
         }
         
-        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView.placeItemView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
+        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView.placeItemView) { [unowned self] collectionView, indexPath, itemIdentifier in
             
             let section = Section(rawValue: indexPath.section)
-            
-//            let region = regionList?[indexPath.row]
             
             let cell = section == .region ? collectionView.dequeueConfiguredReusableCell(using: categoryCellRegistration, for: indexPath, item: regionList![indexPath.row]) :
             collectionView.dequeueConfiguredReusableCell(using: placeCellRegistration, for: indexPath, item: placeList![indexPath.row])
             
             return cell
             
-        })
+        }
         
     }
     
@@ -165,52 +163,8 @@ class CollectionViewController: BaseViewController {
 
 
 // MARK: - CollectionView DataSource, Delegate
-extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        section == 0 ? (regionList?.count ?? 0) : (placeList?.count ?? 0)
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if indexPath.section == 0 {
-            
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else { return UICollectionViewCell() }
-            
-            if let region = regionList?[indexPath.row].name {
-                cell.label.text = region
-            }
-            
-            return cell
-            
-            
-        } else {
-            
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceCollectionCell.reuseIdentifier, for: indexPath) as? PlaceCollectionCell else { return UICollectionViewCell() }
-            
-            if let place = placeList?[indexPath.row] {
-                
-                if place.isImageIncluded {
-                    cell.imageView.kf.setImage(with: URL(string: place.thumbnail), options: [.transition(.fade(0.5))])
-                    cell.imageView.contentMode = .scaleAspectFill
-                } else {
-                    cell.imageView.image = UIImage(systemName: "photo")
-                    cell.imageView.contentMode = .center
-                }
-                
-                
-            }
-            
-            return cell
-            
-        }
-        
-    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -235,7 +189,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
         }
     }
     
-    
+    /*
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         if indexPath.section == 0 {
@@ -275,6 +229,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
         return section == 0 ? space/2 : space
         
     }
+     */
     
     /*
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
