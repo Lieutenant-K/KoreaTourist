@@ -11,33 +11,94 @@ import Kingfisher
 
 class CollectionViewController: BaseViewController {
     
-    
+    enum Section: Int, CaseIterable {
+        
+        case region, place
+        
+    }
     
     let collectionView = CollectionView()
     
     var regionList: Results<AreaCode>? {
         didSet {
-            collectionView.placeItemView.reloadSections([0])
+//            collectionView.placeItemView.reloadSections([0])
+            updateSnapshot()
         }
     }
     
     var placeList: Results<CommonPlaceInfo>? {
         didSet {
             collectionView.placeItemView.backgroundView = placeList?.count ?? 0 > 0 ? nil : collectionView.backgroundView
-            collectionView.placeItemView.reloadSections([1])
+//            collectionView.placeItemView.reloadSections([1])
+            updateSnapshot()
         }
     }
+    
+    var dataSource: UICollectionViewDiffableDataSource<Section, Int>!
     
     override func loadView() {
         view = collectionView
         collectionView.placeItemView.delegate = self
-        collectionView.placeItemView.dataSource = self
+//        collectionView.placeItemView.dataSource = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureCollectionView()
         fetchPlaceList()
         fetchAreaList()
+//        updateSnapshot()
+    }
+    
+    func configureCollectionView() {
+        
+        let categoryCellRegistration = UICollectionView.CellRegistration<CategoryCell, AreaCode> { cell, indexPath, itemIdentifier in
+            
+            cell.label.text = itemIdentifier.name
+            
+        }
+        
+        let placeCellRegistration = UICollectionView.CellRegistration<PlaceCollectionCell, CommonPlaceInfo> { cell, indexPath, itemIdentifier in
+            
+            if itemIdentifier.isImageIncluded {
+                
+                cell.imageView.kf.setImage(with: URL(string: itemIdentifier.thumbnail), options: [.transition(.fade(0.5))])
+                cell.imageView.contentMode = .scaleAspectFill
+                
+            } else {
+                
+                cell.imageView.image = UIImage(systemName: "photo")
+                cell.imageView.contentMode = .center
+                
+            }
+            
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView.placeItemView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
+            
+            let section = Section(rawValue: indexPath.section)
+            
+//            let region = regionList?[indexPath.row]
+            
+            let cell = section == .region ? collectionView.dequeueConfiguredReusableCell(using: categoryCellRegistration, for: indexPath, item: regionList![indexPath.row]) :
+            collectionView.dequeueConfiguredReusableCell(using: placeCellRegistration, for: indexPath, item: placeList![indexPath.row])
+            
+            return cell
+            
+        })
+        
+    }
+    
+    func updateSnapshot() {
+        
+        let regionCount = regionList?.count ?? 0
+        let placeCount = placeList?.count ?? 0
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Int>()
+        snapshot.appendSections([Section.region, Section.place])
+        snapshot.appendItems([Int](0..<regionCount), toSection: Section.region)
+        snapshot.appendItems([Int](regionCount..<regionCount + placeCount), toSection: Section.place)
+        dataSource.apply(snapshot)
         
     }
     
@@ -215,6 +276,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
         
     }
     
+    /*
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionHeaderView.reuseIdentifier, for: indexPath) as? CollectionHeaderView else { return UICollectionReusableView() }
@@ -233,5 +295,5 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
         section == 0 ? CGSize(width: 0, height: 32) : .zero
         
     }
-    
+    */
 }
