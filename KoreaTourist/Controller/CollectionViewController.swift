@@ -11,7 +11,7 @@ import Kingfisher
 
 class CollectionViewController: BaseViewController {
     
-    enum Section: Int, CaseIterable {
+    enum SectionLayoutKind: Int, CaseIterable {
         
         case region, place
         
@@ -34,7 +34,7 @@ class CollectionViewController: BaseViewController {
         }
     }
     
-    var dataSource: UICollectionViewDiffableDataSource<Section, Int>!
+    var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Int>!
     
     override func loadView() {
         view = collectionView
@@ -76,7 +76,7 @@ class CollectionViewController: BaseViewController {
         
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView.placeItemView) { [unowned self] collectionView, indexPath, itemIdentifier in
             
-            let section = Section(rawValue: indexPath.section)
+            let section = SectionLayoutKind(rawValue: indexPath.section)
             
             let cell = section == .region ? collectionView.dequeueConfiguredReusableCell(using: categoryCellRegistration, for: indexPath, item: regionList![indexPath.row]) :
             collectionView.dequeueConfiguredReusableCell(using: placeCellRegistration, for: indexPath, item: placeList![indexPath.row])
@@ -92,10 +92,10 @@ class CollectionViewController: BaseViewController {
         let regionCount = regionList?.count ?? 0
         let placeCount = placeList?.count ?? 0
         
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Int>()
-        snapshot.appendSections([Section.region, Section.place])
-        snapshot.appendItems([Int](0..<regionCount), toSection: Section.region)
-        snapshot.appendItems([Int](regionCount..<regionCount + placeCount), toSection: Section.place)
+        var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Int>()
+        snapshot.appendSections([SectionLayoutKind.region, SectionLayoutKind.place])
+        snapshot.appendItems([Int](0..<regionCount), toSection: SectionLayoutKind.region)
+        snapshot.appendItems([Int](regionCount..<regionCount + placeCount), toSection: SectionLayoutKind.place)
         dataSource.apply(snapshot)
         
     }

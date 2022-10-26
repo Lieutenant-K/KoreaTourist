@@ -50,34 +50,40 @@ class CollectionView: BaseView {
         
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
             
-//            print(layoutEnvironment.container.contentSize)
+            let sectionKind = CollectionViewController.SectionLayoutKind(rawValue: sectionIndex)!
             
-            let itemSize = sectionIndex == 0 ? NSCollectionLayoutSize(widthDimension: .estimated(44), heightDimension: .estimated(44)) :
-            NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.33), heightDimension: .fractionalWidth(0.33))
+            let item: NSCollectionLayoutItem
+            let group: NSCollectionLayoutGroup
+            let section: NSCollectionLayoutSection
+            let space: CGFloat = 4
             
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            let space = NSCollectionLayoutSpacing.flexible(4)
-//            item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0)
-            
-            if sectionIndex == 0 {
-                item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: space, top: space, trailing: space, bottom: space)
-            } else {
-                item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
+            switch sectionKind {
+            case .region:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(44), heightDimension: .estimated(44))
+                item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: .none, top: .none, trailing: .flexible(space), bottom: .none)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44))
+                group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                
+                section = NSCollectionLayoutSection(group: group)
+                section.interGroupSpacing = space
+                section.contentInsets = NSDirectionalEdgeInsets(value: space*2)
+                return section
+    
+            case .place:
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3333), heightDimension: .fractionalHeight(1.0))
+                item = NSCollectionLayoutItem(layoutSize: itemSize)
+                item.contentInsets = NSDirectionalEdgeInsets(value: space)
+                
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.3333))
+                group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+                
+                section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = NSDirectionalEdgeInsets(value: space)
+                
+                return section
             }
-            
-            
-            let height: NSCollectionLayoutDimension = sectionIndex == 0 ? .estimated(44) : .fractionalWidth(0.33)
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: height)
-            
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-//            group.interItemSpacing = space
-            
-            
-            let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-//            section.interGroupSpacing = 20
-            
-            return section
             
         }
         

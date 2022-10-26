@@ -212,3 +212,11 @@ extension CLLocationManager {
     }
     
 }
+
+extension NSDirectionalEdgeInsets {
+    
+    init(value: CGFloat){
+        self.init(top: value, leading: value, bottom: value, trailing: value)
+    }
+    
+}
