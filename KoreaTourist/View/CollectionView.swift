@@ -24,26 +24,7 @@ class CollectionView: BaseView {
         label.snp.makeConstraints { $0.center.equalToSuperview() }
     }
     
-    lazy var placeItemView = UICollectionView(frame: .zero, collectionViewLayout: createLayout()).then { _ in
-        
-        /*
-        let layout = $0.collectionViewLayout as! UICollectionViewFlowLayout
-        let space: CGFloat = 8
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = space
-        layout.minimumLineSpacing = space
-        layout.sectionInset = UIEdgeInsets(top: space, left: space, bottom: space, right: space)
-         */
-        
-//        let sizeValue = (UIScreen.main.bounds.width - 4*space) / 3
-//        layout.itemSize = CGSize(width: sizeValue, height: sizeValue)
-        
-//        $0.register(CollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionHeaderView.reuseIdentifier)
-//        $0.register(PlaceCollectionCell.self, forCellWithReuseIdentifier: PlaceCollectionCell.reuseIdentifier)
-//        $0.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseIdentifier)
-        
-        
-    }
+    lazy var placeItemView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
     
     
     func createLayout() -> UICollectionViewLayout {
@@ -86,6 +67,18 @@ class CollectionView: BaseView {
             }
             
         }
+        
+        
+        let config = UICollectionViewCompositionalLayoutConfiguration().then {
+            
+            let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(30))
+            
+            let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: size, elementKind: CollectionViewController.layoutHeaderElementKind, alignment: .top)
+            
+            $0.boundarySupplementaryItems = [header]
+        }
+        
+        layout.configuration = config
         
         return layout
     }

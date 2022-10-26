@@ -10,26 +10,16 @@ import RealmSwift
 import Kingfisher
 
 class CollectionViewController: BaseViewController {
-    
-    enum SectionLayoutKind: Int, CaseIterable {
-        
-        case region, place
-        
-    }
-    
+
     let collectionView = CollectionView()
     
     var regionList: Results<AreaCode>? {
-        didSet {
-//            collectionView.placeItemView.reloadSections([0])
-            updateSnapshot()
-        }
+        didSet { updateSnapshot() }
     }
     
     var placeList: Results<CommonPlaceInfo>? {
         didSet {
             collectionView.placeItemView.backgroundView = placeList?.count ?? 0 > 0 ? nil : collectionView.backgroundView
-//            collectionView.placeItemView.reloadSections([1])
             updateSnapshot()
         }
     }
@@ -39,7 +29,6 @@ class CollectionViewController: BaseViewController {
     override func loadView() {
         view = collectionView
         collectionView.placeItemView.delegate = self
-//        collectionView.placeItemView.dataSource = self
     }
     
     override func viewDidLoad() {
@@ -47,45 +36,8 @@ class CollectionViewController: BaseViewController {
         configureCollectionView()
         fetchPlaceList()
         fetchAreaList()
-//        updateSnapshot()
     }
     
-    func configureCollectionView() {
-        
-        let categoryCellRegistration = UICollectionView.CellRegistration<CategoryCell, AreaCode> { cell, indexPath, itemIdentifier in
-            
-            cell.label.text = itemIdentifier.name
-            
-        }
-        
-        let placeCellRegistration = UICollectionView.CellRegistration<PlaceCollectionCell, CommonPlaceInfo> { cell, indexPath, itemIdentifier in
-            
-            if itemIdentifier.isImageIncluded {
-                
-                cell.imageView.kf.setImage(with: URL(string: itemIdentifier.thumbnail), options: [.transition(.fade(0.5))])
-                cell.imageView.contentMode = .scaleAspectFill
-                
-            } else {
-                
-                cell.imageView.image = UIImage(systemName: "photo")
-                cell.imageView.contentMode = .center
-                
-            }
-            
-        }
-        
-        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView.placeItemView) { [unowned self] collectionView, indexPath, itemIdentifier in
-            
-            let section = SectionLayoutKind(rawValue: indexPath.section)
-            
-            let cell = section == .region ? collectionView.dequeueConfiguredReusableCell(using: categoryCellRegistration, for: indexPath, item: regionList![indexPath.row]) :
-            collectionView.dequeueConfiguredReusableCell(using: placeCellRegistration, for: indexPath, item: placeList![indexPath.row])
-            
-            return cell
-            
-        }
-        
-    }
     
     func updateSnapshot() {
         
@@ -165,90 +117,89 @@ class CollectionViewController: BaseViewController {
 // MARK: - CollectionView DataSource, Delegate
 extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    static let layoutHeaderElementKind = "layout-header-element-kind"
+    
+    enum SectionLayoutKind: Int, CaseIterable {
+        
+        case region, place
+        
+    }
+    
+    func configureCollectionView() {
+        
+        let categoryCellRegistration = UICollectionView.CellRegistration<CategoryCell, AreaCode> { cell, indexPath, itemIdentifier in
+            
+            cell.label.text = itemIdentifier.name
+            
+        }
+        
+        let placeCellRegistration = UICollectionView.CellRegistration<PlaceCollectionCell, CommonPlaceInfo> { cell, indexPath, itemIdentifier in
+            
+            if itemIdentifier.isImageIncluded {
+                
+                cell.imageView.kf.setImage(with: URL(string: itemIdentifier.thumbnail), options: [.transition(.fade(0.5))])
+                cell.imageView.contentMode = .scaleAspectFill
+                
+            } else {
+                
+                cell.imageView.image = UIImage(systemName: "photo")
+                cell.imageView.contentMode = .center
+                
+            }
+            
+        }
+        
+        let headerRegistration = UICollectionView.SupplementaryRegistration<CollectionHeaderView>(elementKind: Self.layoutHeaderElementKind) { [unowned self] supplementaryView, elementKind, indexPath in
+            
+            let places = realm.fetchPlaces(type: CommonPlaceInfo.self)
+            
+            let discovered = places.where { $0.discoverDate != nil }
+            
+            supplementaryView.label.text = "발견한 장소: \(discovered.count) 찾은 장소: \(places.count)"
+            
+            
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView.placeItemView) { [unowned self] collectionView, indexPath, itemIdentifier in
+            
+            let section = SectionLayoutKind(rawValue: indexPath.section)
+            
+            let cell = section == .region ? collectionView.dequeueConfiguredReusableCell(using: categoryCellRegistration, for: indexPath, item: regionList![indexPath.row]) :
+            collectionView.dequeueConfiguredReusableCell(using: placeCellRegistration, for: indexPath, item: placeList![indexPath.row])
+            
+            return cell
+            
+        }
+        
+        dataSource.supplementaryViewProvider = { collectionView, elementKind, indexPath in
+            
+            collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+            
+        }
+        
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if indexPath.section == 0 {
-            
+        let sectionKind = SectionLayoutKind(rawValue: indexPath.section)!
+        
+        switch sectionKind {
+        case .region:
             if let regionId = regionList?[indexPath.row].id {
                 placeList = realm.fetchPlaces(type: CommonPlaceInfo.self).where {
                     $0.discoverDate != nil && $0.areaCode == regionId
                 }.sorted(byKeyPath: "discoverDate", ascending: false)
             }
-            
-        } else {
-            
+        case .place:
             if let place = placeList?[indexPath.row] {
                 
                 let vc = DetailViewController(place: place)
                 
                 navigationController?.pushViewController(vc, animated: true)
-                
             }
             
         }
     }
     
-    /*
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if indexPath.section == 0 {
-            
-            let label = CategoryCell.SizingLabel
-            
-            label.text = regionList?[indexPath.row].name ?? ""
-            
-            return label.intrinsicContentSize
-            
-        } else {
-            
-            let space = (collectionViewLayout as! UICollectionViewFlowLayout).minimumInteritemSpacing
-            
-            if let orient = view.window?.windowScene?.interfaceOrientation {
-                
-                let width = collectionView.bounds.width
-                
-                let sizeValue = orient.isLandscape ? (width - 6*space) / 5 : (width - 4*space) / 3
-                
-                return CGSize(width: sizeValue, height: sizeValue)
-                
-            } else {
-                return .zero
-            }
-            
-        }
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        
-        guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else { return 0 }
-        
-        let space = layout.minimumInteritemSpacing
-        
-        return section == 0 ? space/2 : space
-        
-    }
-     */
-    
-    /*
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        guard let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionHeaderView.reuseIdentifier, for: indexPath) as? CollectionHeaderView else { return UICollectionReusableView() }
-        
-        let places = realm.fetchPlaces(type: CommonPlaceInfo.self)
-        let discovered = places.where { $0.discoverDate != nil }
-        
-        view.label.text = "발견한 장소: \(discovered.count) 찾은 장소: \(places.count)"
-        
-        return view
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        
-        section == 0 ? CGSize(width: 0, height: 32) : .zero
-        
-    }
-    */
 }
