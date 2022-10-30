@@ -197,6 +197,8 @@ final class DetailViewController: BaseViewController {
         
         navigationItem.standardAppearance = appear
         navigationItem.scrollEdgeAppearance = appear
+        navigationItem.compactScrollEdgeAppearance = appear
+        navigationItem.compactAppearance = appear
         
         navigationController?.navigationBar.prefersLargeTitles = true
         
