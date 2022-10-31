@@ -30,7 +30,7 @@ class CollectionView: BaseView {
     func createLayout() -> UICollectionViewLayout {
         
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
-            
+            layoutEnvironment.traitCollection
             let sectionKind = CollectionViewController.SectionLayoutKind(rawValue: sectionIndex)!
             
             let item: NSCollectionLayoutItem
@@ -53,11 +53,12 @@ class CollectionView: BaseView {
                 return section
     
             case .place:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3333), heightDimension: .fractionalHeight(1.0))
+                let rate: CGFloat = layoutEnvironment.traitCollection.horizontalSizeClass == .compact ? 0.3333 : 0.2
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(rate), heightDimension: .fractionalHeight(1.0))
                 item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(value: space)
                 
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.3333))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(rate))
                 group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 section = NSCollectionLayoutSection(group: group)
