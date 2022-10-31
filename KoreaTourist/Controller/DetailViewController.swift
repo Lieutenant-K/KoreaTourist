@@ -206,11 +206,26 @@ final class DetailViewController: BaseViewController {
         
     }
     
+    @objc func touchCloseButton(_ sender:UIBarButtonItem) {
+        self.dismiss(animated: true)
+        
+    }
+    
+    func addCloseButton() {
+        
+        let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(touchCloseButton(_:)))
+        
+        navigationItem.leftBarButtonItem = closeButton
+        
+    }
+    
     // MARK: - Initailizer
     
-    init(place: CommonPlaceInfo) {
+    init(place: CommonPlaceInfo, isModal: Bool = false) {
         commonInfo = place
         super.init()
+        
+        if isModal { addCloseButton() }
     }
     
 }

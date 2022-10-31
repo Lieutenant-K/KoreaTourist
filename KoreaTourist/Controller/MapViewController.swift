@@ -269,7 +269,7 @@ final class MapViewController: BaseViewController {
         
         if marker.placeInfo.isDiscovered {
 //            print("이미 발견됨!!!!")
-            let vc = DetailViewController(place: marker.placeInfo)
+            let vc = DetailViewController(place: marker.placeInfo, isModal: true)
             let navi = UINavigationController(rootViewController: vc)
             present(navi, animated: true)
             return
