@@ -19,8 +19,9 @@ class CommonInfoView: BaseView {
     }
     let locationView = LocationView()
     let galleryView = GalleryView()
+    let placeInfoTypeView = PlaceInfoTypeView()
     
-    private lazy var stackView = UIStackView(arrangedSubviews: [locationView, galleryView]).then {
+    private lazy var stackView = UIStackView(arrangedSubviews: [locationView, galleryView, placeInfoTypeView]).then {
         $0.axis = .vertical
         $0.spacing = 20
         $0.alignment = .fill

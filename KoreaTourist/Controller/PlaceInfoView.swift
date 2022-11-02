@@ -9,7 +9,7 @@ import UIKit
 import Then
 import SnapKit
 
-class ScrollView: UIScrollView {
+class PlaceInfoView: UIScrollView {
     
     let contentView = UIView().then {
         $0.backgroundColor = .white
@@ -19,7 +19,7 @@ class ScrollView: UIScrollView {
         $0.backgroundColor = .cyan
     }
     
-    let containerView = CommonInfoView().then {
+    let containerView = UIView().then {
         $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.layer.shadowOpacity = 0.5
     }
@@ -50,6 +50,7 @@ class ScrollView: UIScrollView {
         containerView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview().inset(20)
             make.top.equalTo(imageView.snp.bottom).offset(-100)
+            make.height.greaterThanOrEqualTo(0)
 //            make.height.equalTo(900)
         }
         

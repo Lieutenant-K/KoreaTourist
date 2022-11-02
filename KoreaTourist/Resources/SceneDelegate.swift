@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let notFirst = UserDefaults.standard.bool(forKey: "notFirst")
         
-        let vc = ViewController()
+        let vc = PlaceInfoViewController()
 //        notFirst ? MapViewController() : OnBoardingViewController() //MapViewController()
 //        let navi = UINavigationController(rootViewController: vc)
         
