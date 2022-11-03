@@ -8,8 +8,9 @@
 import UIKit
 import Then
 
-class IntroView: BaseView {
-
+class IntroView: UITableView {
+    
+    /*
     let titleLabel = UILabel().then {
         $0.text = "개요"
         $0.numberOfLines = 1
@@ -33,8 +34,9 @@ class IntroView: BaseView {
         $0.alignment = .fill
         $0.spacing = 8
         $0.axis = .vertical
-    }
+    }*/
     
+    /*
     override func addSubviews() {
         addSubview(verticalStack)
     }
@@ -48,5 +50,9 @@ class IntroView: BaseView {
             make.height.greaterThanOrEqualTo(0)
         }
     }
-
+     */
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
 }

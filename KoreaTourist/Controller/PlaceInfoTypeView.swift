@@ -55,6 +55,7 @@ class PlaceInfoTypeView: BaseView {
         
         contentView.snp.makeConstraints { make in
             make.height.greaterThanOrEqualTo(0)
+//            make.height.equalTo(0)
         }
         
         self.snp.makeConstraints { make in
