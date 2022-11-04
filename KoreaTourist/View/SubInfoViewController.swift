@@ -9,7 +9,7 @@ import UIKit
 
 class SubInfoViewController: BaseViewController {
     
-    var place: CommonPlaceInfo!
+    let place: CommonPlaceInfo
     
     /*
     let introController = IntroInfoController()
@@ -17,11 +17,7 @@ class SubInfoViewController: BaseViewController {
     let extraController = ExtraInfoController()
     */
     
-    lazy var viewControllers: [SubInfoElementController] = [
-        IntroInfoController(place: place),
-        DetailInfoViewController(place: place),
-        ExtraInfoController(place: place)
-    ]
+    let viewControllers: [SubInfoElementController]
     
     let subInfoView = SubInfoView()
 
@@ -31,9 +27,11 @@ class SubInfoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        /*
         if let place = realm.loadPlaceInfo(infoType: CommonPlaceInfo.self, contentId: 2373206) {
             self.place = place
         }
+        */
         
         addChileVC()
         configureButtonAction()
@@ -88,12 +86,17 @@ class SubInfoViewController: BaseViewController {
         
     }
     
-    /*
+    
     init(place: CommonPlaceInfo) {
         self.place = place
+        self.viewControllers = [
+            IntroInfoController(place: place),
+            DetailInfoViewController(place: place),
+            ExtraInfoController(place: place)
+        ]
         super.init()
     }
-    */
+    
 
 
 }

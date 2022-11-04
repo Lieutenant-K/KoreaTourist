@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PlaceInfoViewController: BaseViewController {
     
+    let place: CommonPlaceInfo
+    let mainInfoVC: MainInfoViewController
+    
     let placeInfoView = PlaceInfoView()
-    let mainInfoVC = MainInfoViewController()
     
     override func loadView() {
         view = placeInfoView
@@ -20,6 +23,12 @@ class PlaceInfoViewController: BaseViewController {
         super.viewDidLoad()
         
         addContentVC()
+        configureImage()
+    }
+    
+    func configureImage() {
+        
+        placeInfoView.imageView.kf.setImage(with: URL(string: place.image), options: [.transition(.fade(0.3))])
         
     }
     
@@ -37,7 +46,11 @@ class PlaceInfoViewController: BaseViewController {
         
     }
     
-
+    init(place: CommonPlaceInfo){
+        self.mainInfoVC = MainInfoViewController(place: place)
+        self.place = place
+        super.init()
+    }
    
 
 }

@@ -64,7 +64,7 @@ class PlaceInfoView: UIScrollView {
     }
     
     func setBackground() {
-        backgroundColor = .blue
+        backgroundColor = .systemBackground
     }
     
     required init?(coder: NSCoder) {

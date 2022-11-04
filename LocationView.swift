@@ -12,13 +12,42 @@ import NMapsMap
 class LocationView: BaseView {
 
     let addressLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 16, weight: .medium)
+        $0.font = .systemFont(ofSize: 18, weight: .medium)
         $0.numberOfLines = 0
         $0.textAlignment = .center
-        $0.text = "서울시 동작구 대방동 27길 27\n(06945)"
     }
     
-    let mapView = NMFMapView()
+    let mapView = NMFMapView().then {
+        $0.isScrollGestureEnabled = false
+    }
+    
+    func configureMapView(pos: NMGLatLng, date: Date?){
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = """
+                    yyyy년 MM월 dd일
+                    HH시 mm분
+                    발견
+                    """
+        formatter.locale = Locale(identifier: "ko_KR")
+        
+        let marker = NMFMarker(position: pos, iconImage: NMF_MARKER_IMAGE_BLACK).then {
+            
+            $0.captionText = date != nil ? formatter.string(from: date!) : "미발견"
+            $0.iconTintColor = .discoverdMarker
+            $0.captionColor = .label
+            $0.captionHaloColor = .systemBackground
+            $0.isHideCollidedSymbols = true
+            $0.captionTextSize = 14
+            $0.captionOffset = 4
+//            $0.height = 50
+//            $0.width = 35
+        }
+        
+        marker.mapView = mapView
+        
+        
+    }
     
     override func addSubviews() {
         [addressLabel, mapView].forEach {
@@ -42,6 +71,11 @@ class LocationView: BaseView {
 //        self.snp.makeConstraints { make in
 //            make.height.greaterThanOrEqualTo(0)
 //        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        
+        mapView.adjustInterfaceStyle(style: UITraitCollection.current.userInterfaceStyle)
     }
 
 }

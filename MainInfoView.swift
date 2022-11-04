@@ -13,7 +13,6 @@ class MainInfoView: BaseView {
 
     let nameLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 30, weight: .bold)
-        $0.text = "대방홈타운 아파트"
         $0.numberOfLines = 0
         $0.textAlignment = .center
     }
