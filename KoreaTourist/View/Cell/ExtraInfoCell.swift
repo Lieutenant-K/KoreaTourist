@@ -6,29 +6,36 @@
 //
 
 import UIKit
+import Then
 
 final class ExtraInfoCell: BaseInfoCell {
     
-    let containerView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.distribution = .fill
-        view.alignment = .fill
-        view.spacing = 14
-       return view
-    }()
+    let stackView = UIStackView().then {
+        
+        $0.axis = .vertical
+        $0.distribution = .fill
+        $0.alignment = .fill
+        $0.spacing = 12
+       
+    }
     
     func inputData(data: [ExtraPlaceElement]) {
         
-        if containerView.arrangedSubviews.count > 0 {
-            return
+//        if stackView.arrangedSubviews.count > 0 {
+//            return
+//        }
+        
+        data.forEach {
+            let title = $0.infoTitle
+            let content = $0.infoText
+            stackView.addArrangedSubview(LabelStackView(title: title, content: content, axis: .vertical))
         }
         
-        data.map { (element) -> LabelStackView in
-            let label = LabelStackView(title: element.infoTitle, axis: .vertical)
-            label.contentLabel.text = element.infoText
-            return label
-        }.forEach {  containerView.addArrangedSubview($0) }
+//        data.map { (element) -> LabelStackView in
+//            let label = LabelStackView(title: element.infoTitle,content: "", axis: .vertical)
+//            label.contentLabel.text = element.infoText
+//            return label
+//        }.forEach {  stackView.addArrangedSubview($0) }
         
     }
     
@@ -39,16 +46,16 @@ final class ExtraInfoCell: BaseInfoCell {
     
     override func addSubviews() {
         super.addSubviews()
-        contentView.addSubview(containerView)
+        contentView.addSubview(stackView)
         
     }
     
     override func addConstraints() {
         super.addConstraints()
         
-        containerView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.leading.bottom.trailing.equalTo(contentView).inset(18)
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.leading.bottom.trailing.equalTo(contentView).inset(12)
         }
         
     }

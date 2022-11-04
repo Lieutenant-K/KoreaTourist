@@ -19,8 +19,8 @@ class SubInfoViewController: BaseViewController {
     
     lazy var viewControllers: [SubInfoElementController] = [
         IntroInfoController(place: place),
-        DetailInfoViewController(),
-        ExtraInfoController()
+        DetailInfoViewController(place: place),
+        ExtraInfoController(place: place)
     ]
     
     let subInfoView = SubInfoView()
