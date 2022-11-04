@@ -7,22 +7,21 @@
 
 import UIKit
 import SnapKit
+import Then
 
-final class WebPageInfoCell: BaseInfoCell {
+final class WebPageInfoCell: BaseInfoCell, IntroCell {
     
-    let contentLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 20, weight: .medium)
-        view.textAlignment = .left
-        view.textColor = .label
-        view.numberOfLines = 1
-        view.adjustsFontSizeToFitWidth = true
-        
-       return view
-    }()
+    let contentLabel = UITextView().then {
+        $0.dataDetectorTypes = .link
+        $0.isEditable = false
+        $0.isScrollEnabled = false
+        $0.font = .systemFont(ofSize: 18, weight: .medium)
+        $0.textAlignment = .left
+        $0.textColor = .label
+    }
     
-    func checkValidation() {
-        isHidden = contentLabel.isValidate ? false : true
+    func inputData(intro: Intro) {
+        contentLabel.text = intro.homepage
     }
     
     override func configureCell() {
@@ -40,8 +39,8 @@ final class WebPageInfoCell: BaseInfoCell {
         super.addConstraints()
         
         contentLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.leading.bottom.trailing.equalTo(contentView).inset(18)
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.leading.bottom.trailing.equalTo(contentView).inset(12)
         }
         
     }

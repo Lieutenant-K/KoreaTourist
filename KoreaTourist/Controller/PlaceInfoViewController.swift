@@ -10,7 +10,7 @@ import UIKit
 class PlaceInfoViewController: BaseViewController {
     
     let placeInfoView = PlaceInfoView()
-    let commonInfoVC = CommonInfoViewController()
+    let mainInfoVC = MainInfoViewController()
     
     override func loadView() {
         view = placeInfoView
@@ -25,15 +25,15 @@ class PlaceInfoViewController: BaseViewController {
     
     private func addContentVC() {
         
-        addChild(commonInfoVC)
+        addChild(mainInfoVC)
         
-        placeInfoView.containerView.addSubview(commonInfoVC.view)
+        placeInfoView.containerView.addSubview(mainInfoVC.view)
         
-        commonInfoVC.view.snp.makeConstraints { make in
+        mainInfoVC.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        commonInfoVC.didMove(toParent: self)
+        mainInfoVC.didMove(toParent: self)
         
     }
     

@@ -28,7 +28,7 @@ final class OtherDetailInfoCell: BaseInfoCell {
         return stack
     }()
     
-    func inputData(data: TourPlaceInfo.OtherData){
+    func inputData(data: TourPlaceInfo.ServiceData){
         
 //        guard let data = data else { return }
         contactView.contentLabel.text = data.contact

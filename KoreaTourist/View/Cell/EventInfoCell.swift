@@ -20,7 +20,7 @@ final class EventInfoCell: BaseInfoCell {
         return stack
     }()
     
-    func inputData(data: TourPlaceInfo.EventData){
+    func inputData(data: TourPlaceInfo.ExperienceData){
         
 //        guard let data = data else { return }
         

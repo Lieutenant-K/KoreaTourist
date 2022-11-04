@@ -36,9 +36,9 @@ class GalleryView: BaseView {
             make.height.equalTo(220)
         }
         
-        self.snp.makeConstraints { make in
-            make.height.greaterThanOrEqualTo(0)
-        }
+//        self.snp.makeConstraints { make in
+//            make.height.greaterThanOrEqualTo(0)
+//        }
     }
     
 }

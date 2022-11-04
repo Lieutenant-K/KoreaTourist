@@ -39,9 +39,9 @@ class LocationView: BaseView {
             make.height.equalTo(150)
         }
         
-        self.snp.makeConstraints { make in
-            make.height.greaterThanOrEqualTo(0)
-        }
+//        self.snp.makeConstraints { make in
+//            make.height.greaterThanOrEqualTo(0)
+//        }
     }
 
 }

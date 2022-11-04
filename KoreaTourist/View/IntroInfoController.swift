@@ -7,54 +7,54 @@
 
 import UIKit
 
-class IntroInfoController: BaseViewController {
+final class IntroInfoController: BaseViewController, SubInfoElementController {
     
-    let introView = UITableView(frame: .zero, style: .grouped)
+    private let place: CommonPlaceInfo
     
-    var dataSource: UITableViewDiffableDataSource<Section, Int>!
+    let elementView = UITableView(frame: .zero, style: .grouped)
+    
+    private var dataSource: UITableViewDiffableDataSource<Section, Int>!
     
     override func loadView() {
-        view = introView
+        view = elementView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureIntroView()
+        fetchIntro()
         
     }
     
-    func configureIntroView() {
+    private func fetchIntro() {
         
-        introView.isScrollEnabled = false
-        
-        Section.allCases.forEach {
-            introView.register($0.cellType, forCellReuseIdentifier: $0.cellType.reuseIdentifier)
+        realm.fetchPlaceIntro(place: place) { [weak self] in
+            self?.updateSnapshot()
         }
         
-        dataSource = UITableViewDiffableDataSource(tableView: introView, cellProvider: { tableView, indexPath, itemIdentifier in
-            
-            var cell: UITableViewCell
-            
-            let section = Section(rawValue: indexPath.section)!
-            
-            switch section {
-            case .overview:
-                cell = tableView.dequeueReusableCell(withIdentifier: section.cellType.reuseIdentifier, for: indexPath)
-            case .webpage:
-                cell = tableView.dequeueReusableCell(withIdentifier: section.cellType.reuseIdentifier, for: indexPath)
-            }
-            
-            return cell
-            
-        })
+    }
+    
+    func updateSnapshot() {
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Int>()
-        snapshot.appendSections([Section.overview, Section.webpage])
-        snapshot.appendItems([0], toSection: Section.overview)
-        snapshot.appendItems([1], toSection: Section.webpage)
         
-        dataSource.apply(snapshot)
+        let sections = checkValidatation()
         
+        var count = 0
+        
+        sections.forEach {
+            snapshot.appendSections([$0])
+            snapshot.appendItems([count], toSection: $0)
+            count += 1
+        }
+    
+        dataSource.applySnapshotUsingReloadData(snapshot)
+        
+    }
+    
+    init(place: CommonPlaceInfo){
+        self.place = place
+        super.init()
     }
 
     
@@ -67,7 +67,7 @@ extension IntroInfoController {
         
         case overview, webpage
         
-        var cellType: UITableViewCell.Type {
+        var cellType: IntroCell.Type {
             switch self {
             case .overview:
                 return OverviewInfoCell.self
@@ -75,6 +75,50 @@ extension IntroInfoController {
                 return WebPageInfoCell.self
             }
         }
+        
+    }
+    
+    private func checkValidatation() -> [Section] {
+        
+        guard let intro = place.intro else { return [] }
+        
+        var sections: [Section] = []
+        
+        if !intro.overview.isEmpty {
+            sections.append(Section.overview)
+        }
+        if !intro.homepage.isEmpty {
+            sections.append(Section.webpage)
+        }
+        
+        return sections
+    }
+    
+    private func configureIntroView() {
+        
+        elementView.isScrollEnabled = false
+        
+        Section.allCases.forEach {
+            elementView.register($0.cellType, forCellReuseIdentifier: $0.cellType.reuseIdentifier)
+        }
+        
+        dataSource = UITableViewDiffableDataSource(tableView: elementView, cellProvider: { [unowned self] tableView, indexPath, itemIdentifier in
+            
+            
+            let section = Section(rawValue: indexPath.section)!
+            
+            if let cell = tableView.dequeueReusableCell(withIdentifier: section.cellType.reuseIdentifier, for: indexPath) as? IntroCell, let intro = place.intro {
+                
+                cell.inputData(intro: intro)
+                
+                return cell
+                
+            }
+            
+            return UITableViewCell()
+            
+            
+        })
         
     }
     

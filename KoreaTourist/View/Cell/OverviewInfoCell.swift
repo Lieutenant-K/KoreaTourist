@@ -8,9 +8,11 @@
 import UIKit
 import SnapKit
 
-final class OverviewInfoCell: BaseInfoCell {
+final class OverviewInfoCell: BaseInfoCell, IntroCell, ExpandableCell {
     
-    private let arrowImage = UIImageView(systemName: "chevron.down")
+    let arrowImage = UIImageView(systemName: "chevron.down").then {
+        $0.contentMode = .scaleAspectFit
+    }
     
     var isExpand: Bool = false  {
         didSet {
@@ -28,6 +30,17 @@ final class OverviewInfoCell: BaseInfoCell {
        return view
     }()
     
+    lazy var stackView = UIStackView(arrangedSubviews: [contentLabel, arrowImage]).then {
+        $0.spacing = 8
+        $0.alignment = .fill
+        $0.distribution = .fill
+        $0.axis = .vertical
+    }
+    
+    func inputData(intro: Intro) {
+        contentLabel.text = intro.overview
+    }
+    
     override func configureCell() {
         iconImageView.image = UIImage(systemName: "text.alignleft")
         titleLabel.text = "개요"
@@ -35,26 +48,18 @@ final class OverviewInfoCell: BaseInfoCell {
     
     override func addSubviews() {
         super.addSubviews()
-        contentView.addSubview(contentLabel)
-        contentView.addSubview(arrowImage)
+        contentView.addSubview(stackView)
         
     }
     
     override func addConstraints() {
         super.addConstraints()
         
-        arrowImage.snp.makeConstraints { make in
-            make.trailing.top.equalTo(contentView).inset(18)
-            make.width.equalTo(iconImageView.snp.height)
-            make.height.equalTo(titleLabel)
-            
+        stackView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview().inset(12)
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
         }
-        
-        contentLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.leading.bottom.trailing.equalTo(contentView).inset(18)
-        }
-        
     }
+    
 
 }

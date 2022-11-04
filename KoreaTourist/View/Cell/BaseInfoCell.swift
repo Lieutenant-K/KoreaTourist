@@ -14,7 +14,7 @@ class BaseInfoCell: UITableViewCell {
     
     let titleLabel: UILabel = {
         let view = UILabel()
-        view.font = .systemFont(ofSize: 22, weight: .semibold)
+        view.font = .systemFont(ofSize: 18, weight: .semibold)
         view.textAlignment = .left
         view.textColor = .label
         view.numberOfLines = 1
@@ -33,7 +33,7 @@ class BaseInfoCell: UITableViewCell {
     func addConstraints() {
         
         iconImageView.snp.makeConstraints { make in
-            make.leading.top.equalTo(contentView).inset(18)
+            make.leading.top.equalTo(contentView).inset(12)
             make.width.equalTo(iconImageView.snp.height)
             make.height.equalTo(titleLabel)
             
@@ -41,7 +41,7 @@ class BaseInfoCell: UITableViewCell {
         
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(iconImageView)
-            make.leading.equalTo(iconImageView.snp.trailing).offset(12)
+            make.leading.equalTo(iconImageView.snp.trailing).offset(8)
             make.trailing.lessThanOrEqualTo(contentView).offset(-18)
         }
         
@@ -52,7 +52,7 @@ class BaseInfoCell: UITableViewCell {
         configureCell()
         addSubviews()
         addConstraints()
-        backgroundColor = .clear
+//        backgroundColor = .clear
     }
     
     @available(*, unavailable)

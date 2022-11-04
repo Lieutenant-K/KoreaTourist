@@ -128,7 +128,7 @@ class RealmRepository {
         }
     }
     
-    func fetchPlaceDetail<T: Information>(type: T.Type, contentId: Int, contentType: ContentType, completionHandler: @escaping (T) -> ()) {
+    func fetchPlaceDetail<T: DetailInformation>(type: T.Type, contentId: Int, contentType: ContentType, completionHandler: @escaping (T) -> ()) {
         
         if let place = localRealm.object(ofType: type, forPrimaryKey: contentId) {
             completionHandler(place)

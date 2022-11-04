@@ -9,7 +9,7 @@ import UIKit
 import Then
 import NMapsMap
 
-class CommonInfoView: BaseView {
+class MainInfoView: BaseView {
 
     let nameLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 30, weight: .bold)
@@ -19,9 +19,9 @@ class CommonInfoView: BaseView {
     }
     let locationView = LocationView()
     let galleryView = GalleryView()
-    let placeInfoTypeView = PlaceInfoTypeView()
+    let subInfoView = UIView()
     
-    private lazy var stackView = UIStackView(arrangedSubviews: [locationView, galleryView, placeInfoTypeView]).then {
+    private lazy var stackView = UIStackView(arrangedSubviews: [locationView, galleryView, subInfoView]).then {
         $0.axis = .vertical
         $0.spacing = 20
         $0.alignment = .fill
@@ -49,9 +49,9 @@ class CommonInfoView: BaseView {
             make.leading.trailing.bottom.equalToSuperview()
         }
         
-        self.snp.makeConstraints { make in
-            make.height.greaterThanOrEqualTo(0)
-        }
+//        self.snp.makeConstraints { make in
+//            make.height.greaterThanOrEqualTo(0)
+//        }
     }
     
 }

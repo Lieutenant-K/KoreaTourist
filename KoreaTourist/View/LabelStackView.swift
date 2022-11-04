@@ -25,7 +25,7 @@ class LabelStackView: UIStackView {
     
     let contentLabel: UILabel = {
         let view = UILabel()
-        view.font = .systemFont(ofSize: 16, weight: .light)
+        view.font = .systemFont(ofSize: 16, weight: .regular)
         view.textAlignment = .left
         view.textColor = .label
         view.numberOfLines = 1
@@ -50,9 +50,10 @@ class LabelStackView: UIStackView {
         }
     }
     
-    init(title: String, axis: NSLayoutConstraint.Axis = .horizontal) {
+    init(title: String, content: String, axis: NSLayoutConstraint.Axis = .horizontal) {
         super.init(frame: .zero)
         titleLabel.text = title
+        contentLabel.text = content
         configureStackView(axis: axis)
     }
     

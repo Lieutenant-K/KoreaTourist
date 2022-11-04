@@ -24,6 +24,46 @@ protocol NeedValidate {
     var releativeCell: BaseInfoCell.Type { get }
 }
 
+protocol SubInfoElementController: UIViewController {
+    
+    var elementView: UITableView { get }
+    
+//    var dataSource: UITableViewDataSource { get set }
+    
+    func updateSnapshot()
+}
+
+protocol IntroCell: UITableViewCell {
+    
+    func inputData(intro: Intro)
+}
+
+protocol ExpandableCell: UITableViewCell {
+    
+    var arrowImage: UIImageView { get }
+    
+    var isExpand: Bool { get set }
+}
+
+protocol DetailInfo {
+    
+    var iconImage: UIImage? { get }
+    var title: String { get }
+    var contentList: [(String, String)] { get }
+    var isValidate: Bool { get }
+    
+}
+
+protocol DetailInformation: Information {
+    
+    var detailInfoList: [DetailInfo] { get }
+    
+    var contentType: ContentType { get }
+    
+    var contentId: Int { get }
+    
+}
+
 // MARK: - DetailCommon
 struct Result<T:Codable>: Codable {
     let response: Response<T>
@@ -186,14 +226,37 @@ class Intro: EmbeddedObject, Codable {
 
 // MARK: Tour Place Info
 
-class TourPlaceInfo: Information, PlaceInfo {
+class TourPlaceInfo: Information, PlaceInfo, DetailInformation {
     
-    struct TimeData: NeedValidate {
+    var detailInfoList: [DetailInfo] {
+        [timeData, experienceData, serviceData]
+    }
+    
+    var contentType: ContentType {
+        get { ContentType(rawValue: contentTypeId)! }
+        set { contentTypeId = newValue.rawValue }
+    }
+    
+    struct TimeData: NeedValidate, DetailInfo {
         
         let openDate: String
         let restDate: String
         let availableTime: String
         let availableSeason: String
+        
+        var title: String { "시간 안내" }
+        
+        var iconImage: UIImage? {
+            UIImage(systemName: "stopwatch.fill")
+        }
+        
+        var contentList: [(String, String)] {
+            [ ("개장일", openDate)
+              ,("휴일", restDate)
+              ,("이용 가능 시간", availableTime)
+              ,("이용 가능 시기", availableSeason)
+            ]
+        }
         
         var isValidate: Bool {
             var validate = false
@@ -209,9 +272,22 @@ class TourPlaceInfo: Information, PlaceInfo {
         
     }
     
-    struct EventData: NeedValidate {
+    struct ExperienceData: NeedValidate, DetailInfo {
+        
         let event: String
         let eventAge: String
+        
+        var title: String { "체험 안내" }
+        
+        var iconImage: UIImage? {
+            UIImage(systemName: "exclamationmark.circle.fill")
+        }
+        
+        var contentList: [(String, String)] {
+            [ ("행사", event)
+              ,("가능 연령", eventAge)
+            ]
+        }
         
         var isValidate: Bool {
             var validate = false
@@ -226,13 +302,29 @@ class TourPlaceInfo: Information, PlaceInfo {
         }
     }
     
-    struct OtherData: NeedValidate {
+    struct ServiceData: NeedValidate, DetailInfo {
         let contact: String
         let capacity: String
         let parking: String
         let stroller: String
         let creditCard: String
         let pet: String
+        
+        var title: String { "서비스" }
+        
+        var iconImage: UIImage? {
+            UIImage(systemName: "person.fill")
+        }
+        
+        var contentList: [(String, String)] {
+            [ ("문의 및 안내", contact)
+              ,("수용인원", capacity)
+              ,("주차장 여부", parking)
+              ,("유모차 대여 여부", stroller)
+              ,("신용카드 가능 여부", creditCard)
+              ,("애완동물 가능 여부", pet)
+            ]
+        }
         
         var isValidate: Bool {
             var validate = false
@@ -269,16 +361,16 @@ class TourPlaceInfo: Information, PlaceInfo {
         TimeData(openDate: openDate, restDate: restDate, availableTime: availableTime, availableSeason: availableSeason)
     }
     
-    var eventData: EventData {
-        EventData(event: event, eventAge: ageForEvent)
+    var experienceData: ExperienceData {
+        ExperienceData(event: event, eventAge: ageForEvent)
     }
     
-    var otherData: OtherData {
-        OtherData(contact: contactNumber, capacity: capacity, parking: parkingLot, stroller: strollerRentalInfo, creditCard: isAvailableCreditCard, pet: isAvailablePet)
+    var serviceData: ServiceData {
+        ServiceData(contact: contactNumber, capacity: capacity, parking: parkingLot, stroller: strollerRentalInfo, creditCard: isAvailableCreditCard, pet: isAvailablePet)
     }
     
     var validateCell: [BaseInfoCell.Type] {
-        let data: [NeedValidate] = [timeData, eventData, otherData]
+        let data: [NeedValidate] = [timeData, experienceData, serviceData]
         return data.filter { $0.isValidate == true }.map { $0.releativeCell }
     }
     
@@ -327,7 +419,15 @@ class TourPlaceInfo: Information, PlaceInfo {
 }
 
 
-class CulturePlaceInfo: Information {
+class CulturePlaceInfo: Information, DetailInformation {
+    
+    var detailInfoList: [DetailInfo] { [] }
+    
+    var contentType: ContentType {
+        get { ContentType(rawValue: contentTypeId)! }
+        set { contentTypeId = newValue.rawValue }
+    }
+    
     
     @Persisted(primaryKey: true) var contentId: Int
     @Persisted var contentTypeId: String
@@ -335,7 +435,15 @@ class CulturePlaceInfo: Information {
     
 }
 
-class EventPlaceInfo: Information {
+class EventPlaceInfo: Information, DetailInformation {
+    
+    var detailInfoList: [DetailInfo] { [] }
+    
+    var contentType: ContentType {
+        get { ContentType(rawValue: contentTypeId)! }
+        set { contentTypeId = newValue.rawValue }
+    }
+    
     @Persisted(primaryKey: true) var contentId: Int
     @Persisted var contentTypeId: String
 }
@@ -498,7 +606,7 @@ enum ContentType: String, Codable {
         }
     }
     
-    var detailInfoType: Information.Type {
+    var detailInfoType: DetailInformation.Type {
         switch self {
         case .tour:
             return TourPlaceInfo.self
@@ -547,78 +655,3 @@ enum FailureReason {
     case noData
     
 }
-
-let dummy = """
-                [
-                    {
-                        "addr1": "서울시 동작구 대방동",
-                        "addr2": "27길 27",
-                        "areacode": "1",
-                        "booktour": "0",
-                        "cat1": "A02",
-                        "cat2": "A0201",
-                        "cat3": "A02010700",
-                        "contentid": "126516",
-                        "contenttypeid": "12",
-                        "createdtime": "20031230090000",
-                        "dist": "0",
-                        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/76/1568176_image2_1.jpg",
-                        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/76/1568176_image3_1.jpg",
-                        "mapx": "126.92461",
-                        "mapy": "37.50400",
-                        "mlevel": "6",
-                        "modifiedtime": "20220518172825",
-                        "readcount": 40150,
-                        "sigungucode": "23",
-                        "tel": "",
-                        "title": "GS25 대방성남점"
-                    },
-                    {
-                        "addr1": "서울시 동작구 대방동",
-                        "addr2": "27길 25",
-                        "areacode": "1",
-                        "booktour": "0",
-                        "cat1": "A02",
-                        "cat2": "A0203",
-                        "cat3": "A02030600",
-                        "contentid": "735749",
-                        "contenttypeid": "12",
-                        "createdtime": "20090518192216",
-                        "dist": "0",
-                        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/18/728318_image2_1.jpg",
-                        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/18/728318_image3_1.jpg",
-                        "mapx": "126.924100",
-                        "mapy": "37.503831",
-                        "mlevel": "6",
-                        "modifiedtime": "20220322151730",
-                        "readcount": 33860,
-                        "sigungucode": "23",
-                        "tel": "",
-                        "title": "코코리퍼브"
-                    },
-                    {
-                        "addr1": "서울시 동작구 대방동",
-                        "addr2": "26길",
-                        "areacode": "1",
-                        "booktour": "0",
-                        "cat1": "A02",
-                        "cat2": "A0202",
-                        "cat3": "A02020500",
-                        "contentid": "2794933",
-                        "contenttypeid": "12",
-                        "createdtime": "20211214053541",
-                        "dist": "0",
-                        "firstimage": "http://tong.visitkorea.or.kr/cms/resource/43/2796243_image2_1.jpg",
-                        "firstimage2": "http://tong.visitkorea.or.kr/cms/resource/43/2796243_image2_1.jpg",
-                        "mapx": "126.924378",
-                        "mapy": "37.502914",
-                        "mlevel": "6",
-                        "modifiedtime": "20220701145045",
-                        "readcount": 0,
-                        "sigungucode": "24",
-                        "tel": "",
-                        "title": "구립 대방 보듬이 나눔이 어린이집"
-                    }
-]
-
-"""
