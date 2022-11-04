@@ -19,31 +19,16 @@ final class DetailInfoCell: BaseInfoCell {
     
     func inputData(data: DetailInfo){
         
-//        guard let data = data els e { return }
         iconImageView.image = data.iconImage
         titleLabel.text = data.title
         data.contentList.forEach {
-            stackView.addArrangedSubview(LabelStackView(title: $0.0, content: $0.1))
+            if !$0.1.isEmpty {
+                stackView.addArrangedSubview(LabelStackView(title: $0.0, content: $0.1))
+            }
         }
 
     }
     
-    /*
-    func checkValidation() {
-        var isDisplay = false
-        [eventView, eventAgeView].forEach { view in
-            if view.contentLabel.isValidate {
-                view.isHidden = false
-                isDisplay = isDisplay || true
-            } else {
-                view.isHidden = true
-                isDisplay = isDisplay || false
-            }
-        }
-        isHidden = !isDisplay
-        
-    }
-    */
     
     override func addSubviews() {
         super.addSubviews()

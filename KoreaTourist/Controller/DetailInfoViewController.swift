@@ -9,11 +9,13 @@ import UIKit
 
 class DetailInfoViewController: BaseViewController, SubInfoElementController {
     
-    let place: DetailInformation
+    let place: CommonPlaceInfo
+    
+    var detail: DetailInformation?
     
     let elementView = UITableView(frame: .zero, style: .grouped)
     
-    var dataSource: UITableViewDiffableDataSource<Int, Int>!
+    var dataSource: UITableViewDiffableDataSource<Int, Item>!
     
     override func loadView() {
         view = elementView
@@ -22,6 +24,7 @@ class DetailInfoViewController: BaseViewController, SubInfoElementController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureDetailView()
+        fetchDetailInfo()
         
     }
 
@@ -34,12 +37,29 @@ class DetailInfoViewController: BaseViewController, SubInfoElementController {
     func fetchDetailInfo() {
         
         realm.fetchPlaceDetail(type: place.contentType.detailInfoType, contentId: place.contentId, contentType: place.contentType) { [weak self] in
-            self?.place = $0
+            self?.detail = $0
+            self?.updateSnapshot()
         }
         
     }
     
     func updateSnapshot() {
+        
+        guard let detail = detail else { return }
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Int, Item>()
+        
+        let sections = detail.detailInfoList
+            .filter { $0.isValidate == true }
+        
+        for i in 0..<sections.count {
+            let item = Item(info: sections[i])
+            
+            snapshot.appendSections([i])
+            snapshot.appendItems([item], toSection: i)
+        }
+    
+        dataSource.applySnapshotUsingReloadData(snapshot)
         
     }
     
@@ -52,23 +72,18 @@ class DetailInfoViewController: BaseViewController, SubInfoElementController {
         
         dataSource = UITableViewDiffableDataSource(tableView: elementView, cellProvider: { tableView, indexPath, itemIdentifier in
                         
-            let section = Section(rawValue: indexPath.section)!
+            if let cell = tableView.dequeueReusableCell(withIdentifier: DetailInfoCell.reuseIdentifier, for: indexPath) as? DetailInfoCell {
+                
+                cell.inputData(data: itemIdentifier.info)
+                
+                return cell
+                
+            }
+                
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: DetailInfoCell.reuseIdentifier, for: indexPath)
-            
-            return cell
+            return UITableViewCell()
             
         })
-        
-        var snapshot = NSDiffableDataSourceSnapshot<Int, Int>()
-        var count = 0
-        Section.allCases.forEach {
-            snapshot.appendSections([$0])
-            snapshot.appendItems([count], toSection: $0)
-            count += 1
-        }
-        
-        dataSource.apply(snapshot)
         
     }
     
@@ -80,26 +95,22 @@ class DetailInfoViewController: BaseViewController, SubInfoElementController {
 
 }
 
+
 extension DetailInfoViewController {
     
-    enum Section: Int, CaseIterable {
+    struct Item: Hashable {
         
-        case time, event, service
-        case culture1, culture2
-        case event1, event2
-        
-        var contentType: ContentType {
-            switch self {
-            case .time, .event, .service:
-                return .tour
-            case .culture1, .culture2:
-                return .culture
-            case .event1, .event2:
-                return .event
-            }
+        static func == (lhs: DetailInfoViewController.Item, rhs: DetailInfoViewController.Item) -> Bool {
+            lhs.info.title == rhs.info.title
         }
         
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(info.title)
+        }
+        
+        let info: DetailInfo
     }
     
     
 }
+
