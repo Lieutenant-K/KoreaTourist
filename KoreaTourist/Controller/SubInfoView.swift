@@ -10,11 +10,11 @@ import Then
 
 class SubInfoView: BaseView {
     
-    let buttons = [UIButton].init(repeating: UIButton(type: .system), count: 3)
+    var buttons = [UIButton]()
     
     let contentView = UIView()
     
-    lazy var buttonStack = UIStackView(arrangedSubviews: buttons).then {
+    lazy var buttonStack = UIStackView(arrangedSubviews: []).then {
         $0.alignment = .fill
         $0.distribution = .fillEqually
         $0.axis = .horizontal
@@ -26,12 +26,14 @@ class SubInfoView: BaseView {
         
         let titles = ["소개", "정보", "안내"]
         
-        for i in 0..<buttons.count {
-            let button = buttons[i]
+        for i in 0..<titles.count {
+            let button = UIButton(type: .system)
             button.titleLabel?.font = .systemFont(ofSize: 20, weight: .medium)
             button.setTitle(titles[i], for: .normal)
             button.setTitleColor(.label, for: .normal)
             button.tag = i
+            buttons.append(button)
+            buttonStack.addArrangedSubview(button)
         }
         
     }
@@ -51,13 +53,8 @@ class SubInfoView: BaseView {
         contentView.snp.makeConstraints { make in
             make.top.equalTo(buttonStack.snp.bottom)
             make.leading.bottom.trailing.equalToSuperview()
-//            make.height.greaterThanOrEqualTo(0)
             make.height.equalTo(1000)
         }
-        
-//        self.snp.makeConstraints { make in
-//            make.height.greaterThanOrEqualTo(0)
-//        }
     }
     
     override init(frame: CGRect) {
