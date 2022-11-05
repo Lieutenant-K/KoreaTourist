@@ -16,8 +16,12 @@ class MainInfoView: BaseView {
         $0.numberOfLines = 0
         $0.textAlignment = .center
     }
+    
     let locationView = LocationView()
-    let galleryView = GalleryView()
+    
+    let galleryView = GalleryView().then {
+        $0.isHidden = true
+    }
     let subInfoView = UIView()
     
     private lazy var stackView = UIStackView(arrangedSubviews: [locationView, galleryView, subInfoView]).then {

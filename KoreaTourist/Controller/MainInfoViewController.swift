@@ -12,8 +12,17 @@ import Kingfisher
 class MainInfoViewController: BaseViewController {
     
     let place: CommonPlaceInfo
-    var galleryImages: [PlaceImage] = []
-    var dataSource: UICollectionViewDiffableDataSource<Int, PlaceImage>!
+    var galleryImages: [PlaceImage] = [] {
+        didSet {
+            updateSnapshot()
+            updateScrollPos()
+        }
+    }
+    
+//    var currentPageIndex = 0
+    var originCount: Int { galleryImages.count / 3 }
+    var dataSource: UICollectionViewDiffableDataSource<Int, Int>!
+    var autoScrollTimer = Timer()
     
     let subInfoVC: SubInfoViewController
     let mainInfoView = MainInfoView()
@@ -24,16 +33,30 @@ class MainInfoViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        realm.printRealmFileURL()
         addChildVC()
         configureMainInfoView()
         fetchGalleryImages()
+        activateAutoScrollTimer()
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateMapCameraPos()
+        updateScrollPos()
     }
+    
+    
+    /*
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        print(#function)
+        updateMapCameraPos()
+        updateScrollPos()
+
+    }
+    */
     
     func configureMainInfoView() {
         mainInfoView.nameLabel.text = place.title
@@ -83,6 +106,8 @@ class MainInfoViewController: BaseViewController {
 extension MainInfoViewController: UICollectionViewDelegate {
     
     private func configureGalleryView() {
+//        mainInfoView.galleryView.collectionView.collectionViewLayout = createLayout()
+        //        mainInfoView.galleryView.collectionView.isPagingEnabled = true
         mainInfoView.galleryView.collectionView.delegate = self
         mainInfoView.galleryView.isHidden = true
         
@@ -95,9 +120,9 @@ extension MainInfoViewController: UICollectionViewDelegate {
             
         }
         
-        dataSource = UICollectionViewDiffableDataSource(collectionView: mainInfoView.galleryView.collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = UICollectionViewDiffableDataSource(collectionView: mainInfoView.galleryView.collectionView, cellProvider: { [unowned self] collectionView, indexPath, itemIdentifier in
             
-            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
+            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: galleryImages[itemIdentifier])
             
             return cell
             
@@ -105,23 +130,129 @@ extension MainInfoViewController: UICollectionViewDelegate {
         
     }
     
+    
+    func activateAutoScrollTimer() {
+        
+        autoScrollTimer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true) { [weak self] _ in
+            
+            guard let weakSelf = self else { return }
+            
+            let collectionView = weakSelf.mainInfoView.galleryView.collectionView
+            
+            let originCount = weakSelf.originCount
+            
+            guard let cell = collectionView.visibleCells.first, var index = collectionView.indexPath(for: cell)?.row else { return }
+            
+            
+            if index == originCount*2-1  {
+                index = originCount-1
+                collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredHorizontally, animated: false)
+                
+            }
+            
+            collectionView.scrollToItem(at: IndexPath(row: index+1, section: 0), at: .centeredHorizontally, animated: true)
+            
+        }
+    }
+    
+    /*
+    func createLayout() -> UICollectionViewLayout {
+        
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        let config = UICollectionViewCompositionalLayoutConfiguration()
+        config.scrollDirection = .horizontal
+        
+        let layout = UICollectionViewCompositionalLayout(section: section, configuration: config)
+        
+        return layout
+        
+    }
+    */
+    /*
+    private func updateGalleryPage() {
+        
+        mainInfoView.galleryView.pageLabel.text = "\(currentPageIndex+1) / \(galleryImages.count)"
+        
+    }
+    */
+    
+    private func updateScrollPos() {
+        
+        if let index = dataSource.indexPath(for: originCount) {
+            mainInfoView.galleryView.collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
+        }
+        
+    }
+    
     private func updateSnapshot() {
         
-        var snapshot = NSDiffableDataSourceSnapshot<Int, PlaceImage>()
+        let count = galleryImages.count
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Int, Int>()
         snapshot.appendSections([0])
-        snapshot.appendItems(galleryImages)
+        snapshot.appendItems([Int].init(0..<count))
         
         dataSource.apply(snapshot)
+        
         
     }
     
     
     private func fetchGalleryImages() {
         realm.fetchPlaceImages(contentId: place.contentId) {[weak self] in
-            self?.galleryImages = $0
-            self?.mainInfoView.galleryView.isHidden = false
-            self?.updateSnapshot()
+            self?.galleryImages = $0 + $0 + $0
+            self?.mainInfoView.galleryView.isHidden = $0.count > 0 ? false : true
+//            self?.updateGalleryPage()
+
         }
+    }
+    
+    /*
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        currentPageIndex = Int(targetContentOffset.pointee.x / scrollView.frame.width)
+        
+         updateGalleryPage()
+        
+    }
+    */
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        print(#function)
+        autoScrollTimer.invalidate()
+    }
+
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        let collectionView = mainInfoView.galleryView.collectionView
+        
+        let originCount = galleryImages.count / 3
+        
+        guard let cell = collectionView.visibleCells.first, var index = collectionView.indexPath(for: cell)?.row else { return }
+        
+        if index == originCount * 2 {
+            index = originCount
+        } else if index == originCount - 1 {
+            index = 2*originCount - 1
+        }
+        
+        
+        collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .centeredHorizontally, animated: false)
+        
+        if !autoScrollTimer.isValid {
+            activateAutoScrollTimer()
+        }
+        print(#function)
     }
     
 }
