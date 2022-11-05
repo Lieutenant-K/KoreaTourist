@@ -41,7 +41,7 @@ class LabelStackView: UIStackView {
         self.axis = axis
         distribution = .fill
         alignment = .fill
-        spacing = 10
+        spacing = 6
         addArrangedSubview(titleLabel)
         addArrangedSubview(contentLabel)
         

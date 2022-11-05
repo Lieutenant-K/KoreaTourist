@@ -13,7 +13,7 @@ final class DetailInfoCell: BaseInfoCell {
     lazy var stackView = UIStackView(arrangedSubviews: []).then {
         $0.axis = .vertical
         $0.distribution = .fill
-        $0.spacing = 6
+        $0.spacing = 12
         
     }
     
@@ -23,7 +23,13 @@ final class DetailInfoCell: BaseInfoCell {
         titleLabel.text = data.title
         data.contentList.forEach {
             if !$0.1.isEmpty {
-                stackView.addArrangedSubview(LabelStackView(title: $0.0, content: $0.1))
+                let labelStack = LabelStackView(title: $0.0, content: $0.1)
+//                print(labelStack.contentLabel.countLines())
+                if labelStack.contentLabel.countLines() > 1 {
+                    labelStack.contentLabel.numberOfLines = 0
+                    labelStack.axis = .vertical
+                }
+                stackView.addArrangedSubview(labelStack)
             }
         }
 
