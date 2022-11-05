@@ -28,7 +28,9 @@ class PlaceInfoViewController: BaseViewController {
     
     func configureImage() {
         
-        placeInfoView.imageView.kf.setImage(with: URL(string: place.image), options: [.transition(.fade(0.3))])
+        let url = URL(string: place.image)
+        
+        placeInfoView.imageView.kf.setImage(with: url, options: [.transition(.fade(0.3))])
         
     }
     
