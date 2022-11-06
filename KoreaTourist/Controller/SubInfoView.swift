@@ -18,7 +18,7 @@ class SubInfoView: BaseView {
         $0.alignment = .fill
         $0.distribution = .fillEqually
         $0.axis = .horizontal
-        $0.spacing = 2
+        $0.spacing = 0
     }
     
     
@@ -27,13 +27,51 @@ class SubInfoView: BaseView {
         let titles = ["소개", "정보", "안내"]
         
         for i in 0..<titles.count {
-            let button = UIButton(type: .system)
-            button.titleLabel?.font = .systemFont(ofSize: 20, weight: .medium)
-            button.setTitle(titles[i], for: .normal)
-            button.setTitleColor(.label, for: .normal)
-            button.tag = i
-            buttons.append(button)
-            buttonStack.addArrangedSubview(button)
+            
+            let updateHandler: UIButton.ConfigurationUpdateHandler = { button in
+                
+                button.layer.removeAllBorderLine()
+                
+                var color: UIColor
+                var font: UIFont
+                
+                switch button.state {
+                    
+                case .selected:
+                    color = .label
+                    font = .systemFont(ofSize: 20, weight: .semibold)
+
+                    button.layer.addBorderLine(color: .separator, edge: [.right, .left], width: 1)
+                    button.layer.addBorderLine(color: .label, edge: [.top], width: 3)
+                default:
+                    color = .secondaryLabel
+                    font = .systemFont(ofSize: 20, weight: .medium)
+                    button.layer.addBorderLine(color: .separator, edge: [.bottom], width: 1.5)
+                }
+                
+                
+                let container = AttributeContainer([.font:font, .foregroundColor:color])
+                let attrTitle = AttributedString(button.currentTitle!, attributes: container)
+                
+                var config = UIButton.Configuration.plain()
+                config.attributedTitle = attrTitle
+                config.background.cornerRadius = 0
+                config.background.backgroundColor = .clear
+                
+                button.configuration = config
+                
+            }
+            
+            
+            
+            let button = UIButton(type: .custom).then {
+                $0.setTitle(titles[i], for: .normal)
+                $0.tag = i
+                $0.configurationUpdateHandler = updateHandler
+                buttons.append($0)
+                buttonStack.addArrangedSubview($0)
+            }
+            
         }
         
     }

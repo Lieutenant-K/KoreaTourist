@@ -19,6 +19,11 @@ final class DetailInfoCell: BaseInfoCell {
     
     func inputData(data: DetailInfo){
         
+//         계속 cellProvider가 호출됨. 이유가 뭘까?
+//        if titleLabel.text == data.title {
+//            return
+//        }
+        
         iconImageView.image = data.iconImage
         titleLabel.text = data.title
         data.contentList.forEach {

@@ -13,12 +13,15 @@ class DetailInfoViewController: BaseViewController, SubInfoElementController {
     
     var detail: DetailInformation?
     
-    let elementView = UITableView(frame: .zero, style: .grouped)
+    let elementView = UITableView(frame: .zero, style: .plain).then {
+        $0.separatorInset = .zero
+    }
     
     var dataSource: UITableViewDiffableDataSource<Int, Item>!
     
     override func loadView() {
         view = elementView
+        
     }
 
     override func viewDidLoad() {

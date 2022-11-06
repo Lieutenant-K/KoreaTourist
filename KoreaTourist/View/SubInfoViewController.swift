@@ -42,13 +42,12 @@ class SubInfoViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        guard let vc = viewControllers.first else { return }
-        
-        subInfoView.contentView.snp.updateConstraints { make in
-            make.height.equalTo(vc.elementView.contentSize.height)
+        subInfoView.buttons.forEach {
+            $0.layer.addBorderLine(color: .separator, edge: [.bottom], width: 1.5)
+            if $0 == subInfoView.buttons.first {
+                touchButton($0)
+            }
         }
-        
-        subInfoView.contentView.bringSubviewToFront(vc.view)
         
     }
     
@@ -77,6 +76,12 @@ class SubInfoViewController: BaseViewController {
     @objc func touchButton(_ sender: UIButton) {
         
         let vc = viewControllers[sender.tag]
+        
+        subInfoView.buttons.forEach {
+            $0.isSelected = $0 == sender
+        }
+        
+//        selectButton(viewController: vc)
         
         subInfoView.contentView.bringSubviewToFront(vc.view)
         
