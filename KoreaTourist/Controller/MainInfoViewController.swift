@@ -133,6 +133,8 @@ extension MainInfoViewController: UICollectionViewDelegate {
     
     func activateAutoScrollTimer() {
         
+        if originCount < 2 { return }
+        
         autoScrollTimer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true) { [weak self] _ in
             
             guard let weakSelf = self else { return }

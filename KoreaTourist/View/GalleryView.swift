@@ -49,13 +49,23 @@ class GalleryView: BaseView {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.visibleItemsInvalidationHandler = { a, b,c in
-            print(b)
+        section.visibleItemsInvalidationHandler = { [unowned self] visibleItems, scrollOffset, layoutEnvironment in
+            
+            let width = layoutEnvironment.container.contentSize.width
+            
+            let originCount = collectionView.numberOfItems(inSection: 0) / 3
+            
+            let offset = scrollOffset.x
+            
+            let pageIndex = Int((offset / width).rounded())
+            
+            pageLabel.text = "\(pageIndex % originCount + 1) / \(originCount)"
+
         }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.scrollDirection = .horizontal
-        
+        config.contentInsetsReference = .none
         
         let layout = UICollectionViewCompositionalLayout(section: section, configuration: config)
         
