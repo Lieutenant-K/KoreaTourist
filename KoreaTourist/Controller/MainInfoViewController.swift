@@ -233,29 +233,22 @@ extension MainInfoViewController: UICollectionViewDelegate {
         }
     }
     
-    /*
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
-        currentPageIndex = Int(targetContentOffset.pointee.x / scrollView.frame.width)
-        
-         updateGalleryPage()
-        
-    }
-    */
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        print(#function)
+        print("---------willBeginDragging")
         autoScrollTimer.invalidate()
     }
-
+    
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
+        print("&&&&&&&&& DidEndDecelerating")
         let collectionView = mainInfoView.galleryView.collectionView
         
-        let originCount = galleryImages.count / 3
+        let visibleRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
         
-        guard let cell = collectionView.visibleCells.first, var index = collectionView.indexPath(for: cell)?.row else { return }
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        
+        guard var index = collectionView.indexPathForItem(at: visiblePoint)?.row else { return }
         
         if index == originCount * 2 {
             index = originCount
@@ -269,7 +262,30 @@ extension MainInfoViewController: UICollectionViewDelegate {
         if !autoScrollTimer.isValid {
             activateAutoScrollTimer()
         }
-//        print(#function)
+        
+        scrollView.isScrollEnabled = true
+    }
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        print("----------willBeginDecelerating")
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        print("*********** willEndDragging")
+//        print("v = \(velocity), offset = \(targetContentOffset.pointee)")
+        
+        let offset = targetContentOffset.pointee.x
+        let width = scrollView.bounds.width
+        let count = Double(originCount)
+        
+        if offset == 2*count*width || offset == (count-1)*width {
+            print("🥹🥹 감속을 완료해야해! 🥹🥹")
+            scrollView.isScrollEnabled = false
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        print("----------DidEndDragging")
     }
 
 }
