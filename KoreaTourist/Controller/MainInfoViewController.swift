@@ -16,11 +16,11 @@ class MainInfoViewController: BaseViewController {
         didSet {
             updateSnapshot()
             updateScrollPos()
+            activateAutoScrollTimer()
         }
     }
     
 //    var currentPageIndex = 0
-    var originCount: Int { galleryImages.count / 3 }
     var dataSource: UICollectionViewDiffableDataSource<Int, Int>!
     var autoScrollTimer = Timer()
     
@@ -34,10 +34,11 @@ class MainInfoViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         realm.printRealmFileURL()
+        addObserver()
         addChildVC()
         configureMainInfoView()
         fetchGalleryImages()
-        activateAutoScrollTimer()
+//        activateAutoScrollTimer()
     }
     
     
@@ -46,7 +47,6 @@ class MainInfoViewController: BaseViewController {
         updateMapCameraPos()
         updateScrollPos()
     }
-    
     
     /*
     override func viewDidLayoutSubviews() {
@@ -58,10 +58,22 @@ class MainInfoViewController: BaseViewController {
     }
     */
     
-    func configureMainInfoView() {
+    private func configureMainInfoView() {
         mainInfoView.nameLabel.text = place.title
         configureLocationView()
         configureGalleryView()
+        
+    }
+    
+    private func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationChanged(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
+        
+    }
+    
+    @objc func deviceOrientationChanged(_ noti: Notification) {
+        
+        updateScrollPos()
         
     }
     
@@ -105,11 +117,11 @@ class MainInfoViewController: BaseViewController {
 
 extension MainInfoViewController: UICollectionViewDelegate {
     
+    var originCount: Int { galleryImages.count / 3 }
+    
     private func configureGalleryView() {
-//        mainInfoView.galleryView.collectionView.collectionViewLayout = createLayout()
-        //        mainInfoView.galleryView.collectionView.isPagingEnabled = true
+        
         mainInfoView.galleryView.collectionView.delegate = self
-        mainInfoView.galleryView.isHidden = true
         
         let cellRegistration = UICollectionView.CellRegistration<DetailImageCell, PlaceImage> { cell, indexPath, itemIdentifier in
             
@@ -155,6 +167,8 @@ extension MainInfoViewController: UICollectionViewDelegate {
             collectionView.scrollToItem(at: IndexPath(row: index+1, section: 0), at: .centeredHorizontally, animated: true)
             
         }
+        
+        RunLoop.main.add(autoScrollTimer, forMode: .common)
     }
     
     /*
@@ -191,6 +205,7 @@ extension MainInfoViewController: UICollectionViewDelegate {
         
         if let index = dataSource.indexPath(for: originCount) {
             mainInfoView.galleryView.collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
+            mainInfoView.galleryView.pageLabel.text = "1 / \(originCount)"
         }
         
     }
@@ -229,7 +244,7 @@ extension MainInfoViewController: UICollectionViewDelegate {
     */
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        print(#function)
+//        print(#function)
         autoScrollTimer.invalidate()
     }
 
@@ -254,7 +269,7 @@ extension MainInfoViewController: UICollectionViewDelegate {
         if !autoScrollTimer.isValid {
             activateAutoScrollTimer()
         }
-        print(#function)
+//        print(#function)
     }
-    
+
 }

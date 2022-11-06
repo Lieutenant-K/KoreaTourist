@@ -12,6 +12,7 @@ import Then
 final class WebPageInfoCell: BaseInfoCell, IntroCell {
     
     let contentLabel = UITextView().then {
+        $0.backgroundColor = .clear
         $0.dataDetectorTypes = .link
         $0.isEditable = false
         $0.isScrollEnabled = false

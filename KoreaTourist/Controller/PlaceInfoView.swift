@@ -12,11 +12,11 @@ import SnapKit
 class PlaceInfoView: UIScrollView {
     
     let contentView = UIView().then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .systemBackground
     }
     
     let imageView = UIImageView().then {
-        $0.backgroundColor = .cyan
+        $0.backgroundColor = .secondarySystemBackground
     }
     
     let containerView = UIView().then {

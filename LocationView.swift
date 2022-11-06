@@ -18,8 +18,12 @@ class LocationView: BaseView {
     }
     
     let mapView = NMFMapView().then {
+        $0.adjustInterfaceStyle(style: UITraitCollection.current.userInterfaceStyle)
+        $0.mapType = .navi
         $0.isScrollGestureEnabled = false
     }
+    
+    var marker: NMFMarker?
     
     func configureMapView(pos: NMGLatLng, date: Date?){
         
@@ -31,7 +35,7 @@ class LocationView: BaseView {
                     """
         formatter.locale = Locale(identifier: "ko_KR")
         
-        let marker = NMFMarker(position: pos, iconImage: NMF_MARKER_IMAGE_BLACK).then {
+        marker = NMFMarker(position: pos, iconImage: NMF_MARKER_IMAGE_BLACK).then {
             
             $0.captionText = date != nil ? formatter.string(from: date!) : "미발견"
             $0.iconTintColor = .discoverdMarker
@@ -40,11 +44,10 @@ class LocationView: BaseView {
             $0.isHideCollidedSymbols = true
             $0.captionTextSize = 14
             $0.captionOffset = 4
+            $0.mapView = mapView
 //            $0.height = 50
 //            $0.width = 35
         }
-        
-        marker.mapView = mapView
         
         
     }
@@ -74,6 +77,10 @@ class LocationView: BaseView {
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        
+        marker?.iconTintColor = .discoverdMarker
+        marker?.captionColor = .label
+        marker?.captionHaloColor = .systemBackground
         
         mapView.adjustInterfaceStyle(style: UITraitCollection.current.userInterfaceStyle)
     }
