@@ -28,8 +28,8 @@ final class DetailInfoCell: BaseInfoCell {
                 let labelStack = LabelStackView(title: $0.0, content: $0.1)
 //                print(labelStack.contentLabel.countLines())
                 if labelStack.contentLabel.countLines() > 1 {
-                    labelStack.contentLabel.numberOfLines = 0
                     labelStack.axis = .vertical
+                    labelStack.alignment = .fill
                 }
                 stackView.addArrangedSubview(labelStack)
             }
