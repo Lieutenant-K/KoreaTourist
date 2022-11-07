@@ -30,8 +30,6 @@ class SubInfoView: BaseView {
             
             let updateHandler: UIButton.ConfigurationUpdateHandler = { button in
                 
-                button.layer.removeAllBorderLine()
-                
                 var color: UIColor
                 var font: UIFont
                 
@@ -40,13 +38,12 @@ class SubInfoView: BaseView {
                 case .selected:
                     color = .label
                     font = .systemFont(ofSize: 20, weight: .semibold)
-
-                    button.layer.addBorderLine(color: .separator, edge: [.right, .left], width: 1)
-                    button.layer.addBorderLine(color: .label, edge: [.top], width: 3)
+                    button.setBorderLine()
+                    
                 default:
                     color = .secondaryLabel
                     font = .systemFont(ofSize: 20, weight: .medium)
-                    button.layer.addBorderLine(color: .separator, edge: [.bottom], width: 1.5)
+                    button.setBorderLine()
                 }
                 
                 

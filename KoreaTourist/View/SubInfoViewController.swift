@@ -32,24 +32,40 @@ class SubInfoViewController: BaseViewController {
             self.place = place
         }
         */
-        
+        addObserver()
         addChileVC()
         configureButtonAction()
         
     }
     
     
+    func addObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(resetSubInfoButtons), name: UIDevice.orientationDidChangeNotification, object: nil)
+        
+    }
+    
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        resetSubInfoButtons()
+        
+    }
+    
+    @objc private func resetSubInfoButtons() {
+        
         subInfoView.buttons.forEach {
-            $0.layer.addBorderLine(color: .separator, edge: [.bottom], width: 1.5)
-            if $0 == subInfoView.buttons.first {
-                touchButton($0)
-            }
+            $0.setNeedsUpdateConfiguration()
+        }
+        
+        if let first = subInfoView.buttons.first {
+            touchButton(first)
         }
         
     }
+    
     
     private func configureButtonAction() {
         

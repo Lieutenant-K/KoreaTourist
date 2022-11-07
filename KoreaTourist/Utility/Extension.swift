@@ -286,3 +286,21 @@ extension CALayer {
     }
     
 }
+
+extension UIButton {
+    
+    func setBorderLine() {
+        
+        layer.removeAllBorderLine()
+        
+        switch state {
+        case .selected:
+            layer.addBorderLine(color: .separator, edge: [.right, .left], width: 1)
+            layer.addBorderLine(color: .label, edge: [.top], width: 3)
+        default:
+            layer.addBorderLine(color: .separator, edge: [.bottom], width: 1.5)
+        }
+        
+    }
+    
+}
