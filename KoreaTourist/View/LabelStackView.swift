@@ -7,47 +7,46 @@
 
 import UIKit
 import SnapKit
+import Then
 
 class LabelStackView: UIStackView {
     
-    let titleLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 16, weight: .medium)
-        view.textAlignment = .left
-        view.textColor = .label
-        view.numberOfLines = 1
-        view.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        view.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        view.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        view.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        return view
-    }()
+    let titleLabel = UILabel().then {
+        
+        $0.font = .systemFont(ofSize: 16, weight: .medium)
+        $0.textAlignment = .left
+        $0.textColor = .label
+        $0.numberOfLines = 1
+        $0.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        $0.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        $0.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        
+    }
     
-    let contentLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 16, weight: .regular)
-        view.textAlignment = .left
-        view.textColor = .label
-        view.numberOfLines = 1
-        view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        view.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        view.setContentHuggingPriority(.defaultLow, for: .vertical)
-        view.adjustsFontSizeToFitWidth = true
-        return view
-    }()
+    let contentLabel = UILabel().then {
+        
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+        $0.textAlignment = .left
+        $0.textColor = .label
+        $0.numberOfLines = 0
+        $0.lineBreakMode = .byWordWrapping
+        $0.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        $0.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        $0.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        $0.setContentHuggingPriority(.defaultLow, for: .vertical)
+//        view.adjustsFontSizeToFitWidth = true
+        
+    }
     
     func configureStackView(axis: NSLayoutConstraint.Axis) {
         self.axis = axis
         distribution = .fill
-        alignment = .fill
+        alignment = axis == .horizontal ? .top : .fill
         spacing = 6
         addArrangedSubview(titleLabel)
         addArrangedSubview(contentLabel)
         
-        if axis == .vertical {
-            contentLabel.numberOfLines = 0
-        }
     }
     
     init(title: String, content: String, axis: NSLayoutConstraint.Axis = .horizontal) {

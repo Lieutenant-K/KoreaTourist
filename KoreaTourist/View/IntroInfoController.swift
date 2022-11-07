@@ -96,6 +96,14 @@ extension IntroInfoController {
     
     private func configureIntroView() {
         
+        elementView.tableFooterView = UIView().then {
+            $0.frame = CGRect(origin: .zero, size: CGSize(width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
+        }
+        
+        elementView.tableHeaderView = UIView().then {
+            $0.frame = CGRect(origin: .zero, size: CGSize(width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
+        }
+        
         elementView.isScrollEnabled = false
         
         Section.allCases.forEach {

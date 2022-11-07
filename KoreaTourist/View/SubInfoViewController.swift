@@ -81,8 +81,6 @@ class SubInfoViewController: BaseViewController {
             $0.isSelected = $0 == sender
         }
         
-//        selectButton(viewController: vc)
-        
         subInfoView.contentView.bringSubviewToFront(vc.view)
         
         subInfoView.contentView.snp.updateConstraints { make in
@@ -107,6 +105,14 @@ class SubInfoViewController: BaseViewController {
 }
 
 extension SubInfoViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        UIView()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
+    }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         

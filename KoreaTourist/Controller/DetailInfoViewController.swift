@@ -57,7 +57,39 @@ class DetailInfoViewController: BaseViewController, SubInfoElementController {
         
     }
     
+    init(place: CommonPlaceInfo) {
+        self.place = place
+        super.init()
+    }
+    
+
+}
+
+
+extension DetailInfoViewController {
+    
+    struct Item: Hashable {
+        
+        static func == (lhs: DetailInfoViewController.Item, rhs: DetailInfoViewController.Item) -> Bool {
+            lhs.info.title == rhs.info.title
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(info.title)
+        }
+        
+        let info: DetailInfo
+    }
+    
     func configureDetailView() {
+        
+        elementView.tableFooterView = UIView().then {
+            $0.frame = CGRect(origin: .zero, size: CGSize(width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
+        }
+        
+        elementView.tableHeaderView = UIView().then {
+            $0.frame = CGRect(origin: .zero, size: CGSize(width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
+        }
         
         elementView.isScrollEnabled = false
         elementView.allowsSelection = false
@@ -81,30 +113,6 @@ class DetailInfoViewController: BaseViewController, SubInfoElementController {
             
         })
         
-    }
-    
-    init(place: CommonPlaceInfo) {
-        self.place = place
-        super.init()
-    }
-    
-
-}
-
-
-extension DetailInfoViewController {
-    
-    struct Item: Hashable {
-        
-        static func == (lhs: DetailInfoViewController.Item, rhs: DetailInfoViewController.Item) -> Bool {
-            lhs.info.title == rhs.info.title
-        }
-        
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(info.title)
-        }
-        
-        let info: DetailInfo
     }
     
     

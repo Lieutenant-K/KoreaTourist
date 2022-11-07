@@ -284,7 +284,7 @@ class TourPlaceInfo: Information, PlaceInfo, DetailInformation {
         }
         
         var contentList: [(String, String)] {
-            [ ("행사", event)
+            [ ("체험", event)
               ,("가능 연령", eventAge)
             ]
         }
@@ -474,9 +474,6 @@ class ExtraPlaceInfo: Object, PlaceInfo {
         self.init()
         contentId = id
         list = infoList
-//        let list = List<ExtraPlaceElement>()
-//        infoList.forEach { list.append($0) }
-//        self.infoList = list
     }
 }
 
@@ -488,11 +485,14 @@ class ExtraPlaceElement: EmbeddedObject, Codable, NeedValidate {
     @Persisted var infoType: Int
     
     var isValidate: Bool {
+        /*
         var validate = false
         [infoText, infoTitle].forEach {
             validate = validate || !$0.isEmpty ? true : false
         }
         return validate
+         */
+        return !infoTitle.isEmpty && !infoText.isEmpty
     }
     
     var releativeCell: BaseInfoCell.Type {
@@ -616,6 +616,8 @@ enum ContentType: String, Codable {
             return EventPlaceInfo.self
         }
     }
+    
+    
     
 }
 

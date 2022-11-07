@@ -11,11 +11,13 @@ class ExtraInfoController: BaseViewController, SubInfoElementController {
     
     let place: CommonPlaceInfo
     
-    var extra: ExtraPlaceInfo?
+    var extra: [ExtraPlaceElement] = [] {
+        didSet { updateSnapshot() }
+    }
     
     let elementView = UITableView(frame: .zero, style: .grouped)
     
-    var dataSource: UITableViewDiffableDataSource<Int, Int>!
+    var dataSource: UITableViewDiffableDataSource<Int, [ExtraPlaceElement]>!
     
     override func loadView() {
         view = elementView
@@ -23,41 +25,50 @@ class ExtraInfoController: BaseViewController, SubInfoElementController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureIntroView()
+        configureExtraView()
         fetchExtraInfo()
     }
     
     func fetchExtraInfo() {
         
         realm.fetchPlaceExtra(contentId: place.contentId, contentType: place.contentType) { [weak self] extra in
-            self?.extra = extra
-            self?.updateSnapshot()
+            self?.extra = extra.list.filter { element in
+                element.isValidate == true
+            }
         }
         
     }
     
     func updateSnapshot() {
         
-        guard let _ = extra else { return }
+        var snapshot = NSDiffableDataSourceSnapshot<Int, [ExtraPlaceElement]>()
         
-        var snapshot = NSDiffableDataSourceSnapshot<Int, Int>()
-        snapshot.appendSections([0])
-        snapshot.appendItems([0])
+        if !extra.isEmpty {
+            snapshot.appendSections([0])
+            snapshot.appendItems([extra])
+        }
         
         dataSource.apply(snapshot)
         
     }
     
-    func configureIntroView() {
+    func configureExtraView() {
+        elementView.tableFooterView = UIView().then {
+            $0.frame = CGRect(origin: .zero, size: CGSize(width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
+        }
+        
+        elementView.tableHeaderView = UIView().then {
+            $0.frame = CGRect(origin: .zero, size: CGSize(width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
+        }
         
         elementView.isScrollEnabled = false
         elementView.register(ExtraInfoCell.self, forCellReuseIdentifier: ExtraInfoCell.reuseIdentifier)
         
-        dataSource = UITableViewDiffableDataSource(tableView: elementView, cellProvider: { [unowned self] tableView, indexPath, itemIdentifier in
+        dataSource = UITableViewDiffableDataSource(tableView: elementView, cellProvider: { tableView, indexPath, itemIdentifier in
             
-            if let cell = tableView.dequeueReusableCell(withIdentifier: ExtraInfoCell.reuseIdentifier, for: indexPath) as? ExtraInfoCell, let extra {
+            if let cell = tableView.dequeueReusableCell(withIdentifier: ExtraInfoCell.reuseIdentifier, for: indexPath) as? ExtraInfoCell {
                 
-                cell.inputData(data: extra.list)
+                cell.inputData(data: itemIdentifier)
                 
                 return cell
             }

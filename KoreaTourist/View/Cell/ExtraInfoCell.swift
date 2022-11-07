@@ -21,21 +21,33 @@ final class ExtraInfoCell: BaseInfoCell {
     
     func inputData(data: [ExtraPlaceElement]) {
         
-//        if stackView.arrangedSubviews.count > 0 {
-//            return
-//        }
+        removeSubviews()
         
         data.forEach {
+            
             let title = $0.infoTitle
             let content = $0.infoText
-            stackView.addArrangedSubview(LabelStackView(title: title, content: content, axis: .vertical))
+            
+            let labelStack = LabelStackView(title: title, content: content)
+            
+            if labelStack.contentLabel.countLines() > 1 {
+                labelStack.axis = .vertical
+                labelStack.alignment = .fill
+            }
+            
+            stackView.addArrangedSubview(labelStack)
+            
         }
         
-//        data.map { (element) -> LabelStackView in
-//            let label = LabelStackView(title: element.infoTitle,content: "", axis: .vertical)
-//            label.contentLabel.text = element.infoText
-//            return label
-//        }.forEach {  stackView.addArrangedSubview($0) }
+    }
+    
+    
+    private func removeSubviews() {
+        
+        stackView.arrangedSubviews.forEach {
+            stackView.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
         
     }
     
