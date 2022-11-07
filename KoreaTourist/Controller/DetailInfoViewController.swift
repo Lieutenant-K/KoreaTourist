@@ -11,11 +11,11 @@ class DetailInfoViewController: BaseViewController, SubInfoElementController {
     
     let place: CommonPlaceInfo
     
-    var detail: DetailInformation?
-    
-    let elementView = UITableView(frame: .zero, style: .plain).then {
-        $0.separatorInset = .zero
+    var detail: [DetailInfo] = [] {
+        didSet { updateSnapshot() }
     }
+    
+    let elementView = UITableView(frame: .zero, style: .grouped)
     
     var dataSource: UITableViewDiffableDataSource<Int, Item>!
     
@@ -30,33 +30,24 @@ class DetailInfoViewController: BaseViewController, SubInfoElementController {
         fetchDetailInfo()
         
     }
-
-    
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        print(elementView.contentSize.height)
-//    }
     
     func fetchDetailInfo() {
         
         realm.fetchPlaceDetail(type: place.contentType.detailInfoType, contentId: place.contentId, contentType: place.contentType) { [weak self] in
-            self?.detail = $0
-            self?.updateSnapshot()
+            self?.detail = $0.detailInfoList.filter{ data in
+                data.isValidate == true
+            }
         }
         
     }
     
+    
     func updateSnapshot() {
-        
-        guard let detail = detail else { return }
         
         var snapshot = NSDiffableDataSourceSnapshot<Int, Item>()
         
-        let sections = detail.detailInfoList
-            .filter { $0.isValidate == true }
-        
-        for i in 0..<sections.count {
-            let item = Item(info: sections[i])
+        for i in 0..<detail.count {
+            let item = Item(info: detail[i])
             
             snapshot.appendSections([i])
             snapshot.appendItems([item], toSection: i)
@@ -68,8 +59,10 @@ class DetailInfoViewController: BaseViewController, SubInfoElementController {
     
     func configureDetailView() {
         
-//        elementView.isScrollEnabled = false
+        elementView.isScrollEnabled = false
         elementView.allowsSelection = false
+        elementView.separatorInset = .zero
+        
         
         elementView.register(DetailInfoCell.self, forCellReuseIdentifier: DetailInfoCell.reuseIdentifier)
         
