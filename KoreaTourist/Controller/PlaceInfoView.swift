@@ -17,11 +17,13 @@ class PlaceInfoView: UIScrollView {
     
     let imageView = UIImageView().then {
         $0.backgroundColor = .secondarySystemBackground
+        $0.contentMode = .scaleAspectFill
     }
     
     let containerView = UIView().then {
         $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.layer.shadowOpacity = 0.5
+        $0.layer.cornerRadius = 10
     }
     /*
     UIView().then {
@@ -44,7 +46,7 @@ class PlaceInfoView: UIScrollView {
         
         imageView.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
-            make.height.equalTo(250)
+            make.height.equalTo(imageView.snp.width).multipliedBy(0.75)
         }
         
         containerView.snp.makeConstraints { make in
@@ -54,7 +56,7 @@ class PlaceInfoView: UIScrollView {
 //            make.height.equalTo(900)
         }
         
-        containerView.layer.cornerRadius = 20
+//        containerView.layer.cornerRadius = 20
     }
     
     func addSubviews() {

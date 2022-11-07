@@ -25,7 +25,10 @@ class MainInfoViewController: BaseViewController {
     var autoScrollTimer = Timer()
     
     let subInfoVC: SubInfoViewController
-    let mainInfoView = MainInfoView()
+    let mainInfoView = MainInfoView().then {
+        $0.layer.cornerRadius = 10
+        $0.clipsToBounds = true
+    }
     
     override func loadView() {
         view = mainInfoView
@@ -67,16 +70,9 @@ class MainInfoViewController: BaseViewController {
     
     private func addObserver() {
         
-        NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationChanged(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateScrollPos), name: UIDevice.orientationDidChangeNotification, object: nil)
         
     }
-    
-    @objc func deviceOrientationChanged(_ noti: Notification) {
-        
-        updateScrollPos()
-        
-    }
-    
     
     private func configureLocationView() {
         
@@ -201,7 +197,7 @@ extension MainInfoViewController: UICollectionViewDelegate {
     }
     */
     
-    private func updateScrollPos() {
+    @objc private func updateScrollPos() {
         
         if let index = dataSource.indexPath(for: originCount) {
             mainInfoView.galleryView.collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
