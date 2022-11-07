@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SnapKit
 
 class PlaceInfoViewController: BaseViewController {
     
@@ -15,22 +16,47 @@ class PlaceInfoViewController: BaseViewController {
     
     let placeInfoView = PlaceInfoView()
     
-    override func loadView() {
-        view = placeInfoView
+    let imageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configureSubviews()
         addContentVC()
         configureImage()
+    }
+    
+    func configureSubviews() {
+        
+        placeInfoView.delegate = self
+        
+        view.addSubview(placeInfoView)
+        placeInfoView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        placeInfoView.imageContainer.addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(view.snp.top).priority(.high)
+            make.height.greaterThanOrEqualTo(placeInfoView.imageContainer.snp.height)
+        }
+        
     }
     
     func configureImage() {
         
         let url = URL(string: place.image)
         
-        placeInfoView.imageView.kf.setImage(with: url, options: [.transition(.fade(0.3))])
+        imageView.kf.setImage(with: url, options: [.transition(.fade(0.3))])
+        
+    }
+    
+    override func configureNavigationItem() {
+        guard let naviBar = navigationController?.navigationBar else { return }
+        
+//        navigationController?.isNavigationBarHidden = true
         
     }
     
@@ -55,4 +81,8 @@ class PlaceInfoViewController: BaseViewController {
     }
    
 
+}
+
+extension PlaceInfoViewController: UIScrollViewDelegate {
+    
 }

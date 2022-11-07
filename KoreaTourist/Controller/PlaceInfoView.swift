@@ -15,9 +15,8 @@ class PlaceInfoView: UIScrollView {
         $0.backgroundColor = .systemBackground
     }
     
-    let imageView = UIImageView().then {
+    let imageContainer = UIView().then {
         $0.backgroundColor = .secondarySystemBackground
-        $0.contentMode = .scaleAspectFill
     }
     
     let containerView = UIView().then {
@@ -25,33 +24,39 @@ class PlaceInfoView: UIScrollView {
         $0.layer.shadowOpacity = 0.5
         $0.layer.cornerRadius = 10
     }
-    /*
-    UIView().then {
-        $0.backgroundColor = .gray
-        let view = CommonInfoView()
-        $0.addSubview(view)
-        view.snp.makeConstraints { make in
-            make.leading.trailing.top.equalToSuperview()
-        }
-    }
-     */
     
     func addConstraint() {
         
+        imageContainer.snp.makeConstraints { make in
+            make.trailing.leading.equalTo(frameLayoutGuide)
+            make.top.equalTo(contentLayoutGuide)
+//            make.height.greaterThanOrEqualTo(0)
+            make.height.equalTo(imageContainer.snp.width).multipliedBy(0.75)
+        }
+        
+        /*
         contentView.snp.makeConstraints { make in
             make.edges.equalTo(contentLayoutGuide)
             make.width.equalTo(frameLayoutGuide)
             make.height.equalTo(frameLayoutGuide).priority(.low)
         }
+         */
         
+        /*
         imageView.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
             make.height.equalTo(imageView.snp.width).multipliedBy(0.75)
         }
+        */
         
         containerView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview().inset(20)
-            make.top.equalTo(imageView.snp.bottom).offset(-100)
+            make.top.equalTo(imageContainer.snp.bottom).offset(-100)
+            
+            make.leading.trailing.equalTo(frameLayoutGuide).inset(20)
+            make.bottom.equalTo(contentLayoutGuide)
+            
+            make.height.greaterThanOrEqualTo(0)
+//           make.top.equalTo(imageView.snp.bottom).offset(-100)
 //            make.height.greaterThanOrEqualTo(0)
 //            make.height.equalTo(900)
         }
@@ -60,9 +65,11 @@ class PlaceInfoView: UIScrollView {
     }
     
     func addSubviews() {
-        addSubview(contentView)
-        contentView.addSubview(imageView)
-        contentView.addSubview(containerView)
+        addSubview(imageContainer)
+        addSubview(containerView)
+        
+        //contentView.addSubview(imageView)
+        //contentView.addSubview(containerView)
     }
     
     func setBackground() {
