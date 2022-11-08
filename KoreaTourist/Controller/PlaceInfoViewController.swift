@@ -56,7 +56,31 @@ class PlaceInfoViewController: BaseViewController {
     override func configureNavigationItem() {
         guard let naviBar = navigationController?.navigationBar else { return }
         
-//        navigationController?.isNavigationBarHidden = true
+//        let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 15, weight: .heavy)), style: .plain, target: nil, action: nil)
+//        let personButton = UIBarButtonItem(image: UIImage(systemName: "person.fill"), style: .plain, target: nil, action: nil)
+//
+//        navigationItem.leftBarButtonItem = closeButton
+//        navigationItem.rightBarButtonItem = personButton
+        
+        naviBar.tintColor = .white
+        
+        navigationItem.titleView = UILabel().then {
+            $0.font = .systemFont(ofSize: 22, weight: .bold)
+            $0.text = place.title
+            $0.textColor = .tintColor
+            $0.alpha = 0.0
+        }
+        
+        let standard = UINavigationBarAppearance()
+        standard.configureWithTransparentBackground()
+        standard.backgroundColor = .white
+        
+        let scrollEdge = UINavigationBarAppearance()
+        scrollEdge.configureWithTransparentBackground()
+        
+        navigationItem.standardAppearance = standard
+        navigationItem.scrollEdgeAppearance = scrollEdge
+        
         
     }
     
@@ -84,5 +108,36 @@ class PlaceInfoViewController: BaseViewController {
 }
 
 extension PlaceInfoViewController: UIScrollViewDelegate {
+    
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        guard let naviBar = navigationController?.navigationBar else {return }
+        
+        let imageContainerHeight = placeInfoView.imageContainer.frame.height
+        
+        let inset = imageView.frame.height - imageContainerHeight
+        
+        let maxOffset = imageContainerHeight - 100
+        
+        let alpha = (scrollView.contentOffset.y + inset) / (inset + maxOffset)
+        
+        print("alpha:\(alpha)")
+        
+        
+        navigationItem.standardAppearance?.backgroundColor = UIColor.white.withAlphaComponent(alpha)
+        navigationItem.titleView?.alpha = alpha
+        naviBar.tintColor = UIColor.white.colorWithBrightness(brightness: 1-alpha)
+        
+        if scrollView.contentOffset.y >= maxOffset {
+            print("OK")
+            
+//            navigationItem.standardAppearance?.backgroundColor = UIColor.systemBackground.withAlphaComponent(1.0)
+        } else {
+//            print("No")
+//            navigationItem.standardAppearance?.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.0)
+        }
+//        print(scrollView.contentOffset.y + inset)
+    }
     
 }

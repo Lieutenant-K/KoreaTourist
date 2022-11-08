@@ -162,6 +162,19 @@ extension UIColor {
     //UIColor(red: 117/255, green: 86/255, blue: 86/255, alpha: 1)
     //UIColor(red: 84/255, green: 183/255, blue: 161/255, alpha: 1)
     
+    func colorWithBrightness(brightness: CGFloat) -> UIColor {
+        var H: CGFloat = 0, S: CGFloat = 0, B: CGFloat = 0, A: CGFloat = 0
+        
+        if getHue(&H, saturation: &S, brightness: &B, alpha: &A) {
+            B += (brightness - 1.0)
+            B = max(min(B, 1.0), 0.0)
+            
+            return UIColor(hue: H, saturation: S, brightness: B, alpha: A)
+        }
+        
+        return self
+    }
+    
 }
 
 extension CGPoint {
