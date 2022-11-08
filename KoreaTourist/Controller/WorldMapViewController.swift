@@ -59,9 +59,9 @@ final class WorldMapViewController: BaseViewController {
         
         let handler: NMFOverlayTouchHandler = { [weak self] in
             if let marker = $0 as? PlaceMarker {
-                let vc = DetailViewController(place: marker.placeInfo, isModal: true)
-                
+                let vc = PlaceInfoViewController(place: marker.placeInfo)
                 let navi = UINavigationController(rootViewController: vc)
+                navi.modalPresentationStyle = .fullScreen
                 self?.present(navi, animated: true)
             }
             return true

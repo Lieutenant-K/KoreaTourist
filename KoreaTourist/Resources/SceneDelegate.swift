@@ -29,11 +29,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ToastManager.shared.duration = 1.5
         
         
-        let notFirst = UserDefaults.standard.bool(forKey: "notFirst")
-        
-        let vc = PlaceInfoViewController()
-//        notFirst ? MapViewController() : OnBoardingViewController() //MapViewController()
-//        let navi = UINavigationController(rootViewController: vc)
+        var notFirst = UserDefaults.standard.bool(forKey: "notFirst")
+//        notFirst = false
+//        let vc = PlaceInfoViewController()
+        let vc = notFirst ? MapViewController() : OnBoardingViewController() //MapViewController()
+        let navi = UINavigationController(rootViewController: vc)
         
         window = UIWindow(windowScene: scene)
         window?.rootViewController = vc

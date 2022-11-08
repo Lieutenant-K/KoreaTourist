@@ -47,7 +47,7 @@ final class PopupViewController: BaseViewController {
     
     @objc func touchDetailButton(_ sender: UIButton) {
         
-        let vc = DetailViewController(place: self.placeInfo)
+        let vc = PlaceInfoViewController(place: self.placeInfo)
         let navi = UINavigationController(rootViewController: vc)
         self.present(navi, animated: true)
         

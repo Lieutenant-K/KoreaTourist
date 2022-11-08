@@ -49,18 +49,24 @@ class GalleryView: BaseView {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.visibleItemsInvalidationHandler = { [unowned self] visibleItems, scrollOffset, layoutEnvironment in
+        section.visibleItemsInvalidationHandler = { [weak self] visibleItems, scrollOffset, layoutEnvironment in
+            
+            // 호출 시 마다 수직 스크롤이 자동으로 발생하는 이슈
+            
+            guard let weakSelf = self else { return }
             
             let width = layoutEnvironment.container.contentSize.width
             
-            let originCount = collectionView.numberOfItems(inSection: 0) / 3
+            let originCount = weakSelf.collectionView.numberOfItems(inSection: 0) / 3
             
             let offset = scrollOffset.x
             
             let pageIndex = Int((offset / width).rounded())
             
-            pageLabel.text = "\(pageIndex % originCount + 1) / \(originCount)"
-
+            if originCount != 0 {
+                weakSelf.pageLabel.text = "\(pageIndex % originCount + 1) / \(originCount)"
+            }
+             
         }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()

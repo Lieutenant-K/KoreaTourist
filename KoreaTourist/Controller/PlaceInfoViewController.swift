@@ -27,6 +27,19 @@ class PlaceInfoViewController: BaseViewController {
         configureImage()
     }
     
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setNavigationBarColor(with: 0)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.navigationBar.tintColor = .tintColor
+    }
+    
+    
     func configureSubviews() {
         
         placeInfoView.delegate = self
@@ -53,13 +66,24 @@ class PlaceInfoViewController: BaseViewController {
         
     }
     
+    func setNavigationBarColor(with alpha: CGFloat) {
+        
+        navigationItem.standardAppearance?.backgroundColor = UIColor.white.withAlphaComponent(alpha)
+        navigationItem.titleView?.alpha = alpha
+        navigationController?.navigationBar.tintColor = UIColor.white.colorWithBrightness(brightness: 1-alpha)
+        
+        
+    }
+    
     override func configureNavigationItem() {
         guard let naviBar = navigationController?.navigationBar else { return }
         
-//        let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 15, weight: .heavy)), style: .plain, target: nil, action: nil)
+        let closeButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 18, weight: .heavy)), style: .plain, target: self, action: #selector(touchCloseButton(_:)))
+        
+        navigationItem.leftBarButtonItem = closeButton
+        
 //        let personButton = UIBarButtonItem(image: UIImage(systemName: "person.fill"), style: .plain, target: nil, action: nil)
 //
-//        navigationItem.leftBarButtonItem = closeButton
 //        navigationItem.rightBarButtonItem = personButton
         
         naviBar.tintColor = .white
@@ -98,6 +122,16 @@ class PlaceInfoViewController: BaseViewController {
         
     }
     
+    @objc func touchCloseButton(_ sender: UIBarButtonItem) {
+        
+        if isModal {
+            dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
+        
+    }
+    
     init(place: CommonPlaceInfo){
         self.mainInfoVC = MainInfoViewController(place: place)
         self.place = place
@@ -112,22 +146,24 @@ extension PlaceInfoViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-        guard let naviBar = navigationController?.navigationBar else {return }
+//        guard let naviBar = navigationController?.navigationBar else {return }
         
         let imageContainerHeight = placeInfoView.imageContainer.frame.height
         
         let inset = imageView.frame.height - imageContainerHeight
         
-        let maxOffset = imageContainerHeight - 100
+        let maxOffset = (imageContainerHeight / 2) - 100
         
         let alpha = (scrollView.contentOffset.y + inset) / (inset + maxOffset)
         
-        print("alpha:\(alpha)")
+//        print("alpha:\(alpha)")
         
-        
+        setNavigationBarColor(with: alpha)
+        /*
         navigationItem.standardAppearance?.backgroundColor = UIColor.white.withAlphaComponent(alpha)
         navigationItem.titleView?.alpha = alpha
         naviBar.tintColor = UIColor.white.colorWithBrightness(brightness: 1-alpha)
+        */
         
         if scrollView.contentOffset.y >= maxOffset {
             print("OK")

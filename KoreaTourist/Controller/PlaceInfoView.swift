@@ -50,10 +50,10 @@ class PlaceInfoView: UIScrollView {
         */
         
         containerView.snp.makeConstraints { make in
-            make.top.equalTo(imageContainer.snp.bottom).offset(-100)
+            make.top.equalTo(imageContainer.snp.centerY).offset(-100)
             
             make.leading.trailing.equalTo(frameLayoutGuide).inset(20)
-            make.bottom.equalTo(contentLayoutGuide)
+            make.bottom.equalTo(contentLayoutGuide).offset(-50)
             
             make.height.greaterThanOrEqualTo(0)
 //           make.top.equalTo(imageView.snp.bottom).offset(-100)

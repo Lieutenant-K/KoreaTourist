@@ -194,7 +194,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
         case .place:
             if let place = placeList?[indexPath.row] {
                 
-                let vc = DetailViewController(place: place)
+                let vc = PlaceInfoViewController(place: place)
                 
                 navigationController?.pushViewController(vc, animated: true)
             }
