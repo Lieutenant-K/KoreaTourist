@@ -9,8 +9,8 @@ import UIKit
 
 final class EventInfoCell: BaseInfoCell {
     
-    let eventView = LabelStackView(title: "행사")
-    let eventAgeView = LabelStackView(title: "가능 연령")
+    let eventView = LabelStackView(title: "행사", content: "")
+    let eventAgeView = LabelStackView(title: "가능 연령", content: "")
     
     lazy var verticalStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [eventView, eventAgeView])

@@ -9,10 +9,10 @@ import UIKit
 
 final class TimeInfoCell: BaseInfoCell {
     
-    let openDateView = LabelStackView(title: "개장일")
-    let restDateView = LabelStackView(title: "휴일")
-    let availableSeasonView = LabelStackView(title: "이용시기")
-    let availableTimeView = LabelStackView(title: "이용시간")
+    let openDateView = LabelStackView(title: "개장일", content: "")
+    let restDateView = LabelStackView(title: "휴일", content: "")
+    let availableSeasonView = LabelStackView(title: "이용시기", content: "")
+    let availableTimeView = LabelStackView(title: "이용시간", content: "")
     
     lazy var verticalStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [availableSeasonView, availableTimeView, openDateView, restDateView])

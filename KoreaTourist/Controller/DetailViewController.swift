@@ -128,7 +128,7 @@ final class DetailViewController: BaseViewController {
     
     // MARK: Detail Place Information
     
-    private func fetchDetailInfo<T:Information>(infoType: T.Type) {
+    private func fetchDetailInfo<T:DetailInformation>(infoType: T.Type) {
         
         let id = commonInfo.contentId
         let type = commonInfo.contentType
@@ -281,11 +281,11 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
                     time.checkValidation()
                     
                 case let event as EventInfoCell:
-                    event.inputData(data: detail.eventData)
+                    event.inputData(data: detail.experienceData)
                     event.checkValidation()
                     
                 case let other as OtherDetailInfoCell:
-                    other.inputData(data: detail.otherData)
+                    other.inputData(data: detail.serviceData)
                     other.checkValidation()
                 default:
                     break

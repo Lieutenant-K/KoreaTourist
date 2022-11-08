@@ -9,12 +9,12 @@ import UIKit
 
 final class OtherDetailInfoCell: BaseInfoCell {
     
-    let contactView = LabelStackView(title: "문의 및 안내")
-    let capacityView = LabelStackView(title: "수용인원")
-    let parkingView = LabelStackView(title: "주차장 여부")
-    let strollerView = LabelStackView(title: "유모차 대여 여부")
-    let creditCardView = LabelStackView(title: "신용카드 가능 여부")
-    let petView = LabelStackView(title: "애완동물 가능 여부")
+    let contactView = LabelStackView(title: "문의 및 안내", content: "")
+    let capacityView = LabelStackView(title: "수용인원", content: "")
+    let parkingView = LabelStackView(title: "주차장 여부", content: "")
+    let strollerView = LabelStackView(title: "유모차 대여 여부", content: "")
+    let creditCardView = LabelStackView(title: "신용카드 가능 여부", content: "")
+    let petView = LabelStackView(title: "애완동물 가능 여부", content: "")
     
     lazy var viewList: [LabelStackView] = {
         [contactView, capacityView, parkingView, strollerView, creditCardView, petView]

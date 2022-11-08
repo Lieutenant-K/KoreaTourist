@@ -58,9 +58,9 @@ protocol DetailInformation: Information {
     
     var detailInfoList: [DetailInfo] { get }
     
-    var contentType: ContentType { get }
-    
-    var contentId: Int { get }
+//    var contentType: ContentType { get }
+//
+//    var contentId: Int { get }
     
 }
 
