@@ -33,17 +33,17 @@ final class WorldMapViewController: BaseViewController {
     }
     
     private func moveWorldMapCamera() {
-        
         let points = placeList.map { $0.position }
         
-        let bounds = NMGLatLngBounds(latLngs: points)
-        
-        let update = NMFCameraUpdate(fit: bounds, padding: 20)
-        update.animation = .easeOut
-        update.animationDuration = 0.75
-        
-        worldMapView.moveCamera(update)
-        
+        if !points.isEmpty {
+            let bounds = NMGLatLngBounds(latLngs: points)
+            let update = NMFCameraUpdate(fit: bounds, padding: 20)
+            
+            update.animation = .easeOut
+            update.animationDuration = 0.75
+            
+            worldMapView.moveCamera(update)
+        }
     }
      
     
