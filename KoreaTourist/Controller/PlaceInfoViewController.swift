@@ -10,16 +10,20 @@ import Kingfisher
 import SnapKit
 
 class PlaceInfoViewController: BaseViewController {
-    
     let place: CommonPlaceInfo
     let mainInfoVC: MainInfoViewController
-    
     let placeInfoView = PlaceInfoView()
+    let backgroundImageView = UIImageView()
+    let titleLabel = UILabel()
     
-    let imageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
+    init(place: CommonPlaceInfo, mainInfoVC: MainInfoViewController){
+        self.mainInfoVC = mainInfoVC
+        self.place = place
+        super.init()
+        backgroundImageView.contentMode = .scaleAspectFill
     }
     
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSubviews()
@@ -27,153 +31,95 @@ class PlaceInfoViewController: BaseViewController {
         configureImage()
     }
     
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        setNavigationBarColor(with: 0)
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         navigationController?.navigationBar.tintColor = .tintColor
     }
     
-    
-    func configureSubviews() {
-        
-        placeInfoView.delegate = self
-        
-        view.addSubview(placeInfoView)
-        placeInfoView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        placeInfoView.imageContainer.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview()
-            make.top.equalTo(view.snp.top).priority(.high)
-            make.height.greaterThanOrEqualTo(placeInfoView.imageContainer.snp.height)
-        }
-        
-    }
-    
-    func configureImage() {
-        
-        let url = URL(string: place.image)
-        
-        imageView.kf.setImage(with: url, options: [.transition(.fade(0.3))])
-        
-    }
-    
-    func setNavigationBarColor(with alpha: CGFloat) {
-        
-        navigationItem.standardAppearance?.backgroundColor = UIColor.white.withAlphaComponent(alpha)
-        navigationItem.titleView?.alpha = alpha
-        navigationController?.navigationBar.tintColor = UIColor.white.colorWithBrightness(brightness: 1-alpha)
-        
-        
-    }
-    
+    // MARK: - Navigation Item
     override func configureNavigationItem() {
         guard let naviBar = navigationController?.navigationBar else { return }
+        naviBar.tintColor = .white
         
         let closeButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 18, weight: .heavy)), style: .plain, target: self, action: #selector(touchCloseButton(_:)))
         
-        navigationItem.leftBarButtonItem = closeButton
-        
-//        let personButton = UIBarButtonItem(image: UIImage(systemName: "person.fill"), style: .plain, target: nil, action: nil)
-//
-//        navigationItem.rightBarButtonItem = personButton
-        
-        naviBar.tintColor = .white
-        
-        navigationItem.titleView = UILabel().then {
-            $0.font = .systemFont(ofSize: 22, weight: .bold)
-            $0.text = place.title
-            $0.textColor = .tintColor
-            $0.alpha = 0.0
-        }
+        titleLabel.font = .systemFont(ofSize: 22, weight: .bold)
+        titleLabel.text = place.title
+        titleLabel.textColor = .tintColor.withAlphaComponent(0.0)
         
         let standard = UINavigationBarAppearance()
         standard.configureWithTransparentBackground()
-        standard.backgroundColor = .white
-        
-        let scrollEdge = UINavigationBarAppearance()
-        scrollEdge.configureWithTransparentBackground()
-        
+
+        navigationItem.leftBarButtonItem = closeButton
+        navigationItem.titleView = titleLabel
         navigationItem.standardAppearance = standard
-        navigationItem.scrollEdgeAppearance = scrollEdge
-        
-        
     }
     
-    private func addContentVC() {
-        
-        addChild(mainInfoVC)
-        
-        placeInfoView.containerView.addSubview(mainInfoVC.view)
-        
-        mainInfoVC.view.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        mainInfoVC.didMove(toParent: self)
-        
-    }
-    
+    // MARK: - Action Method
     @objc func touchCloseButton(_ sender: UIBarButtonItem) {
-        
         if isModal {
             dismiss(animated: true)
         } else {
             navigationController?.popViewController(animated: true)
         }
-        
     }
-    
-    init(place: CommonPlaceInfo){
-        self.mainInfoVC = MainInfoViewController(place: place)
-        self.place = place
-        super.init()
-    }
-   
-
 }
 
+// MARK: - Helper Method
+extension PlaceInfoViewController {
+    private func configureSubviews() {
+        placeInfoView.delegate = self
+        placeInfoView.imageContainer.addSubview(backgroundImageView)
+        view.addSubview(placeInfoView)
+        
+        placeInfoView.snp.makeConstraints { $0.edges.equalToSuperview()
+        }
+        
+        backgroundImageView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalTo(view.snp.top).priority(.high)
+            make.height.greaterThanOrEqualTo(placeInfoView.imageContainer.snp.height)
+        }
+    }
+    
+    private func configureImage() {
+        let url = URL(string: place.image)
+        
+        backgroundImageView.kf.setImage(with: url, options: [.transition(.fade(0.3))])
+    }
+    
+    private func addContentVC() {
+        addChild(mainInfoVC)
+        placeInfoView.containerView.addSubview(mainInfoVC.view)
+        mainInfoVC.view.snp.makeConstraints { $0.edges.equalToSuperview()
+        }
+        
+        mainInfoVC.didMove(toParent: self)
+    }
+    
+    private func setNavigationBarColor(with alpha: CGFloat) {
+        navigationItem.standardAppearance?.backgroundColor = UIColor.white.withAlphaComponent(alpha)
+        navigationController?.navigationBar.tintColor = UIColor.white.colorWithBrightness(brightness: 1-alpha)
+        titleLabel.textColor = .tintColor.withAlphaComponent(alpha)
+    }
+}
+
+// MARK: - ScrollView Delegate
 extension PlaceInfoViewController: UIScrollViewDelegate {
-    
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-//        guard let naviBar = navigationController?.navigationBar else {return }
-        
         let imageContainerHeight = placeInfoView.imageContainer.frame.height
-        
-        let inset = imageView.frame.height - imageContainerHeight
-        
+        let inset = backgroundImageView.frame.height - imageContainerHeight
         let maxOffset = (imageContainerHeight / 2) - 100
         
         let alpha = (scrollView.contentOffset.y + inset) / (inset + maxOffset)
+        print(imageContainerHeight, inset, maxOffset)
+        print("alpha:\(alpha)")
         
-//        print("alpha:\(alpha)")
+        setNavigationBarColor(with: imageContainerHeight > 0 ? alpha : 0.0)
         
-        setNavigationBarColor(with: alpha)
-        /*
-        navigationItem.standardAppearance?.backgroundColor = UIColor.white.withAlphaComponent(alpha)
-        navigationItem.titleView?.alpha = alpha
-        naviBar.tintColor = UIColor.white.colorWithBrightness(brightness: 1-alpha)
-        */
-        
-        if scrollView.contentOffset.y >= maxOffset {
-            print("OK")
-            
-//            navigationItem.standardAppearance?.backgroundColor = UIColor.systemBackground.withAlphaComponent(1.0)
-        } else {
-//            print("No")
-//            navigationItem.standardAppearance?.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.0)
-        }
-//        print(scrollView.contentOffset.y + inset)
+//        if scrollView.contentOffset.y >= maxOffset {
+//            print("OK")
+//        } else {}
     }
     
 }
