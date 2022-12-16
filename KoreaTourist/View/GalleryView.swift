@@ -7,67 +7,60 @@
 
 import UIKit
 import Then
+import SnapKit
 
 class GalleryView: BaseView {
+    let pageLabel = BasePaddingLabel(padding: UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 10))
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
     
-    /*
-    let titleLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 18, weight: .medium)
-        $0.numberOfLines = 0
-        $0.textAlignment = .left
-        $0.text = "갤러리"
+    init() {
+        super.init(frame: .zero)
+        configureSubviews()
     }
-     */
     
-    let pageLabel = BasePaddingLabel(padding: UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 10)).then {
-        $0.font = .systemFont(ofSize: 14, weight: .medium)
-        $0.layer.cornerRadius = 14
-        $0.textColor = .white
-        $0.backgroundColor = .black.withAlphaComponent(0.6)
-        $0.clipsToBounds = true
-        $0.textAlignment = .center
-        $0.numberOfLines = 1
+    private func configureSubviews() {
+        pageLabel.font = .systemFont(ofSize: 14, weight: .medium)
+        pageLabel.layer.cornerRadius = 14
+        pageLabel.textColor = .white
+        pageLabel.backgroundColor = .black.withAlphaComponent(0.6)
+        pageLabel.clipsToBounds = true
+        pageLabel.textAlignment = .center
+        pageLabel.numberOfLines = 1
+        
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isPagingEnabled = true
+        collectionView.backgroundColor = .systemGroupedBackground
+    }
+     
+    override func addSubviews() {
+        [collectionView, pageLabel].forEach {
+            addSubview($0)
+        }
+    }
+    
+    override func addConstraint() {
+        collectionView.snp.makeConstraints {
+            $0.leading.trailing.bottom.top.equalToSuperview()
+            $0.height.equalTo(collectionView.snp.width).multipliedBy(0.75)
+        }
+        
+        pageLabel.snp.makeConstraints {
+            $0.bottom.equalTo(-12)
+            $0.centerX.equalToSuperview()
+        }
+    }
+    
+}
 
-    }
-    
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout()).then {
-        $0.showsHorizontalScrollIndicator = false
-        $0.isPagingEnabled = true
-        $0.backgroundColor = .systemGroupedBackground
-    
-    }
-    
-    
-    func createLayout() -> UICollectionViewLayout {
-        
+extension GalleryView {
+    private func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.visibleItemsInvalidationHandler = { [weak self] visibleItems, scrollOffset, layoutEnvironment in
-            
-            // 호출 시 마다 수직 스크롤이 자동으로 발생하는 이슈
-            
-            guard let weakSelf = self else { return }
-            
-            let width = layoutEnvironment.container.contentSize.width
-            
-            let originCount = weakSelf.collectionView.numberOfItems(inSection: 0) / 3
-            
-            let offset = scrollOffset.x
-            
-            let pageIndex = Int((offset / width).rounded())
-            
-            if originCount != 0 {
-                weakSelf.pageLabel.text = "\(pageIndex % originCount + 1) / \(originCount)"
-            }
-             
-        }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.scrollDirection = .horizontal
@@ -76,38 +69,5 @@ class GalleryView: BaseView {
         let layout = UICollectionViewCompositionalLayout(section: section, configuration: config)
         
         return layout
-        
     }
-     
-    
-    override func addSubviews() {
-        [collectionView, pageLabel].forEach {
-            addSubview($0)
-        }
-    }
-    
-    override func addConstraint() {
-        /*
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(12)
-        }*/
-        
-        collectionView.snp.makeConstraints { make in
-//            make.top.equalTo(titleLabel.snp.bottom).offset(14)
-            make.leading.trailing.bottom.top.equalToSuperview()
-            make.height.equalTo(collectionView.snp.width).multipliedBy(0.75)
-        }
-        
-        pageLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(-12)
-            make.centerX.equalToSuperview()
-//            make.trailing.bottom.equalToSuperview().inset(12)
-        }
-        
-//        self.snp.makeConstraints { make in
-//            make.height.greaterThanOrEqualTo(0)
-//        }
-    }
-    
 }

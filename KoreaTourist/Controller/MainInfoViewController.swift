@@ -18,7 +18,7 @@ class MainInfoViewController: BaseViewController {
     var galleryImages: [PlaceImage] = [] {
         didSet {
             updateSnapshot()
-            updateScrollPos()
+            resetScrollPos()
             activateAutoScrollTimer()
         }
     }
@@ -41,13 +41,12 @@ class MainInfoViewController: BaseViewController {
         addChildVC()
         configureMainInfoView()
         fetchGalleryImages()
-//        activateAutoScrollTimer()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateMapCameraPos()
-        updateScrollPos()
+        resetScrollPos()
     }
 }
 
@@ -74,17 +73,17 @@ extension MainInfoViewController {
     }
     
     private func addObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(updateScrollPos), name: UIDevice.orientationDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resetScrollPos), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     private func addChildVC() {
         addChild(subInfoVC)
         mainInfoView.subInfoView.addSubview(subInfoVC.view)
-        
+
         subInfoVC.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
+
         subInfoVC.didMove(toParent: self)
     }
 }
@@ -132,37 +131,7 @@ extension MainInfoViewController: UICollectionViewDelegate {
         RunLoop.main.add(autoScrollTimer, forMode: .common)
     }
     
-    /*
-    func createLayout() -> UICollectionViewLayout {
-        
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        
-        let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.scrollDirection = .horizontal
-        
-        let layout = UICollectionViewCompositionalLayout(section: section, configuration: config)
-        
-        return layout
-        
-    }
-    */
-    /*
-    private func updateGalleryPage() {
-        
-        mainInfoView.galleryView.pageLabel.text = "\(currentPageIndex+1) / \(galleryImages.count)"
-        
-    }
-    */
-    
-    @objc private func updateScrollPos() {
+    @objc private func resetScrollPos() {
         guard let index = dataSource.indexPath(for: originCount) else { return }
         
         mainInfoView.galleryView.collectionView.scrollToItem(at: index, at: .centeredHorizontally, animated: false)
@@ -179,12 +148,20 @@ extension MainInfoViewController: UICollectionViewDelegate {
         dataSource.apply(snapshot)
     }
     
-    
     private func fetchGalleryImages() {
         realm.fetchPlaceImages(contentId: place.contentId) { [weak self] in
             self?.galleryImages = $0 + $0 + $0
             self?.mainInfoView.galleryView.isHidden = $0.count > 0 ? false : true
         }
+    }
+    
+    // MARK: - Delegate Method
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let width = mainInfoView.galleryView.collectionView.frame.width
+        let offset = scrollView.contentOffset.x
+        let pageIndex = Int((offset / width).rounded()) % originCount
+        
+        mainInfoView.galleryView.pageLabel.text  = "\(pageIndex+1) / \(originCount)"
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -223,5 +200,4 @@ extension MainInfoViewController: UICollectionViewDelegate {
             scrollView.isScrollEnabled = false
         }
     }
-
 }

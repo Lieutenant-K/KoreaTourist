@@ -36,6 +36,7 @@ class PlaceInfoViewController: BaseViewController {
         navigationController?.navigationBar.tintColor = .tintColor
     }
     
+    
     // MARK: - Navigation Item
     override func configureNavigationItem() {
         guard let naviBar = navigationController?.navigationBar else { return }
@@ -53,6 +54,7 @@ class PlaceInfoViewController: BaseViewController {
         navigationItem.leftBarButtonItem = closeButton
         navigationItem.titleView = titleLabel
         navigationItem.standardAppearance = standard
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     // MARK: - Action Method
@@ -116,10 +118,6 @@ extension PlaceInfoViewController: UIScrollViewDelegate {
         print("alpha:\(alpha)")
         
         setNavigationBarColor(with: imageContainerHeight > 0 ? alpha : 0.0)
-        
-//        if scrollView.contentOffset.y >= maxOffset {
-//            print("OK")
-//        } else {}
     }
     
 }
