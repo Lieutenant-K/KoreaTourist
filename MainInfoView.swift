@@ -6,55 +6,49 @@
 //
 
 import UIKit
-import Then
-import NMapsMap
+import SnapKit
 
 class MainInfoView: BaseView {
-
-    let nameLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 30, weight: .bold)
-        $0.numberOfLines = 0
-        $0.textAlignment = .center
-    }
-    
+    let nameLabel = UILabel()
     let locationView = LocationView()
-    
-    let galleryView = GalleryView().then {
-        $0.isHidden = true
-    }
+    let galleryView = GalleryView()
     let subInfoView = UIView()
+    private lazy var stackView = UIStackView(arrangedSubviews: [locationView, galleryView, subInfoView])
     
-    private lazy var stackView = UIStackView(arrangedSubviews: [locationView, galleryView, subInfoView]).then {
-        $0.axis = .vertical
-        $0.spacing = 20
-        $0.alignment = .fill
-        $0.distribution = .fill
+    init() {
+        super.init(frame: .zero)
+        configureSubviews()
+    }
+    
+    private func configureSubviews() {
+        nameLabel.font = .systemFont(ofSize: 30, weight: .bold)
+        nameLabel.numberOfLines = 0
+        nameLabel.textAlignment = .center
+        
+        stackView.axis = .vertical
+        stackView.spacing = 20
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        
+        galleryView.isHidden = true
     }
     
     override func addSubviews() {
-        
-        [nameLabel, stackView].forEach {
-            addSubview($0)
-        }
-        
+        [nameLabel, stackView].forEach { addSubview($0) }
     }
     
     override func addConstraint() {
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(20)
-            make.centerX.equalToSuperview()
-            make.leading.greaterThanOrEqualToSuperview().offset(12)
-            make.trailing.lessThanOrEqualToSuperview().offset(-12)
+        nameLabel.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide).offset(20)
+            $0.centerX.equalToSuperview()
+            $0.leading.greaterThanOrEqualToSuperview().offset(12)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-12)
         }
         
-        stackView.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(20)
-            make.leading.trailing.bottom.equalToSuperview()
+        stackView.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(20)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
-        
-//        self.snp.makeConstraints { make in
-//            make.height.greaterThanOrEqualTo(0)
-//        }
     }
     
 }

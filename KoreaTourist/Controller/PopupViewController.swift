@@ -46,7 +46,8 @@ final class PopupViewController: BaseViewController {
     }
     
     @objc func touchDetailButton(_ sender: UIButton) {
-        let main = MainInfoViewController(place: placeInfo)
+        let sub = SubInfoViewController(place: placeInfo)
+        let main = MainInfoViewController(place: placeInfo, subInfoVC: sub)
         let vc = PlaceInfoViewController(place: placeInfo, mainInfoVC: main)
         let navi = UINavigationController(rootViewController: vc)
         

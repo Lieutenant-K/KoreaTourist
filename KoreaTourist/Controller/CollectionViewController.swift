@@ -193,7 +193,8 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
             }
         case .place:
             if let place = placeList?[indexPath.row] {
-                let main = MainInfoViewController(place: place)
+                let sub = SubInfoViewController(place: place)
+                let main = MainInfoViewController(place: place, subInfoVC: sub)
                 let vc = PlaceInfoViewController(place: place, mainInfoVC: main)
                 
                 navigationController?.pushViewController(vc, animated: true)

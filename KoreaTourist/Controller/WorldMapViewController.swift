@@ -74,7 +74,8 @@ extension WorldMapViewController {
         let handler: NMFOverlayTouchHandler = {
             [weak self] in
             if let marker = $0 as? PlaceMarker {
-                let main = MainInfoViewController(place: marker.placeInfo)
+                let sub = SubInfoViewController(place: marker.placeInfo)
+                let main = MainInfoViewController(place: marker.placeInfo, subInfoVC: sub)
                 let vc = PlaceInfoViewController(place: marker.placeInfo, mainInfoVC: main)
                 let navi = UINavigationController(rootViewController: vc)
                 navi.modalPresentationStyle = .fullScreen
