@@ -2,6 +2,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=xcode,macos,cocoapods,swiftpackagemanager
 
 
+### Google Service ###
+GoogleService-Info.plist
+
 ### Custom Swift File ###
 KoreaTourist/APIManager/APIKey.swift
 
@@ -52,7 +55,6 @@ Packages
 .build/
 xcuserdata
 DerivedData/
-*.xcodeproj
 
 
 ### Xcode ###
@@ -64,7 +66,6 @@ xcuserdata/
 *.xccheckout
 
 ### Xcode Patch ###
-*.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcodeproj/xcshareddata/
 !*.xcworkspace/contents.xcworkspacedata
