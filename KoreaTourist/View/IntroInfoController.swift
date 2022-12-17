@@ -8,13 +8,11 @@
 import UIKit
 
 final class IntroInfoController: BaseViewController, SubInfoElementController {
-    
     private let place: CommonPlaceInfo
-    
+    private var dataSource: UITableViewDiffableDataSource<Section, Int>!
     let elementView = UITableView(frame: .zero, style: .grouped)
     
-    private var dataSource: UITableViewDiffableDataSource<Section, Int>!
-    
+    // MARK: - LifeCycle
     override func loadView() {
         view = elementView
     }
@@ -23,48 +21,18 @@ final class IntroInfoController: BaseViewController, SubInfoElementController {
         super.viewDidLoad()
         configureIntroView()
         fetchIntro()
-        
-    }
-    
-    private func fetchIntro() {
-        
-        realm.fetchPlaceIntro(place: place) { [weak self] in
-            self?.updateSnapshot()
-        }
-        
-    }
-    
-    func updateSnapshot() {
-        
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Int>()
-        
-        let sections = checkValidatation()
-        
-        var count = 0
-        
-        sections.forEach {
-            snapshot.appendSections([$0])
-            snapshot.appendItems([count], toSection: $0)
-            count += 1
-        }
-    
-        dataSource.applySnapshotUsingReloadData(snapshot)
-        
     }
     
     init(place: CommonPlaceInfo){
         self.place = place
         super.init()
+        dataSource = createDataSource()
     }
-
-    
-
 }
 
+// MARK: - DataSource
 extension IntroInfoController {
-    
     enum Section: Int, CaseIterable {
-        
         case overview, webpage
         
         var cellType: IntroCell.Type {
@@ -75,11 +43,46 @@ extension IntroInfoController {
                 return WebPageInfoCell.self
             }
         }
+    }
+    
+    func updateSnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Int>()
+        let sections = checkValidatation()
+        var count = 0
         
+        sections.forEach {
+            snapshot.appendSections([$0])
+            snapshot.appendItems([count], toSection: $0)
+            count += 1
+        }
+    
+        dataSource.applySnapshotUsingReloadData(snapshot)
+    }
+}
+
+// MARK: - Helper Method
+extension IntroInfoController {
+    private func fetchIntro() {
+        realm.fetchPlaceIntro(place: place) { [weak self] in
+            self?.updateSnapshot()
+        }
+    }
+    
+    private func createDataSource() -> UITableViewDiffableDataSource<Section, Int> {
+        UITableViewDiffableDataSource(tableView: elementView) { [unowned self] tableView, indexPath, itemIdentifier in
+            let section = Section(rawValue: indexPath.section)!
+            
+            if let cell = tableView.dequeueReusableCell(withIdentifier: section.cellType.reuseIdentifier, for: indexPath) as? IntroCell, let intro = place.intro {
+                cell.inputData(intro: intro)
+                
+                return cell
+            }
+            
+            return UITableViewCell()
+        }
     }
     
     private func checkValidatation() -> [Section] {
-        
         guard let intro = place.intro else { return [] }
         
         var sections: [Section] = []
@@ -95,40 +98,11 @@ extension IntroInfoController {
     }
     
     private func configureIntroView() {
-        
-        elementView.tableFooterView = UIView().then {
-            $0.frame = CGRect(origin: .zero, size: CGSize(width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
-        }
-        
-        elementView.tableHeaderView = UIView().then {
-            $0.frame = CGRect(origin: .zero, size: CGSize(width: CGFloat.leastNormalMagnitude, height: CGFloat.leastNormalMagnitude))
-        }
-        
+        elementView.tableFooterView = createView()
+        elementView.tableHeaderView = createView()
         elementView.isScrollEnabled = false
-        
         Section.allCases.forEach {
             elementView.register($0.cellType, forCellReuseIdentifier: $0.cellType.reuseIdentifier)
         }
-        
-        dataSource = UITableViewDiffableDataSource(tableView: elementView, cellProvider: { [unowned self] tableView, indexPath, itemIdentifier in
-            
-            
-            let section = Section(rawValue: indexPath.section)!
-            
-            if let cell = tableView.dequeueReusableCell(withIdentifier: section.cellType.reuseIdentifier, for: indexPath) as? IntroCell, let intro = place.intro {
-                
-                cell.inputData(intro: intro)
-                
-                return cell
-                
-            }
-            
-            return UITableViewCell()
-            
-            
-        })
-        
     }
-    
-    
 }

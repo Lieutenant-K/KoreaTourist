@@ -21,6 +21,7 @@ class PlaceInfoViewController: BaseViewController {
         self.place = place
         super.init()
         backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.backgroundColor = .secondarySystemBackground
     }
     
     // MARK: - LifeCycle

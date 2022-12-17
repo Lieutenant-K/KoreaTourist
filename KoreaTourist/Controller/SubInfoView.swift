@@ -6,71 +6,60 @@
 //
 
 import UIKit
-import Then
 
-class SubInfoView: BaseView {
-    
+final class SubInfoView: BaseView {
     var buttons = [UIButton]()
-    
     let contentView = UIView()
+    let buttonStack = UIStackView(frame: .zero)
     
-    lazy var buttonStack = UIStackView(arrangedSubviews: []).then {
-        $0.alignment = .fill
-        $0.distribution = .fillEqually
-        $0.axis = .horizontal
-        $0.spacing = 0
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configureButtons()
     }
     
-    
     private func configureButtons() {
-        
         let titles = ["소개", "정보", "안내"]
         
-        for i in 0..<titles.count {
-            
-            let updateHandler: UIButton.ConfigurationUpdateHandler = { button in
-                
-                var color: UIColor
-                var font: UIFont
-                
-                switch button.state {
-                    
-                case .selected:
-                    color = .label
-                    font = .systemFont(ofSize: 20, weight: .semibold)
-                    button.setBorderLine()
-                    
-                default:
-                    color = .secondaryLabel
-                    font = .systemFont(ofSize: 20, weight: .medium)
-                    button.setBorderLine()
-                }
-                
-                
-                let container = AttributeContainer([.font:font, .foregroundColor:color])
-                let attrTitle = AttributedString(button.currentTitle!, attributes: container)
-                
-                var config = UIButton.Configuration.plain()
-                config.attributedTitle = attrTitle
-                config.background.cornerRadius = 0
-                config.background.backgroundColor = .clear
-                
-                button.configuration = config
-                
-            }
-            
-            
-            
-            let button = UIButton(type: .custom).then {
-                $0.setTitle(titles[i], for: .normal)
-                $0.tag = i
-                $0.configurationUpdateHandler = updateHandler
-                buttons.append($0)
-                buttonStack.addArrangedSubview($0)
-            }
-            
+        titles.enumerated().forEach { i, title in
+            let button = UIButton(type: .custom)
+                button.tag = i
+                button.configurationUpdateHandler = createButtonUpdateHandler(title: title)
+                buttons.append(button)
+                buttonStack.addArrangedSubview(button)
         }
         
+        buttonStack.alignment = .fill
+        buttonStack.distribution = .fillEqually
+        buttonStack.axis = .horizontal
+        buttonStack.spacing = 0
+    }
+    
+    private func createButtonUpdateHandler(title: String) -> UIButton.ConfigurationUpdateHandler {
+        return { button in
+            var color: UIColor
+            var font: UIFont
+            
+            switch button.state {
+            case .selected:
+                color = .label
+                font = .systemFont(ofSize: 20, weight: .semibold)
+                button.setBorderLine()
+            default:
+                color = .secondaryLabel
+                font = .systemFont(ofSize: 20, weight: .medium)
+                button.setBorderLine()
+            }
+            
+            let container = AttributeContainer([.font:font, .foregroundColor:color])
+            let attrTitle = AttributedString(title, attributes: container)
+            
+            var config = UIButton.Configuration.plain()
+            config.attributedTitle = attrTitle
+            config.background.cornerRadius = 0
+            config.background.backgroundColor = .clear
+            
+            button.configuration = config
+        }
     }
 
     override func addSubviews() {
@@ -79,22 +68,15 @@ class SubInfoView: BaseView {
     }
 
     override func addConstraint() {
-        
-        buttonStack.snp.makeConstraints { make in
-            make.leading.top.trailing.equalToSuperview()
-            make.height.equalTo(60)
+        buttonStack.snp.makeConstraints {
+            $0.leading.top.trailing.equalToSuperview()
+            $0.height.equalTo(60)
         }
         
-        contentView.snp.makeConstraints { make in
-            make.top.equalTo(buttonStack.snp.bottom)
-            make.leading.bottom.trailing.equalToSuperview()
-            make.height.equalTo(1000)
+        contentView.snp.makeConstraints {
+            $0.top.equalTo(buttonStack.snp.bottom)
+            $0.leading.bottom.trailing.equalToSuperview()
+            $0.height.equalTo(1000)
         }
     }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureButtons()
-    }
-    
 }
