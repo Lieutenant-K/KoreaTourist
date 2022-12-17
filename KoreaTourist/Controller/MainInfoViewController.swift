@@ -62,8 +62,12 @@ extension MainInfoViewController {
     }
     
     private func configureLocationView() {
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.addTarget(self, action: #selector(touchLocationView(sender:)))
+        
         mainInfoView.locationView.addressLabel.text = "\(place.addr1)\n\(place.addr2)"
-        mainInfoView.locationView.configureMapView(pos: place.position, date: place.discoverDate)
+        mainInfoView.locationView.createMarker(pos: place.position, date: place.discoverDate)
+        mainInfoView.locationView.mapView.addGestureRecognizer(tapGesture)
     }
     
     private func updateMapCameraPos() {
@@ -85,6 +89,12 @@ extension MainInfoViewController {
         }
 
         subInfoVC.didMove(toParent: self)
+    }
+    
+    @objc private func touchLocationView(sender: UITapGestureRecognizer) {
+        let vc = WorldMapViewController(placeId: place.contentId)
+        let navi = UINavigationController(rootViewController: vc)
+        self.present(navi, animated: true)
     }
 }
 

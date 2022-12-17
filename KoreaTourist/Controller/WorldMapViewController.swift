@@ -12,6 +12,12 @@ import NMapsMap
 final class WorldMapViewController: BaseViewController {
     let worldMapView = WorldMapView()
     var placeList: [PlaceMarker] = []
+    var placeId: Int?
+    
+    init(placeId: Int? = nil) {
+        self.placeId = placeId
+        super.init()
+    }
     
     // MARK: - LifeCycle
     override func loadView() {
@@ -65,9 +71,15 @@ extension WorldMapViewController {
     }
      
     private func fetchPlace() {
-        placeList = realm.fetchPlaces(type: CommonPlaceInfo.self)
-            .where { $0.discoverDate != nil }
-            .map { PlaceMarker(place: $0) }
+        var places: [CommonPlaceInfo] = []
+        if let id = placeId, let place = realm.loadPlaceInfo(infoType: CommonPlaceInfo.self, contentId: id) {
+            places = [place]
+        } else {
+            places = realm.fetchPlaces(type: CommonPlaceInfo.self)
+                .where { $0.discoverDate != nil }
+                .map{ $0 }
+        }
+        placeList = places.map{ PlaceMarker(place: $0) }
     }
     
     private func setPlaceMarker() {
@@ -87,7 +99,7 @@ extension WorldMapViewController {
         placeList.forEach {
             $0.mapView = worldMapView
             $0.captionMinZoom = 12
-            $0.touchHandler = handler
+            $0.touchHandler = placeId == nil ? handler : nil
         }
     }
 }

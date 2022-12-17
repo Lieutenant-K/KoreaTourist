@@ -6,34 +6,26 @@
 //
 
 import UIKit
-import Then
 import NMapsMap
 
-class LocationView: BaseView {
-
-    let addressLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 18, weight: .medium)
-        $0.numberOfLines = 0
-        $0.textAlignment = .center
-    }
-    
-    let mapView = NMFMapView().then {
-        $0.adjustInterfaceStyle(style: UITraitCollection.current.userInterfaceStyle)
-        $0.mapType = .navi
-        $0.isScrollGestureEnabled = false
-    }
-    
+final class LocationView: BaseView {
+    let addressLabel = UILabel()
+    let mapView = NMFMapView()
     var marker: NMFMarker?
     
-    func configureMapView(pos: NMGLatLng, date: Date?){
-        
+    init() {
+        super.init(frame: .zero)
+        configureSubviews()
+    }
+    
+    func createMarker(pos: NMGLatLng, date: Date?){
         let formatter = DateFormatter()
-        formatter.dateFormat = """
-                    yyyy년 MM월 dd일
-                    HH시 mm분
-                    발견
-                    """
         formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat =  """
+                                yyyy년 MM월 dd일
+                                HH시 mm분
+                                발견
+                                """
         
         marker = NMFMarker(position: pos, iconImage: NMF_MARKER_IMAGE_BLACK).then {
             
@@ -45,44 +37,44 @@ class LocationView: BaseView {
             $0.captionTextSize = 14
             $0.captionOffset = 4
             $0.mapView = mapView
-//            $0.height = 50
-//            $0.width = 35
         }
+    }
+    
+    private func configureSubviews() {
+        addressLabel.font = .systemFont(ofSize: 18, weight: .medium)
+        addressLabel.numberOfLines = 0
+        addressLabel.textAlignment = .center
         
-        
+        mapView.adjustInterfaceStyle(style: UITraitCollection.current.userInterfaceStyle)
+        mapView.mapType = .navi
+        mapView.gestureRecognizers?.forEach {
+            mapView.removeGestureRecognizer($0)
+        }
     }
     
     override func addSubviews() {
-        [addressLabel, mapView].forEach {
-            addSubview($0)
-        }
+        [addressLabel, mapView].forEach { addSubview($0) }
     }
     
     override func addConstraint() {
-        addressLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(12)
+        addressLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(12)
         }
         
-        mapView.snp.makeConstraints { make in
-            make.top.equalTo(addressLabel.snp.bottom).offset(14)
-            make.leading.trailing.bottom.equalToSuperview()
-            make.height.equalTo(150)
+        mapView.snp.makeConstraints {
+            $0.top.equalTo(addressLabel.snp.bottom).offset(14)
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.height.equalTo(150)
         }
-        
-//        self.snp.makeConstraints { make in
-//            make.height.greaterThanOrEqualTo(0)
-//        }
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        
         marker?.iconTintColor = .discoverdMarker
         marker?.captionColor = .label
         marker?.captionHaloColor = .systemBackground
         
         mapView.adjustInterfaceStyle(style: UITraitCollection.current.userInterfaceStyle)
     }
-
 }
