@@ -53,7 +53,7 @@ final class SettingViewController: BaseViewController {
             var config = UIListContentConfiguration.valueCell()
             config.text = itemIdentifier
             config.prefersSideBySideTextAndSecondaryText = false
-            config.secondaryText = itemIdentifier == "앱 버전" ? "1.0.1" : nil
+            config.secondaryText = itemIdentifier == "앱 버전" ? "1.1" : nil
             cell.accessories = itemIdentifier != "앱 버전" ? [.disclosureIndicator()] : []
             cell.contentConfiguration = config
             
