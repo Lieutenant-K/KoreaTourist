@@ -71,6 +71,7 @@
 		0DE3BC2428F5C45D00FBFBFC /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE3BC2328F5C45D00FBFBFC /* FirebaseMessaging */; };
 		0DE5C9CB28E85930003542C4 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE5C9CA28E85930003542C4 /* OnBoardingViewController.swift */; };
 		0DE5C9CE28E8594A003542C4 /* PaperOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 0DE5C9CD28E8594A003542C4 /* PaperOnboarding */; };
+		0DE81B0C2950BB8600DF6C7B /* CameraMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE81B0B2950BB8600DF6C7B /* CameraMode.swift */; };
 		0DEE1CC92911F364008EE5F6 /* MainInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEE1CC82911F364008EE5F6 /* MainInfoViewController.swift */; };
 		0DEE1CCB2911FA66008EE5F6 /* SubInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEE1CCA2911FA66008EE5F6 /* SubInfoView.swift */; };
 		0DF3F5BD28D8567000D2F399 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3F5BC28D8567000D2F399 /* AppDelegate.swift */; };
@@ -160,6 +161,7 @@
 		0DE3BC1B28F5BD2100FBFBFC /* KoreaTourist.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KoreaTourist.entitlements; sourceTree = "<group>"; };
 		0DE3BC1C28F5C34100FBFBFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0DE5C9CA28E85930003542C4 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
+		0DE81B0B2950BB8600DF6C7B /* CameraMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraMode.swift; sourceTree = "<group>"; };
 		0DEE1CC82911F364008EE5F6 /* MainInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInfoViewController.swift; sourceTree = "<group>"; };
 		0DEE1CCA2911FA66008EE5F6 /* SubInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SubInfoView.swift; path = KoreaTourist/View/SubInfoView.swift; sourceTree = SOURCE_ROOT; };
 		0DF3F5B928D8567000D2F399 /* KoreaTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KoreaTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -328,6 +330,7 @@
 				0D03F623294E674B00300749 /* ResponseData.swift */,
 				0D03F629294E67BD00300749 /* TourPlaceInfo.swift */,
 				0D03F643294E69B800300749 /* XMLDecoding.swift */,
+				0DE81B0B2950BB8600DF6C7B /* CameraMode.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -596,6 +599,7 @@
 				0DD92A10294A279C00FD43F6 /* String + Extension.swift in Sources */,
 				0DD92A0E294A277900FD43F6 /* UICollectionReusableCell + Extension.swift in Sources */,
 				0DF3F61128D8579A00D2F399 /* APIManager.swift in Sources */,
+				0DE81B0C2950BB8600DF6C7B /* CameraMode.swift in Sources */,
 				0DF3F60028D8579A00D2F399 /* LocationInfoCell.swift in Sources */,
 				0DF3F5BD28D8567000D2F399 /* AppDelegate.swift in Sources */,
 				0DF3F60E28D8579A00D2F399 /* BaseViewController.swift in Sources */,
