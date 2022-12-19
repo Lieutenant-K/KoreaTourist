@@ -11,13 +11,11 @@ import RealmSwift
 class PlaceImage: EmbeddedObject, Codable {
     @Persisted var originalImage: String
     @Persisted var imageName: String
-    @Persisted var smallImage: String
     @Persisted var serialNumber: String
     
     enum CodingKeys: String, CodingKey {
         case originalImage = "originimgurl"
         case imageName = "imgname"
-        case smallImage = "smallimageurl"
         case serialNumber = "serialnum"
     }
     
@@ -25,7 +23,6 @@ class PlaceImage: EmbeddedObject, Codable {
         self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)
         originalImage = try container.decode(String.self, forKey: .originalImage)
-        smallImage = try container.decode(String.self, forKey: .smallImage)
         imageName = try container.decode(String.self, forKey: .imageName)
         serialNumber = try container.decode(String.self, forKey: .serialNumber)
     }

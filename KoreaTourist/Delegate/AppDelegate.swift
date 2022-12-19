@@ -9,12 +9,10 @@ import UIKit
 import NMapsMap
 import FirebaseCore
 import FirebaseMessaging
+import RealmSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -34,16 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Messaging.messaging().delegate = self
         
-        /*
-        Messaging.messaging().token { token, error in
-          if let error = error {
-            print("Error fetching FCM registration token: \(error)")
-          } else if let token = token {
-            print("FCM registration token: \(token)")
-          }
+        let realmConfig = Realm.Configuration(schemaVersion: 1) { migration, oldSchemaVersion in
+            if oldSchemaVersion < 1 {
+                // PlaceImage 클래스의 smallImage 프로퍼티 삭제
+            }
         }
-        */
-
+        Realm.Configuration.defaultConfiguration = realmConfig
         
         return true
     }
