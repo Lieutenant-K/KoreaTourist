@@ -96,30 +96,8 @@ enum CameraMode: Equatable {
 final class MapViewController: BaseViewController {
     
     // MARK: - Properties
-    
-    // 한국관광공사 좌표
-    let defaultX = 126.981611
-    let defaultY = 37.568477
-
     var naverMapView = MapView()
-    
-    static let locationManager = CLLocationManager().then {
-        $0.desiredAccuracy = kCLLocationAccuracyBest
-//        $0.distanceFilter = 1
-        
-    }
-    
-    static let progressHUD = JGProgressHUD(automaticStyle: ()).then {
-        $0.position = .center
-        $0.animation = JGProgressHUDFadeAnimation()
-        $0.indicatorView = JGProgressHUDIndeterminateIndicatorView()
-        $0.textLabel.text = "장소를 찾는 중..."
-    }
-    
     var currentMarkers = [PlaceMarker]()
-    
-    var markerHandler: NMFOverlayTouchHandler?
-    
     var isMarkerFilterOn = false {
         didSet {
             let active = isMarkerFilterOn ? "활성화" : "비활성화"
@@ -155,66 +133,43 @@ final class MapViewController: BaseViewController {
         }
     }
     
+    static let locationManager = CLLocationManager().then {
+        $0.desiredAccuracy = kCLLocationAccuracyBest
+    }
+    
+    static let progressHUD = JGProgressHUD(automaticStyle: ()).then {
+        $0.position = .center
+        $0.animation = JGProgressHUDFadeAnimation()
+        $0.indicatorView = JGProgressHUDIndeterminateIndicatorView()
+        $0.textLabel.text = "장소를 찾는 중..."
+    }
     
     // MARK: - LifeCycle
     
     override func loadView() {
         view = naverMapView
-        
         naverMapView.cameraButton.addTarget(self, action: #selector(touchPreviousCameraButton), for: .touchUpInside)
-        
-//        naverMapView.menuButton.addTarget(self, action: #selector(touchMenuButton), for: .touchUpInside)
-        
         naverMapView.trackButton.addTarget(self, action: #selector(touchTrackButton(_:)), for: .touchUpInside)
-        
         naverMapView.mapView.touchDelegate = self
-        
         naverMapView.circleButton.delegate = self
-        
         naverMapView.circleButton.buttonsCount = Menu.allCases.count
-        
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(#function)
-        
         addObservers()
-        
         checkLocationService()
-        
         realm.printRealmFileURL()
-        
-        settingMarkerTouchHandler()
-        
     }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        print(#function)
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print(#function)
-        
-        
-    }
-    
-    // MARK: - Method
-    
+}
+
+// MARK: - Helper Method
+extension MapViewController {
     private func addObservers() {
-        
         NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationChanged), name: UIDevice.orientationDidChangeNotification, object: nil)
-        
     }
     
     private func checkLocationService() {
-        
         if CLLocationManager.locationServicesEnabled() {
             Self.locationManager.delegate = self
         } else {
@@ -222,53 +177,25 @@ final class MapViewController: BaseViewController {
             let ok: UIAlertAction = .goSettingAction
             showAlert(title: "위치 서비스를 활성화 해주세요!", message: "사용자의 위치를 가져오려면 위치 서비스가 필요해요", actions: [cancel, ok])
         }
-        
     }
     
-    // MARK: Navigation Item
-    override func configureNavigationItem() {
-        /*
-        let appear = UINavigationBarAppearance()
-        appear.configureWithTransparentBackground()
-//        appear.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
-        
-        navigationItem.standardAppearance = appear
-        navigationItem.scrollEdgeAppearance = appear
-        
-        let label = BasePaddingLabel(value: 0)
-        label.text = "현재 지역"
-        label.font = .systemFont(ofSize: 26, weight: .heavy)
-        label.textColor = .secondaryLabel
-        
-        navigationItem.titleView = label
-        */
-        
-    }
-    
-    
-    // MARK: Marker Touch Handler
-    func settingMarkerTouchHandler() {
-        
-        markerHandler = { [weak self] marker in
+    private func createMarkerHandler() -> NMFOverlayTouchHandler {
+        return { [weak self] marker in
             if let marker = marker as? PlaceMarker {
-                
                 if self?.cameraMode == .select(marker.position) {
                     self?.showDiscoverAlert(target: marker)
                 } else {
                     self?.cameraMode = .select(marker.position)
                 }
-                
             }
             return true
         }
-        
     }
     
     // MARK: Discover Place
     private func showDiscoverAlert(target marker: PlaceMarker) {
         
         if marker.placeInfo.isDiscovered {
-//            print("이미 발견됨!!!!")
             let sub = SubInfoViewController(place: marker.placeInfo)
             let main = MainInfoViewController(place: marker.placeInfo, subInfoVC: sub)
             let vc = PlaceInfoViewController(place: marker.placeInfo, mainInfoVC: main)
@@ -281,9 +208,7 @@ final class MapViewController: BaseViewController {
         let ok = UIAlertAction(title: "네", style: .cancel) { [weak self] _ in
             self?.discoverPlace(about: marker)
         }
-        
         let cancel = UIAlertAction(title: "아니오", style: .default)
-        
         let actions = [cancel, ok]
         
         if marker.distance <= PlaceMarker.minimumDistance {
@@ -291,22 +216,16 @@ final class MapViewController: BaseViewController {
         } else {
             
             naverMapView.makeToast("\(Int(PlaceMarker.minimumDistance))m 이내로 접근해주세요", point: .markerTop, title: "아직 발견할 수 없어요!", image: nil, completion: nil)
-            
-            
-//            showAlert(title: "아직 발견할 수 없어요!", message: "\(Int(PlaceMarker.minimumDistance))m 이내로 접근해주세요")
         }
         
     }
     
     private func discoverPlace(about marker: PlaceMarker) {
-        
         realm.discoverPlace(with: marker.placeInfo.contentId)
+        
         marker.updateMarkerAppearnce()
         
         present(PopupViewController(place: marker.placeInfo), animated: true)
-//        naverMapView.mapView.positionMode = .normal
-//        locationManager.stopUpdatingLocation()
-        
     }
     
     
@@ -353,7 +272,7 @@ final class MapViewController: BaseViewController {
                 
                 let markers = placeList.map { (info) -> PlaceMarker in
                     let marker = PlaceMarker(place: info)
-                    marker.touchHandler = self?.markerHandler
+                    marker.touchHandler = self?.createMarkerHandler()
                     return marker
                 }
                 
@@ -378,15 +297,8 @@ final class MapViewController: BaseViewController {
     }
     
     private func displayAreaOnMap(location: CLLocationCoordinate2D) {
-        
-//        print(#function)
-        
         naverMapView.circleOverlay.center = NMGLatLng(lat: location.latitude, lng: location.longitude)
-        
         naverMapView.circleOverlay.mapView = naverMapView.mapView
-            
-        
-        
     }
     
     
