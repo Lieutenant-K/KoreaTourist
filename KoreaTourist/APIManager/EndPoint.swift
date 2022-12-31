@@ -6,23 +6,21 @@
 //
 
 import Foundation
+import Alamofire
 
-enum BaseURL {
-    
-    static let baseURL = "https://apis.data.go.kr/B551011/KorService/"
-    
-    case service(ServiceType)
-    
-    var url: String {
-        switch self {
-        case .service(let type):
-            return (Self.baseURL + type.path + type.query.string)
-        }
+enum Router: URLRequestConvertible {
+    private static var baseURL: URL {
+        URL(string: "https://apis.data.go.kr/B551011/KorService")!
     }
-}
-
-enum ServiceType {
     
+    private static var baseParameter:[String: Any] {
+        ["serviceKey":APIKey.tourAPIKey,
+         "MobileOS":"IOS",
+         "MobileApp":"Test",
+         "_type":"json"]
+    }
+    
+    // MARK: - Cases
     case location(Circle)
     case areaCode
     case commonInfo(Int)
@@ -30,56 +28,81 @@ enum ServiceType {
     case extraInfo(Int, ContentType)
     case detailImage(Int)
     
+    // MARK: - Methods
+    var method: HTTPMethod {
+        return .get
+    }
+    
+    // MARK: - Paths
     var path: String {
         switch self {
         case .location:
-            return "locationBasedList?"
+            return "/locationBasedList"
         case .areaCode:
-            return "areaCode?"
+            return "/areaCode"
         case .commonInfo:
-            return "detailCommon?"
+            return "/detailCommon"
         case .typeInfo:
-            return "detailIntro?"
+            return "/detailIntro"
         case .extraInfo:
-            return "detailInfo?"
+            return "/detailInfo"
         case .detailImage:
-            return "detailImage?"
+            return "/detailImage"
         }
     }
     
-    fileprivate var query: QueryString {
-        return QueryString.query(self)
+    // MARK: - Parameters
+    var parameters: Parameters? {
+        switch self {
+        case .location(let circle):
+            return ["numOfRows":30,
+                    "pageNo":1,
+                    "mapX":circle.x,
+                    "mapY":circle.y,
+                    "radius":circle.radius,
+                    "listYN":"Y",
+                    "contentTypeId":12,
+                    "arrange":"E"]
+        case .areaCode:
+            return ["numOfRows":20, "pageNo": 1]
+        case .commonInfo(let id):
+            return ["contentId": id,
+                    "overviewYN":"Y",
+                    "catcodeYN": "Y",
+                    "addrinfoYN":"Y",
+                    "defaultYN":"Y",
+                    "firstImageYN":"Y",
+                    "areacodeYN":"Y",
+                    "mapinfoYN":"Y"]
+        case .typeInfo(let id, let type):
+            return ["contentId":id, "contentTypeId":type.rawValue]
+        case .extraInfo(let id, let type):
+            return ["contentId":id, "contentTypeId":type.rawValue]
+        case .detailImage(let id):
+            return ["numOfRows":20,
+                    "pageNo":1,
+                    "contentId":id,
+                    "imageYN":"Y",
+                    "subImageYN":"Y"]
+        }
+    }
+    
+    
+    // MARK: - URL Request
+    func asURLRequest() throws -> URLRequest {
+        let url = Self.baseURL.appendingPathComponent(self.path)
+        var urlRequest = URLRequest(url: url)
+    
+        urlRequest.method = method
+        
+        if let parameters = parameters {
+            let param = Self.baseParameter.merging(parameters) { left, _ in
+                return left }
+            
+            return try URLEncoding(destination: .methodDependent, arrayEncoding: .noBrackets).encode(urlRequest, with: param)
+        }
+
+        return urlRequest
     }
 }
 
-fileprivate enum QueryString {
-    
-    static let baseParameter = "serviceKey=\(APIKey.tourAPIKey)&MobileOS=IOS&MobileApp=Test&_type=json&"
-    
-    case query(ServiceType)
-    
-    private var parameter: String {
-        switch self {
-        case .query(let serviceType):
-            switch serviceType {
-            case .location(let position):
-                return "numOfRows=30&pageNo=1&mapX=\(position.x)&mapY=\(position.y)&radius=\(position.radius)&listYN=Y&contentTypeId=12&arrange=E"
-            case .areaCode:
-                return "numOfRows=20&pageNo=1"
-            case .commonInfo(let id):
-                return "contentId=\(id)&overviewYN=Y&catcodeYN=Y&addrinfoYN=Y&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&mapinfoYN=Y"
-            case .typeInfo(let id, let type):
-                return "contentId=\(id)&contentTypeId=\(type.rawValue)"
-            case .extraInfo(let id, let type):
-                return "contentId=\(id)&contentTypeId=\(type.rawValue)"
-            case .detailImage(let id):
-                return "numOfRows=20&pageNo=1&contentId=\(id)&imageYN=Y&subImageYN=Y"
-            }
-        }
-    }
-    
-    var string: String {
-        return Self.baseParameter + self.parameter
-    }
-    
-}
