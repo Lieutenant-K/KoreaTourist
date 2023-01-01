@@ -107,7 +107,7 @@ class APIManager {
 protocol NetworkManager {}
 
 extension NetworkManager {
-    func requestData<T: Codable>(router: Router, completionHandler: @escaping ([T]) -> Void ) {
+    func requestData<T: Codable>(router: Router, completionHandler: @escaping (APIResult<[T]>) -> Void ) {
         AF.request(router).responseData { response in
             switch response.result {
             case let .success(data):
@@ -116,16 +116,14 @@ extension NetworkManager {
                 if let result = try? JSONDecoder().decode(Result<T>.self, from: data) {
                     let item = result.response.body.items.item
                     
-                    completionHandler(item)
+                    completionHandler(.success(item))
                 } else if let message = try? XMLDecoder().decode(ServiceResponse.self, from: data) {
-                    print(message.cmmMsgHeader.errMsg)
+                    completionHandler(.apiError(message))
                 } else {
-                    print("no Data")
+                    completionHandler(.undefinedData)
                 }
             case let .failure(error):
-                MapViewController.progressHUD.dismiss(animated: true)
-                
-                print(error)
+                completionHandler(.failure(error))
             }
         }
     }
