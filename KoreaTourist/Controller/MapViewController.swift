@@ -138,6 +138,9 @@ extension MapViewController {
             case .noData:
                 title = "주변에서 특별한 장소를 찾지 못했어요"
                 message = "다른 새로운 곳에서 다시 시도해보세요!"
+            case let .networkError(error):
+                title = "네트워크 에러가 발생했어요"
+                message = "나중에 다시 시도해주세요\n이유: \(error.localizedDescription)"
             case let .apiError(error):
                 title = "서버에서 문제가 발생했어요"
                 message = "에러: \(error.cmmMsgHeader.errMsg)\n나중에 다시 시도해주세요"

@@ -20,4 +20,5 @@ struct ServiceResponse: Codable {
 enum FailureReason {
     case apiError(ServiceResponse)
     case noData
+    case networkError(Error)
 }
