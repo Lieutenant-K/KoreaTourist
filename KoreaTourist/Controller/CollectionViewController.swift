@@ -62,7 +62,7 @@ class CollectionViewController: BaseViewController {
     
     func fetchPlaceList() {
         
-        placeList = realm.fetchPlaces(type: CommonPlaceInfo.self).where({ $0.discoverDate != nil}).sorted(byKeyPath: "discoverDate", ascending: false)
+        placeList = realm.loadPlaces(type: CommonPlaceInfo.self).where({ $0.discoverDate != nil}).sorted(byKeyPath: "discoverDate", ascending: false)
         
     }
     
@@ -151,7 +151,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
         
         let headerRegistration = UICollectionView.SupplementaryRegistration<CollectionHeaderView>(elementKind: Self.layoutHeaderElementKind) { [unowned self] supplementaryView, elementKind, indexPath in
             
-            let places = realm.fetchPlaces(type: CommonPlaceInfo.self)
+            let places = realm.loadPlaces(type: CommonPlaceInfo.self)
             
             let discovered = places.where { $0.discoverDate != nil }
             
@@ -187,7 +187,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
         switch sectionKind {
         case .region:
             if let regionId = regionList?[indexPath.row].id {
-                placeList = realm.fetchPlaces(type: CommonPlaceInfo.self).where {
+                placeList = realm.loadPlaces(type: CommonPlaceInfo.self).where {
                     $0.discoverDate != nil && $0.areaCode == regionId
                 }.sorted(byKeyPath: "discoverDate", ascending: false)
             }

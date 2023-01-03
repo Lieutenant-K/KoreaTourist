@@ -75,7 +75,7 @@ extension WorldMapViewController {
         if let id = placeId, let place = realm.loadPlaceInfo(infoType: CommonPlaceInfo.self, contentId: id) {
             places = [place]
         } else {
-            places = realm.fetchPlaces(type: CommonPlaceInfo.self)
+            places = realm.loadPlaces(type: CommonPlaceInfo.self)
                 .where { $0.discoverDate != nil }
                 .map{ $0 }
         }
