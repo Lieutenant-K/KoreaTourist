@@ -43,6 +43,10 @@ class CategoryCell: UICollectionViewCell {
         
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        updateLabelAppearance(isSelected: isSelected)
+    }
+    
     private func configureCell() {
         contentView.addSubview(label)
         label.snp.makeConstraints { $0.edges.equalToSuperview() }
