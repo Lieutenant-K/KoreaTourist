@@ -9,21 +9,17 @@ import UIKit
 import SnapKit
 
 class BaseInfoCell: UITableViewCell {
-    
     let iconImageView = UIImageView()
+    let titleLabel = UILabel()
     
-    let titleLabel: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 18, weight: .semibold)
-        view.textAlignment = .left
-        view.textColor = .label
-        view.numberOfLines = 1
-        view.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-        view.setContentHuggingPriority(.defaultHigh, for: .vertical)
-       return view
-    }()
-    
-    func configureCell(){}
+    func configureCell(){
+        titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
+        titleLabel.textAlignment = .left
+        titleLabel.textColor = .label
+        titleLabel.numberOfLines = 1
+        titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        titleLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
+    }
     
     func addSubviews() {
         contentView.addSubview(titleLabel)
@@ -31,7 +27,6 @@ class BaseInfoCell: UITableViewCell {
     }
     
     func addConstraints() {
-        
         iconImageView.snp.makeConstraints { make in
             make.leading.top.equalTo(contentView).inset(12)
             make.width.equalTo(iconImageView.snp.height)
@@ -44,7 +39,6 @@ class BaseInfoCell: UITableViewCell {
             make.leading.equalTo(iconImageView.snp.trailing).offset(8)
             make.trailing.lessThanOrEqualTo(contentView).offset(-18)
         }
-        
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -52,7 +46,6 @@ class BaseInfoCell: UITableViewCell {
         configureCell()
         addSubviews()
         addConstraints()
-//        backgroundColor = .clear
     }
     
     @available(*, unavailable)
@@ -64,11 +57,4 @@ class BaseInfoCell: UITableViewCell {
         super.awakeFromNib()
         
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        
-    }
-
 }

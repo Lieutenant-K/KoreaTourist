@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import SnapKit
 import Then
 
-class PlaceCollectionCell: UICollectionViewCell {
+final class PlaceCollectionCell: UICollectionViewCell {
     
     let corner: CGFloat = 10
     
@@ -16,12 +17,10 @@ class PlaceCollectionCell: UICollectionViewCell {
         $0.layer.cornerRadius = corner
         $0.contentMode = .scaleAspectFill
         $0.tintColor = .secondaryLabel
-//        $0.clipsToBounds = true
     }
     
     private func configureCell() {
         layer.cornerRadius = corner
-//        backgroundColor = .systemBlue
         
         let blur = UIBlurEffect(style: .systemUltraThinMaterial)
         let visual = UIVisualEffectView(effect: blur)
@@ -32,7 +31,6 @@ class PlaceCollectionCell: UICollectionViewCell {
         visual.snp.makeConstraints { $0.edges.equalToSuperview() }
         visual.contentView.addSubview(imageView)
         imageView.snp.makeConstraints { $0.edges.equalToSuperview() }
-        
     }
     
     override init(frame: CGRect) {
