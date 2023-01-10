@@ -9,20 +9,10 @@ import UIKit
 import Then
 
 class CategoryCell: UICollectionViewCell {
-    
-    static var SizingLabel: BasePaddingLabel {
-        let label = BasePaddingLabel(padding: UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 10)).then {
-            $0.font = .systemFont(ofSize: 18, weight: .medium)
-        }
-        
-        return label
-    }
-    
-    lazy var label = Self.SizingLabel.then {
+    let label = BasePaddingLabel(padding: UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 10)).then {
         $0.numberOfLines = 1
         $0.textAlignment = .center
         $0.textColor = .label
-//        $0.font = .systemFont(ofSize: 18, weight: .medium)
         $0.layer.cornerRadius = 12
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.label.cgColor
@@ -31,20 +21,18 @@ class CategoryCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            updateLabelAppearance(isSelected: isSelected)
+            updateLabelAppearance()
         }
     }
     
-    func updateLabelAppearance(isSelected: Bool) {
-        
+    func updateLabelAppearance() {
         label.textColor = isSelected ? .systemBackground : .label
         label.layer.borderColor = isSelected ? UIColor.systemBackground.cgColor : UIColor.label.cgColor
         label.backgroundColor = isSelected ? .label : .systemBackground
-        
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        updateLabelAppearance(isSelected: isSelected)
+        updateLabelAppearance()
     }
     
     private func configureCell() {
