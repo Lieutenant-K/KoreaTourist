@@ -50,6 +50,8 @@ final class PopupViewController: BaseViewController {
         let main = MainInfoViewController(place: placeInfo, subInfoVC: sub)
         let vc = PlaceInfoViewController(place: placeInfo, mainInfoVC: main)
         let navi = UINavigationController(rootViewController: vc)
+        navi.modalPresentationStyle = .overFullScreen
+        navi.modalTransitionStyle = .crossDissolve
         
         self.present(navi, animated: true)
     }
