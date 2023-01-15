@@ -21,9 +21,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         var style = ToastStyle()
-        style.verticalPadding = 6
+        style.verticalPadding = 4
         style.titleAlignment = .center
         style.messageAlignment = .center
+        
         ToastManager.shared.style = style
         ToastManager.shared.isTapToDismissEnabled = true
         ToastManager.shared.duration = 1.5

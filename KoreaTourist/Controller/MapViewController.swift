@@ -35,8 +35,11 @@ final class MapViewController: BaseViewController {
     var currentMarkers = [PlaceMarker]()
     var isMarkerFilterOn = false {
         didSet {
-            let active = isMarkerFilterOn ? "활성화" : "비활성화"
-            naverMapView.makeToast("미발견 장소만 보기 ", point: .top, title: active, image: nil, completion: nil)
+            let title = isMarkerFilterOn ? "활성화" : "비활성화"
+            let message = isMarkerFilterOn ? "미발견 장소만 보기" : "모든 장소 보기"
+            
+            naverMapView.makeToast(message, point: .top, title: "필터 "+title, image: nil, completion: nil)
+            
             filteringMarker()
         }
     }
