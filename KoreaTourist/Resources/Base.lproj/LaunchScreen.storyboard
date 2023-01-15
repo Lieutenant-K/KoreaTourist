@@ -17,18 +17,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon1" translatesAutoresizingMaskIntoConstraints="NO" id="zXJ-rR-1hi">
-                                <rect key="frame" x="121.66666666666669" y="313.66666666666669" width="150" height="150"/>
+                                <rect key="frame" x="121.66666666666669" y="303.66666666666669" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="zXJ-rR-1hi" secondAttribute="height" multiplier="1:1" id="gff-nP-djG"/>
                                     <constraint firstAttribute="width" constant="150" id="rnh-Ye-Kga"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setreet Place" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NX2-if-pc8">
+                                <rect key="frame" x="53.666666666666657" y="471.66666666666669" width="286" height="41.000000000000057"/>
+                                <fontDescription key="fontDescription" name="Copperplate" family="Copperplate" pointSize="40"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.13874405619999999" green="0.15776050089999999" blue="0.19006338719999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="zXJ-rR-1hi" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-50" id="1WM-D8-bda"/>
+                            <constraint firstItem="zXJ-rR-1hi" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-60" id="1WM-D8-bda"/>
                             <constraint firstItem="zXJ-rR-1hi" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Gjy-Ly-KU6"/>
+                            <constraint firstItem="NX2-if-pc8" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="QqZ-du-KvX"/>
+                            <constraint firstItem="NX2-if-pc8" firstAttribute="top" secondItem="zXJ-rR-1hi" secondAttribute="bottom" constant="18" id="zVe-Ts-bNg"/>
                         </constraints>
                     </view>
                 </viewController>
