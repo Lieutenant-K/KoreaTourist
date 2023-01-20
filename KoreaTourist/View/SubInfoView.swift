@@ -42,11 +42,11 @@ final class SubInfoView: BaseView {
             switch button.state {
             case .selected:
                 color = .label
-                font = .systemFont(ofSize: 20, weight: .semibold)
+                font = .systemFont(ofSize: 18, weight: .semibold)
                 button.setBorderLine()
             default:
                 color = .secondaryLabel
-                font = .systemFont(ofSize: 20, weight: .medium)
+                font = .systemFont(ofSize: 18, weight: .medium)
                 button.setBorderLine()
             }
             

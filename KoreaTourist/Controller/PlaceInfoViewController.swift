@@ -45,7 +45,7 @@ class PlaceInfoViewController: BaseViewController {
         
         let closeButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 18, weight: .heavy)), style: .plain, target: self, action: #selector(touchCloseButton(_:)))
         
-        titleLabel.font = .systemFont(ofSize: 22, weight: .bold)
+        titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
         titleLabel.text = place.title
         titleLabel.textColor = .tintColor.withAlphaComponent(0.0)
         

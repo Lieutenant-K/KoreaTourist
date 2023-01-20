@@ -29,7 +29,7 @@ final class OverviewInfoCell: BaseInfoCell, IntroCell, ExpandableCell {
         titleLabel.text = "개요"
         arrowImage.contentMode = .scaleAspectFit
         
-        contentLabel.font = .systemFont(ofSize: 18, weight: .regular)
+        contentLabel.font = .systemFont(ofSize: 16, weight: .regular)
         contentLabel.textAlignment = .left
         contentLabel.textColor = .label
         contentLabel.numberOfLines = 2

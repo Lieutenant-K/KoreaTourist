@@ -19,10 +19,7 @@ final class ExtraInfoCell: BaseInfoCell {
             let content = $0.infoText
             let labelStack = LabelStackView(title: title, content: content)
             
-            if labelStack.contentLabel.countLines() > 1 {
-                labelStack.axis = .vertical
-                labelStack.alignment = .fill
-            }
+            labelStack.updateAxisUsingContentLines()
             
             stackView.addArrangedSubview(labelStack)
         }

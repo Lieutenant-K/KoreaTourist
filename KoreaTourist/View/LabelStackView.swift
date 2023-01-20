@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-class LabelStackView: UIStackView {
+final class LabelStackView: UIStackView {
     
     let titleLabel = UILabel().then {
         
@@ -39,14 +39,23 @@ class LabelStackView: UIStackView {
         
     }
     
-    func configureStackView(axis: NSLayoutConstraint.Axis) {
+    func updateAxisUsingContentLines() {
+        changeAxis(axis: contentLabel.countLines() > 1 ? .vertical : .horizontal)
+    }
+    
+    private func changeAxis(axis: NSLayoutConstraint.Axis) {
         self.axis = axis
         distribution = .fill
         alignment = axis == .horizontal ? .top : .fill
+    }
+    
+    private func configureStackView(axis: NSLayoutConstraint.Axis) {
+        changeAxis(axis: axis)
+        
         spacing = 6
+        
         addArrangedSubview(titleLabel)
         addArrangedSubview(contentLabel)
-        
     }
     
     init(title: String, content: String, axis: NSLayoutConstraint.Axis = .horizontal) {

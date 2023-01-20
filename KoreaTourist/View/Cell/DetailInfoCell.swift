@@ -20,11 +20,8 @@ final class DetailInfoCell: BaseInfoCell {
         data.contentList.forEach {
             if !$0.1.isEmpty {
                 let labelStack = LabelStackView(title: $0.0, content: $0.1)
-                
-                if labelStack.contentLabel.countLines() > 1 {
-                    labelStack.axis = .vertical
-                    labelStack.alignment = .fill
-                }
+
+                labelStack.updateAxisUsingContentLines()
                 
                 stackView.addArrangedSubview(labelStack)
             }
