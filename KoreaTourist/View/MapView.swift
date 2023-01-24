@@ -201,6 +201,12 @@ extension MapView {
             completionHandler()
         }
     }
+    
+    func controlButtonState(enabled: Bool) {
+        [trackButton, circleButton, cameraButton].forEach {
+            $0.isEnabled = enabled
+        }
+    }
 }
 
 // MARK: - Action Handler Method

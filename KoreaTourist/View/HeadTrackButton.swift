@@ -41,7 +41,7 @@ final class HeadTrackButton: UIButton {
     }
     
     convenience init(location: NMFLocationOverlay) {
-        self.init(type: .custom)
+        self.init(type: .system)
         locationOverlay = location
     }
     

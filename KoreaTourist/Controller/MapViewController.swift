@@ -173,10 +173,12 @@ extension MapViewController {
             update.animation = .easeOut
             update.animationDuration = 0.7
             
+            naverMapView.controlButtonState(enabled: false)
             Self.locationManager.stopUpdatingLocation()
-            naverMapView.moveCameraBlockGesture(update) {
+            naverMapView.moveCameraBlockGesture(update) { [weak self] in
                 if mode == .navigate || mode == .search {
                     Self.locationManager.startUpdatingLocation()
+                    self?.naverMapView.controlButtonState(enabled: true)
                 }
             }
             
