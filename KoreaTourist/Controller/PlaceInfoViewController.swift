@@ -111,14 +111,14 @@ extension PlaceInfoViewController {
 extension PlaceInfoViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let imageContainerHeight = placeInfoView.imageContainer.frame.height
-        let inset = backgroundImageView.frame.height - imageContainerHeight
+        let safeAreaTopInset = self.view.safeAreaInsets.top
         let maxOffset = (imageContainerHeight / 2) - 100
         
-        let alpha = (scrollView.contentOffset.y + inset) / (inset + maxOffset)
-        print(imageContainerHeight, inset, maxOffset)
+        let alpha = (scrollView.contentOffset.y + safeAreaTopInset) / (safeAreaTopInset + maxOffset)
+
         print("alpha:\(alpha)")
         
-        setNavigationBarColor(with: imageContainerHeight > 0 ? alpha : 0.0)
+        setNavigationBarColor(with: alpha)
     }
     
 }
