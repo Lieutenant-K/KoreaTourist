@@ -39,11 +39,6 @@ final class SubInfoViewController: BaseViewController {
         super.viewDidAppear(animated)
         resetSubInfoButtons()
     }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        print(#function)
-    }
 }
 
 // MARK: - Helper Method
@@ -84,6 +79,8 @@ extension SubInfoViewController {
     
     @objc func touchButton(_ sender: UIButton) {
         let vc = viewControllers[sender.tag]
+        
+        if vc.elementView.visibleCells.isEmpty { return }
         
         subInfoView.buttons.forEach {
             $0.isSelected = $0 == sender

@@ -70,7 +70,7 @@ final class SubInfoView: BaseView {
     override func addConstraint() {
         buttonStack.snp.makeConstraints {
             $0.leading.top.trailing.equalToSuperview()
-            $0.height.equalTo(60)
+            $0.height.equalTo(48)
         }
         
         contentView.snp.makeConstraints {

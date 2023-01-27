@@ -178,8 +178,8 @@ extension MapViewController {
             naverMapView.moveCameraBlockGesture(update) { [weak self] in
                 if mode == .navigate || mode == .search {
                     Self.locationManager.startUpdatingLocation()
-                    self?.naverMapView.controlButtonState(enabled: true)
                 }
+                self?.naverMapView.controlButtonState(enabled: true)
             }
             
             naverMapView.locOverlaySize = CGSize(width: size, height: size)
