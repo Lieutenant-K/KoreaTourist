@@ -6,14 +6,15 @@
 //
 
 import Foundation
+
 import Alamofire
 
 enum Router: URLRequestConvertible {
-    private static var baseURL: URL {
-        URL(string: "https://apis.data.go.kr/B551011/KorService")!
+    private var baseURL: String {
+        "https://apis.data.go.kr/B551011/KorService1"
     }
     
-    private static var baseParameter:[String: Any] {
+    private var baseParameter: [String: Any] {
         ["serviceKey":APIKey.tourAPIKey,
          "MobileOS":"IOS",
          "MobileApp":"Test",
@@ -37,22 +38,22 @@ enum Router: URLRequestConvertible {
     var path: String {
         switch self {
         case .location:
-            return "/locationBasedList"
+            return "/locationBasedList1"
         case .areaCode:
-            return "/areaCode"
+            return "/areaCode1"
         case .commonInfo:
-            return "/detailCommon"
+            return "/detailCommon1"
         case .typeInfo:
-            return "/detailIntro"
+            return "/detailIntro1"
         case .extraInfo:
-            return "/detailInfo"
+            return "/detailInfo1"
         case .detailImage:
-            return "/detailImage"
+            return "/detailImage1"
         }
     }
     
     // MARK: - Parameters
-    var parameters: Parameters? {
+    var parameters: Parameters {
         switch self {
         case .location(let circle):
             return ["numOfRows":30,
@@ -90,19 +91,18 @@ enum Router: URLRequestConvertible {
     
     // MARK: - URL Request
     func asURLRequest() throws -> URLRequest {
-        let url = Self.baseURL.appendingPathComponent(self.path)
+        guard let url = URL(string: self.baseURL)?.appendingPathComponent(self.path) else {
+            throw AFError.invalidURL(url: self.baseURL)
+        }
+        
         var urlRequest = URLRequest(url: url)
-    
         urlRequest.method = method
         
-        if let parameters = parameters {
-            let param = Self.baseParameter.merging(parameters) { left, _ in
-                return left }
-            
-            return try URLEncoding(destination: .methodDependent, arrayEncoding: .noBrackets).encode(urlRequest, with: param)
+        var param = self.baseParameter.merging(self.parameters) { left, right in
+            return left
         }
-
-        return urlRequest
+        
+        return try URLEncoding(destination: .methodDependent, arrayEncoding: .noBrackets).encode(urlRequest, with: param)
     }
 }
 
