@@ -36,6 +36,7 @@
 		0D94573A28D8602A00FBCAE2 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D94573928D8602A00FBCAE2 /* APIKey.swift */; };
 		0D94573F28D8647F00FBCAE2 /* CircleMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 0D94573E28D8647F00FBCAE2 /* CircleMenu */; };
 		0D94574228D8656700FBCAE2 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0D94574128D8656700FBCAE2 /* Then */; };
+		0DB85AEB296208B6008E0590 /* APIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB85AEA296208B6008E0590 /* APIResult.swift */; };
 		0DBAF56728DB5A9B00BC943C /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAF56628DB5A9B00BC943C /* RealmRepository.swift */; };
 		0DBE138628D91538007D0113 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 0DBE138528D91538007D0113 /* Realm */; };
 		0DBE138828D91538007D0113 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0DBE138728D91538007D0113 /* RealmSwift */; };
@@ -99,7 +100,7 @@
 		0DF3F60E28D8579A00D2F399 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3F5F328D8579A00D2F399 /* BaseViewController.swift */; };
 		0DF3F61028D8579A00D2F399 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3F5F528D8579A00D2F399 /* PopupViewController.swift */; };
 		0DF3F61128D8579A00D2F399 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3F5F728D8579A00D2F399 /* APIManager.swift */; };
-		0DF3F61328D8579A00D2F399 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3F5F928D8579A00D2F399 /* EndPoint.swift */; };
+		0DF3F61328D8579A00D2F399 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3F5F928D8579A00D2F399 /* Router.swift */; };
 		0DF3F61828D85B9600D2F399 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 0DF3F61728D85B9600D2F399 /* .gitignore */; };
 		0DFFCA8928E38591008B5705 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFFCA8828E38591008B5705 /* CollectionViewController.swift */; };
 		0DFFCA8B28E38641008B5705 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFFCA8A28E38641008B5705 /* CollectionView.swift */; };
@@ -134,6 +135,7 @@
 		0D7B155628E77EC700E70D3B /* Pods-KoreaTourist-acknowledgements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Pods-KoreaTourist-acknowledgements.plist"; path = "Pods/Target Support Files/Pods-KoreaTourist/Pods-KoreaTourist-acknowledgements.plist"; sourceTree = "<group>"; };
 		0D933E9D29119EBE00844644 /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
 		0D94573928D8602A00FBCAE2 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		0DB85AEA296208B6008E0590 /* APIResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResult.swift; sourceTree = "<group>"; };
 		0DBAF56628DB5A9B00BC943C /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		0DC5E8C429140A5A000B43CB /* DetailInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInfoViewController.swift; sourceTree = "<group>"; };
 		0DC5E8C629143EA2000B43CB /* SubInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SubInfoViewController.swift; path = KoreaTourist/Controller/SubInfoViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -187,7 +189,7 @@
 		0DF3F5F328D8579A00D2F399 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		0DF3F5F528D8579A00D2F399 /* PopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		0DF3F5F728D8579A00D2F399 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		0DF3F5F928D8579A00D2F399 /* EndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		0DF3F5F928D8579A00D2F399 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		0DF3F61728D85B9600D2F399 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		0DFFCA8828E38591008B5705 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		0DFFCA8A28E38641008B5705 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
@@ -383,8 +385,9 @@
 			isa = PBXGroup;
 			children = (
 				0DF3F5F728D8579A00D2F399 /* APIManager.swift */,
-				0DF3F5F928D8579A00D2F399 /* EndPoint.swift */,
+				0DF3F5F928D8579A00D2F399 /* Router.swift */,
 				0D94573928D8602A00FBCAE2 /* APIKey.swift */,
+				0DB85AEA296208B6008E0590 /* APIResult.swift */,
 			);
 			path = APIManager;
 			sourceTree = "<group>";
@@ -613,7 +616,7 @@
 				0DF3F5FB28D8579A00D2F399 /* OverviewInfoCell.swift in Sources */,
 				0D03F63D294E697F00300749 /* ContentType.swift in Sources */,
 				0DF3F60D28D8579A00D2F399 /* MapViewController.swift in Sources */,
-				0DF3F61328D8579A00D2F399 /* EndPoint.swift in Sources */,
+				0DF3F61328D8579A00D2F399 /* Router.swift in Sources */,
 				0DD92A14294A282300FD43F6 /* UIColor + Extension.swift in Sources */,
 				0DD92A1E294A299400FD43F6 /* NSDirectionalEdgeInset + Extension.swift in Sources */,
 				0D03F628294E679600300749 /* Intro.swift in Sources */,
@@ -653,6 +656,7 @@
 				0D933E9E29119EBE00844644 /* GalleryView.swift in Sources */,
 				0DE3BC1A28F58DF500FBFBFC /* WorldMapView.swift in Sources */,
 				0DF3F5BF28D8567000D2F399 /* SceneDelegate.swift in Sources */,
+				0DB85AEB296208B6008E0590 /* APIResult.swift in Sources */,
 				0DDB471729154F57001CB6F4 /* DetailInfoCell.swift in Sources */,
 				0DF3F60428D8579A00D2F399 /* BasePaddingLabel.swift in Sources */,
 				0D03F624294E674B00300749 /* ResponseData.swift in Sources */,
@@ -818,7 +822,7 @@
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 권한을 항상 허용해주세요";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 주변의 장소를 탐색하기 위해 사용자의 위치 정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "location-services";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
@@ -854,7 +858,7 @@
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 권한을 항상 허용해주세요";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 주변의 장소를 탐색하기 위해 사용자의 위치 정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "location-services";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
