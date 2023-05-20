@@ -15,7 +15,7 @@ enum Router: URLRequestConvertible {
     }
     
     private var baseParameter: [String: Any] {
-        ["serviceKey":APIKey.tourAPIKey,
+        ["serviceKey":APIKey.tourAPI.key,
          "MobileOS":"IOS",
          "MobileApp":"Test",
          "_type":"json"]
