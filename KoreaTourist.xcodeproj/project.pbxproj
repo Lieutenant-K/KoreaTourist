@@ -33,7 +33,13 @@
 		0D7B79B72A8E2AA600912BF7 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 0D7B79B62A8E2AA600912BF7 /* JGProgressHUD */; };
 		0D7B79BD2A8E2B7F00912BF7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0D7B79BC2A8E2B7F00912BF7 /* Kingfisher */; };
 		0D933E9E29119EBE00844644 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D933E9D29119EBE00844644 /* GalleryView.swift */; };
-		0D94573A28D8602A00FBCAE2 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D94573928D8602A00FBCAE2 /* APIKey.swift */; };
+		0DA61E0E2A8E5D5C00719D7B /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA61E0D2A8E5D5C00719D7B /* APIKey.swift */; };
+		0DA61E102A8E5F0D00719D7B /* CircleMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA61E0F2A8E5F0D00719D7B /* CircleMenuButton.swift */; };
+		0DA61E122A8E5F1400719D7B /* CompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA61E112A8E5F1400719D7B /* CompassView.swift */; };
+		0DA61E142A8E5F2900719D7B /* LocalizedTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA61E132A8E5F2900719D7B /* LocalizedTitleLabel.swift */; };
+		0DA61E162A8E5F3000719D7B /* MapCameraModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA61E152A8E5F3000719D7B /* MapCameraModeButton.swift */; };
+		0DA61E182A8E5F3A00719D7B /* MapMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA61E172A8E5F3A00719D7B /* MapMenu.swift */; };
+		0DA61E1A2A8E5F3F00719D7B /* MyLocationOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA61E192A8E5F3F00719D7B /* MyLocationOverlay.swift */; };
 		0DB85AEB296208B6008E0590 /* APIResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB85AEA296208B6008E0590 /* APIResult.swift */; };
 		0DBAF56728DB5A9B00BC943C /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBAF56628DB5A9B00BC943C /* RealmRepository.swift */; };
 		0DC5E8C529140A5A000B43CB /* DetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC5E8C429140A5A000B43CB /* DetailInfoViewController.swift */; };
@@ -132,7 +138,13 @@
 		0D7B155428E7606700E70D3B /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		0D7B155628E77EC700E70D3B /* Pods-KoreaTourist-acknowledgements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Pods-KoreaTourist-acknowledgements.plist"; path = "Pods/Target Support Files/Pods-KoreaTourist/Pods-KoreaTourist-acknowledgements.plist"; sourceTree = "<group>"; };
 		0D933E9D29119EBE00844644 /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
-		0D94573928D8602A00FBCAE2 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		0DA61E0D2A8E5D5C00719D7B /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		0DA61E0F2A8E5F0D00719D7B /* CircleMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleMenuButton.swift; sourceTree = "<group>"; };
+		0DA61E112A8E5F1400719D7B /* CompassView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompassView.swift; sourceTree = "<group>"; };
+		0DA61E132A8E5F2900719D7B /* LocalizedTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedTitleLabel.swift; sourceTree = "<group>"; };
+		0DA61E152A8E5F3000719D7B /* MapCameraModeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCameraModeButton.swift; sourceTree = "<group>"; };
+		0DA61E172A8E5F3A00719D7B /* MapMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapMenu.swift; sourceTree = "<group>"; };
+		0DA61E192A8E5F3F00719D7B /* MyLocationOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyLocationOverlay.swift; sourceTree = "<group>"; };
 		0DB85AEA296208B6008E0590 /* APIResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResult.swift; sourceTree = "<group>"; };
 		0DBAF56628DB5A9B00BC943C /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		0DC5E8C429140A5A000B43CB /* DetailInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInfoViewController.swift; sourceTree = "<group>"; };
@@ -333,14 +345,20 @@
 				0DF3F5F028D8579A00D2F399 /* BaseView.swift */,
 				0DFA15AB28FDA33A00065D1F /* Cell */,
 				0D7B154B28E747F100E70D3B /* CollectionHeaderView.swift */,
+				0DA61E0F2A8E5F0D00719D7B /* CircleMenuButton.swift */,
 				0DFFCA8A28E38641008B5705 /* CollectionView.swift */,
+				0DA61E112A8E5F1400719D7B /* CompassView.swift */,
 				0D933E9D29119EBE00844644 /* GalleryView.swift */,
 				0D03F5FD294E609D00300749 /* HeadTrackButton.swift */,
 				0DF3F5EC28D8579A00D2F399 /* ImageHeaderView.swift */,
 				0DF3F5E728D8579A00D2F399 /* LabelStackView.swift */,
+				0DA61E132A8E5F2900719D7B /* LocalizedTitleLabel.swift */,
 				0D03F5FB294E605700300749 /* LocationView.swift */,
 				0D03F5F9294E603C00300749 /* MainInfoView.swift */,
+				0DA61E152A8E5F3000719D7B /* MapCameraModeButton.swift */,
+				0DA61E172A8E5F3A00719D7B /* MapMenu.swift */,
 				0DF3F5E928D8579A00D2F399 /* MapView.swift */,
+				0DA61E192A8E5F3F00719D7B /* MyLocationOverlay.swift */,
 				0DE2DB632910DE7200F9E41B /* PlaceInfoView.swift */,
 				0DF3F5EE28D8579A00D2F399 /* PlaceMarker.swift */,
 				0DF3F5EB28D8579A00D2F399 /* PopupView.swift */,
@@ -375,7 +393,7 @@
 			children = (
 				0DF3F5F728D8579A00D2F399 /* APIManager.swift */,
 				0DF3F5F928D8579A00D2F399 /* Router.swift */,
-				0D94573928D8602A00FBCAE2 /* APIKey.swift */,
+				0DA61E0D2A8E5D5C00719D7B /* APIKey.swift */,
 				0DB85AEA296208B6008E0590 /* APIResult.swift */,
 			);
 			path = APIManager;
@@ -587,6 +605,7 @@
 			files = (
 				0DF3F5FC28D8579A00D2F399 /* WebPageInfoCell.swift in Sources */,
 				0D03F5FC294E605800300749 /* LocationView.swift in Sources */,
+				0DA61E182A8E5F3A00719D7B /* MapMenu.swift in Sources */,
 				0DD92A10294A279C00FD43F6 /* String + Extension.swift in Sources */,
 				0DD92A0E294A277900FD43F6 /* UICollectionReusableCell + Extension.swift in Sources */,
 				0DF3F61128D8579A00D2F399 /* APIManager.swift in Sources */,
@@ -594,6 +613,7 @@
 				0DF3F60028D8579A00D2F399 /* LocationInfoCell.swift in Sources */,
 				0DF3F5BD28D8567000D2F399 /* AppDelegate.swift in Sources */,
 				0DF3F60E28D8579A00D2F399 /* BaseViewController.swift in Sources */,
+				0DA61E122A8E5F1400719D7B /* CompassView.swift in Sources */,
 				0D03F634294E691700300749 /* EventPlaceInfo.swift in Sources */,
 				0DC5E8C529140A5A000B43CB /* DetailInfoViewController.swift in Sources */,
 				0DD92A08294A26D800FD43F6 /* UILabel + Extension.swift in Sources */,
@@ -606,11 +626,13 @@
 				0DF3F60D28D8579A00D2F399 /* MapViewController.swift in Sources */,
 				0DF3F61328D8579A00D2F399 /* Router.swift in Sources */,
 				0DD92A14294A282300FD43F6 /* UIColor + Extension.swift in Sources */,
+				0DA61E102A8E5F0D00719D7B /* CircleMenuButton.swift in Sources */,
 				0DD92A1E294A299400FD43F6 /* NSDirectionalEdgeInset + Extension.swift in Sources */,
 				0D03F628294E679600300749 /* Intro.swift in Sources */,
 				0D7B154C28E747F100E70D3B /* CollectionHeaderView.swift in Sources */,
 				0D03F632294E689100300749 /* CulturePlaceInfo.swift in Sources */,
 				0D03F63E294E697F00300749 /* AreaCode.swift in Sources */,
+				0DA61E162A8E5F3000719D7B /* MapCameraModeButton.swift in Sources */,
 				0DF3F60928D8579A00D2F399 /* BaseInfoCell.swift in Sources */,
 				0DD92A1A294A28F300FD43F6 /* CALayer + Extension.swift in Sources */,
 				0D03F642294E69A200300749 /* Circle.swift in Sources */,
@@ -624,6 +646,7 @@
 				0DD92A04294A260D00FD43F6 /* UIImage + Extension.swift in Sources */,
 				0DF3F60C28D8579A00D2F399 /* BaseView.swift in Sources */,
 				0DD92A1C294A294D00FD43F6 /* CLLocationManager + Extension.swift in Sources */,
+				0DA61E1A2A8E5F3F00719D7B /* MyLocationOverlay.swift in Sources */,
 				0DD92A0A294A270300FD43F6 /* UIImageView + Extension.swift in Sources */,
 				0D7B154A28E7109500E70D3B /* CategoryCell.swift in Sources */,
 				0DF3F60528D8579A00D2F399 /* MapView.swift in Sources */,
@@ -634,16 +657,17 @@
 				0D7B155528E7606700E70D3B /* SettingViewController.swift in Sources */,
 				0DBAF56728DB5A9B00BC943C /* RealmRepository.swift in Sources */,
 				0DEE1CC92911F364008EE5F6 /* MainInfoViewController.swift in Sources */,
-				0D94573A28D8602A00FBCAE2 /* APIKey.swift in Sources */,
 				0D03F63C294E697F00300749 /* ExtraPlaceInfo.swift in Sources */,
 				0DFFCA8B28E38641008B5705 /* CollectionView.swift in Sources */,
 				0DE2DB642910DE7200F9E41B /* PlaceInfoView.swift in Sources */,
 				0DC5E8C729143EA2000B43CB /* SubInfoViewController.swift in Sources */,
 				0DE3BC1828F58CEC00FBFBFC /* WorldMapViewController.swift in Sources */,
+				0DA61E142A8E5F2900719D7B /* LocalizedTitleLabel.swift in Sources */,
 				0DF3F60728D8579A00D2F399 /* PopupView.swift in Sources */,
 				0D933E9E29119EBE00844644 /* GalleryView.swift in Sources */,
 				0DE3BC1A28F58DF500FBFBFC /* WorldMapView.swift in Sources */,
 				0DF3F5BF28D8567000D2F399 /* SceneDelegate.swift in Sources */,
+				0DA61E0E2A8E5D5C00719D7B /* APIKey.swift in Sources */,
 				0DB85AEB296208B6008E0590 /* APIResult.swift in Sources */,
 				0DDB471729154F57001CB6F4 /* DetailInfoCell.swift in Sources */,
 				0DF3F60428D8579A00D2F399 /* BasePaddingLabel.swift in Sources */,
@@ -728,7 +752,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -782,7 +806,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

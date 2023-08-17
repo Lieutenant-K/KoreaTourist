@@ -63,10 +63,10 @@ final class MapViewController: BaseViewController {
     var previousMode: CameraMode? {
         didSet {
             if let pre = previousMode {
-                naverMapView.cameraButton.isHidden = false
-                naverMapView.cameraButton.setImage(pre.iconImage, for: .normal)
+                self.naverMapView.cameraModeButton.isHidden = false
+                self.naverMapView.cameraModeButton.setImage(pre.iconImage, for: .normal)
             } else {
-                naverMapView.cameraButton.isHidden = true
+                self.naverMapView.cameraModeButton.isHidden = true
             }
         }
     }
@@ -99,6 +99,7 @@ final class MapViewController: BaseViewController {
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        
         currentMarkers.forEach { $0.updateMarkerAppearnce() }
     }
 }
@@ -110,13 +111,13 @@ extension MapViewController {
     }
     
     private func addTarget() {
-        naverMapView.cameraButton.addTarget(self, action: #selector(touchPreviousCameraButton), for: .touchUpInside)
+        naverMapView.cameraModeButton.addTarget(self, action: #selector(touchPreviousCameraButton), for: .touchUpInside)
         naverMapView.trackButton.addTarget(self, action: #selector(touchTrackButton(_:)), for: .touchUpInside)
     }
     
     private func configureMenuButton() {
-        naverMapView.circleButton.delegate = self
-        naverMapView.circleButton.buttonsCount = Menu.allCases.count
+        naverMapView.circleMenuButton.delegate = self
+        naverMapView.circleMenuButton.buttonsCount = Menu.allCases.count
     }
     
     private func createMarkerHandler() -> NMFOverlayTouchHandler {
@@ -189,7 +190,7 @@ extension MapViewController {
     private func updateGeoTitle(loc: CLLocation) {
         CLGeocoder().reverseGeocodeLocation(loc, preferredLocale: Locale(identifier: "ko_KR")) { [weak self] placeMark, error in
             if let place = placeMark?.first {
-                self?.naverMapView.geoTitleLabel.text = [(place.locality ?? ""),(place.subLocality ?? "")].joined(separator: " ")
+                self?.naverMapView.localizedLabel.text = [(place.locality ?? ""),(place.subLocality ?? "")].joined(separator: " ")
             }
         }
     }
@@ -268,8 +269,8 @@ extension MapViewController {
 // MARK: - Overlay Control Method
 extension MapViewController {
     private func displayAreaOnMap(location: CLLocationCoordinate2D) {
-        naverMapView.circleOverlay.center = NMGLatLng(lat: location.latitude, lng: location.longitude)
-        naverMapView.circleOverlay.mapView = naverMapView.mapView
+        naverMapView.boundaryCircleOverlay.center = NMGLatLng(lat: location.latitude, lng: location.longitude)
+        naverMapView.boundaryCircleOverlay.mapView = naverMapView.mapView
     }
     
     private func updateAndDisplayMarker(markers: [PlaceMarker]) {
@@ -284,7 +285,7 @@ extension MapViewController {
     
     func filteringMarker() {
         currentMarkers.forEach {
-            $0.hidden = isMarkerFilterOn ? ($0.placeInfo.isDiscovered ? true : false) : false
+            $0.hidden = isMarkerFilterOn ? ($0.isDiscovered ? true : false) : false
         }
     }
     

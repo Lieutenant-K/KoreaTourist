@@ -6,20 +6,20 @@
 //
 
 import UIKit
+
 import NMapsMap
 import SnapKit
-import CircleMenu
 
 final class MapView: NMFNaverMapView {
     // MARK: - Properties
     private let buttonWidth: CGFloat = 50
     private var buttonInset = UIEdgeInsets(top: 0, left: 28, bottom: 60, right: 28)
     
-    let geoTitleLabel = UILabel()
-    let compass = NMFCompassView()
-    let cameraButton = UIButton(type: .system)
-    let circleButton = CircleMenu(frame: .zero, normalIcon: "", selectedIcon: "", duration: 0.5, distance: 85)
-    let circleOverlay = NMFCircleOverlay(NMGLatLng(lat: 0, lng: 0), radius: Circle.defaultRadius)
+    let localizedLabel = LocalizedTitleLabel()
+    let compassView = NMFCompassView()
+    let cameraModeButton = MapCameraModeButton(type: .system)
+    let circleMenuButton = CircleMenuButton()
+    let boundaryCircleOverlay = NMFCircleOverlay(NMGLatLng(lat: 0, lng: 0), radius: Circle.defaultRadius)
     lazy var trackButton = HeadTrackButton(location: mapView.locationOverlay)
     
     override init(frame: CGRect) {
@@ -37,7 +37,7 @@ final class MapView: NMFNaverMapView {
         
         mapView.adjustInterfaceStyle(style: style)
         
-        circleOverlay.outlineColor = .secondaryLabel
+        boundaryCircleOverlay.outlineColor = .secondaryLabel
     }
 }
 
@@ -52,31 +52,30 @@ extension MapView {
     }
     
     private func disableDefaultControl() {
-        showZoomControls = false
-        showCompass = false
-        showScaleBar = false
+        self.showZoomControls = false
+        self.showCompass = false
+        self.showScaleBar = false
     }
     
     private func setDefaultValue() {
-        mapView.logoAlign = .rightTop
-        mapView.maxZoomLevel = 18
-        mapView.minZoomLevel = 15
-        mapView.maxTilt = maxTilt
-        mapView.contentInset = contentInset
-        mapView.setLayerGroup(NMF_LAYER_GROUP_BUILDING, isEnabled: false)
-        mapView.symbolScale = 0.5
-        mapView.mapType = .navi
-        
-        mapView.adjustInterfaceStyle(style: UITraitCollection.current.userInterfaceStyle)
+        self.mapView.logoAlign = .rightTop
+        self.mapView.maxZoomLevel = 18
+        self.mapView.minZoomLevel = 15
+        self.mapView.maxTilt = self.maxTilt
+        self.mapView.contentInset = self.contentInset
+        self.mapView.setLayerGroup(NMF_LAYER_GROUP_BUILDING, isEnabled: false)
+        self.mapView.symbolScale = 0.5
+        self.mapView.mapType = .navi
+        self.mapView.adjustInterfaceStyle(style: UITraitCollection.current.userInterfaceStyle)
     }
     
     private func setDefaultLocation() {
         // 서울시청 좌표
-        let baseLocation = NMGLatLng(lat: 37.56661, lng: 126.97839)
-        let defaultCameraPosition = NMFCameraPosition(baseLocation, zoom: mapView.maxZoomLevel, tilt: maxTilt, heading: 0)
+        let location = NMGLatLng(lat: 37.56661, lng: 126.97839)
+        let position = NMFCameraPosition(location, zoom: mapView.maxZoomLevel, tilt: self.maxTilt, heading: 0)
         
-        mapView.moveCamera(NMFCameraUpdate(position: defaultCameraPosition))
-        mapView.locationOverlay.location = baseLocation
+        self.mapView.moveCamera(NMFCameraUpdate(position: position))
+        self.mapView.locationOverlay.location = location
     }
     
     private func setLocationOverlay() {
@@ -105,58 +104,31 @@ extension MapView {
     }
     
     private func configureSubviews() {
-        [circleButton, compass, cameraButton, geoTitleLabel, trackButton].forEach { addSubview($0) }
-        // geoTitleLabel
-        geoTitleLabel.text = "현재 지역"
-        geoTitleLabel.font = .systemFont(ofSize: 26, weight: .heavy)
-        geoTitleLabel.textColor = .secondaryLabel
-        geoTitleLabel.backgroundColor = .clear
-        geoTitleLabel.textAlignment = .center
-        geoTitleLabel.numberOfLines = 1
-        
-        // circleButton
-        let image: UIImage = .backpack
-        let selectImage = UIImage(systemName: "xmark")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25, weight: .medium))
-        
-        circleButton.setImage(image, for: .normal)
-        circleButton.setImage(selectImage, for: .selected)
-        circleButton.backgroundColor = .white
-        circleButton.startAngle = -90
-        circleButton.endAngle = 90
-        circleButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        circleButton.layer.shadowOffset = .zero
-        circleButton.layer.shadowOpacity = 0.3
+        [circleMenuButton, compassView, cameraModeButton, localizedLabel, trackButton].forEach { addSubview($0) }
         
         // compass
         let tap = UITapGestureRecognizer()
         tap.addTarget(self, action: #selector(compassHanlder(_:)))
         
-        compass.mapView = mapView
-        compass.gestureRecognizers = [tap]
+        self.compassView.mapView = mapView
+        self.compassView.gestureRecognizers = [tap]
         
         // circleOverlay
-        circleOverlay.fillColor = .clear
-        circleOverlay.outlineWidth = 2.5
-        circleOverlay.outlineColor = .secondaryLabel
+        self.boundaryCircleOverlay.fillColor = .clear
+        self.boundaryCircleOverlay.outlineWidth = 2.5
+        self.boundaryCircleOverlay.outlineColor = .secondaryLabel
         
-        //cameraButton
-        cameraButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
-        cameraButton.isHidden = true
-        cameraButton.backgroundColor = .white
-        cameraButton.layer.shadowOffset = .zero
-        cameraButton.layer.shadowOpacity = 0.3
-        
-        setTopViews()
-        setBottomViews()
+        self.setTopViews()
+        self.setBottomViews()
     }
     
     private func setTopViews() {
-        compass.snp.makeConstraints {
+        self.compassView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide)
             $0.leading.equalTo(12)
         }
         
-        geoTitleLabel.snp.makeConstraints {
+        self.localizedLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(safeAreaLayoutGuide)
             $0.leading.greaterThanOrEqualTo(20)
@@ -165,32 +137,32 @@ extension MapView {
     }
     
     private func setBottomViews() {
-        circleButton.snp.makeConstraints {
+        circleMenuButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(buttonInset)
-            $0.width.equalTo(buttonWidth)
-            $0.height.equalTo(circleButton.snp.width)
+            $0.bottom.equalToSuperview().inset(self.buttonInset)
+            $0.width.equalTo(self.buttonWidth)
+            $0.height.equalTo(self.circleMenuButton.snp.width)
         }
         
-        cameraButton.snp.makeConstraints {
-            $0.trailing.bottom.equalToSuperview().inset(buttonInset)
-            $0.width.equalTo(buttonWidth)
-            $0.height.equalTo(cameraButton.snp.width)
+        cameraModeButton.snp.makeConstraints {
+            $0.trailing.bottom.equalToSuperview().inset(self.buttonInset)
+            $0.width.equalTo(self.buttonWidth)
+            $0.height.equalTo(self.cameraModeButton.snp.width)
         }
         
         trackButton.snp.makeConstraints {
-            $0.leading.bottom.equalToSuperview().inset(buttonInset)
-            $0.width.equalTo(buttonWidth)
-            $0.height.equalTo(trackButton.snp.width)
+            $0.leading.bottom.equalToSuperview().inset(self.buttonInset)
+            $0.width.equalTo(self.buttonWidth)
+            $0.height.equalTo(self.trackButton.snp.width)
         }
         
-        [circleButton, cameraButton, trackButton].forEach {
-            $0.layer.cornerRadius = buttonWidth/2
+        [self.circleMenuButton, self.cameraModeButton, self.trackButton].forEach {
+            $0.layer.cornerRadius = self.buttonWidth/2
         }
     }
     
     func moveCameraBlockGesture(_ update: NMFCameraUpdate, completionHandler: @escaping () -> ()) {
-        let gestures = mapView.gestureRecognizers
+        let gestures = self.mapView.gestureRecognizers
         
         gestures?.forEach{ $0.isEnabled = false }
         trackButton.isSelected = false
@@ -203,7 +175,7 @@ extension MapView {
     }
     
     func controlButtonState(enabled: Bool) {
-        [trackButton, circleButton, cameraButton].forEach {
+        [trackButton, circleMenuButton, cameraModeButton].forEach {
             $0.isEnabled = enabled
         }
     }
@@ -238,7 +210,7 @@ extension MapView {
             // rotating map camera
             
             let bounds = mapView.bounds
-            let vector1 = CGVector(dx: location.x - bounds.midX, dy: location.y - bounds.midY)
+            let vector1 = CGVector(dx: location.x - bounds.midX, dy: location.y - 3*bounds.midY/2)
             let vector2 = CGVector(dx: vector1.dx + translation.x, dy: vector1.dy + translation.y)
             let angle1 = atan2(vector1.dx, vector1.dy)
             let angle2 = atan2(vector2.dx, vector2.dy)
@@ -311,9 +283,8 @@ extension MapView {
 // MARK: Landscape Method
 extension MapView {
     func deviceOrientationDidChange(mode: CameraMode, orient: UIDeviceOrientation) {
-        updateMapView(mode: mode)
-        
-        updateSubviews(orient: orient)
+        self.updateMapView(mode: mode)
+        self.updateSubviews(orient: orient)
     }
     
     private func updateMapView(mode: CameraMode) {
@@ -333,10 +304,8 @@ extension MapView {
     }
     
     private func updateSubviews(orient: UIDeviceOrientation) {
-        updateTopViews(orient: orient)
-        
-        updateBottomViews(orient: orient)
-        
+        self.updateTopViews(orient: orient)
+        self.updateBottomViews(orient: orient)
     }
     
     private func updateTopViews(orient: UIDeviceOrientation){
@@ -344,50 +313,50 @@ extension MapView {
         let left: CGFloat = orient == .portrait ? 12 : 28
         let inset = UIEdgeInsets(top: top, left: left, bottom: 0, right: 0)
         
-        compass.snp.updateConstraints {
+        compassView.snp.updateConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).inset(inset)
             $0.leading.equalToSuperview().inset(inset)
         }
-        geoTitleLabel.snp.updateConstraints {
+        localizedLabel.snp.updateConstraints {
             $0.top.equalTo(safeAreaLayoutGuide).inset(inset)
         }
     }
     
     private func updateBottomViews(orient: UIDeviceOrientation) {
         let bottom: CGFloat = orient == .portrait ? 60 : 30
-        buttonInset.bottom = bottom
+        self.buttonInset.bottom = bottom
         
-        updateCircleButton(orient: orient)
+        self.updateCircleButton(orient: orient)
         
-        trackButton.snp.updateConstraints {
-            $0.leading.bottom.equalToSuperview().inset(buttonInset)
+        self.trackButton.snp.updateConstraints {
+            $0.leading.bottom.equalToSuperview().inset(self.buttonInset)
         }
         
         if orient == .portrait {
-            circleButton.snp.remakeConstraints {
+            self.circleMenuButton.snp.remakeConstraints {
                 $0.centerX.equalToSuperview()
-                $0.bottom.equalToSuperview().inset(buttonInset)
+                $0.bottom.equalToSuperview().inset(self.buttonInset)
                 $0.width.equalTo(buttonWidth)
-                $0.height.equalTo(circleButton.snp.width)
+                $0.height.equalTo(circleMenuButton.snp.width)
             }
             
-            cameraButton.snp.remakeConstraints {
-                $0.trailing.bottom.equalToSuperview().inset(buttonInset)
+            self.cameraModeButton.snp.remakeConstraints {
+                $0.trailing.bottom.equalToSuperview().inset(self.buttonInset)
                 $0.width.equalTo(buttonWidth)
-                $0.height.equalTo(cameraButton.snp.width)
+                $0.height.equalTo(cameraModeButton.snp.width)
             }
         } else {
-            circleButton.snp.remakeConstraints {
-                $0.trailing.bottom.equalToSuperview().inset(buttonInset)
+            self.circleMenuButton.snp.remakeConstraints {
+                $0.trailing.bottom.equalToSuperview().inset(self.buttonInset)
                 $0.width.equalTo(buttonWidth)
-                $0.height.equalTo(circleButton.snp.width)
+                $0.height.equalTo(circleMenuButton.snp.width)
             }
             
-            cameraButton.snp.remakeConstraints {
-                $0.leading.equalTo(trackButton.snp.trailing).offset(buttonInset.left + buttonWidth/2)
-                $0.bottom.equalToSuperview().inset(buttonInset)
+            self.cameraModeButton.snp.remakeConstraints {
+                $0.leading.equalTo(trackButton.snp.trailing).offset(self.buttonInset.left + buttonWidth/2)
+                $0.bottom.equalToSuperview().inset(self.buttonInset)
                 $0.width.equalTo(buttonWidth)
-                $0.height.equalTo(cameraButton.snp.width)
+                $0.height.equalTo(cameraModeButton.snp.width)
             }
         }
     }
@@ -396,11 +365,11 @@ extension MapView {
         let end: Float = orient == .portrait ? 90 : 0
         let dist: Float = orient == .portrait ? 85 : 100
         
-        circleButton.startAngle = -90
-        circleButton.endAngle = end
-        circleButton.distance = dist
-        circleButton.subButtonsRadius = 20
-        circleButton.hideButtons(0)
+        self.circleMenuButton.startAngle = -90
+        self.circleMenuButton.endAngle = end
+        self.circleMenuButton.distance = dist
+        self.circleMenuButton.subButtonsRadius = 20
+        self.circleMenuButton.hideButtons(0)
     }
 }
 
@@ -412,18 +381,18 @@ extension MapView {
     var contentInset: UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 0, bottom: -UIScreen.main.bounds.height/2, right: 0)
     }
-    var currentTilt: Double { mapView.cameraPosition.tilt }
-    var currentZoom: Double { mapView.cameraPosition.zoom }
+    var currentTilt: Double { self.mapView.cameraPosition.tilt }
+    var currentZoom: Double { self.mapView.cameraPosition.zoom }
     var maxLocOverlaySize: CGFloat { 60 }
     var minLocOverlaySize: CGFloat { 30 }
     var locOverlaySize: CGSize {
         get {
-            let overlay = mapView.locationOverlay
+            let overlay = self.mapView.locationOverlay
             return CGSize(width: overlay.iconWidth, height: overlay.iconHeight)
         }
         set {
-            mapView.locationOverlay.iconWidth = newValue.width
-            mapView.locationOverlay.iconHeight = newValue.height
+            self.mapView.locationOverlay.iconWidth = newValue.width
+            self.mapView.locationOverlay.iconHeight = newValue.height
         }
     }
 }
