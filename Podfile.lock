@@ -1,16 +1,20 @@
 PODS:
-  - NMapsMap (3.16.0)
+  - NMapsGeometry (1.0.1)
+  - NMapsMap (3.17.0):
+    - NMapsGeometry
 
 DEPENDENCIES:
   - NMapsMap
 
 SPEC REPOS:
   trunk:
+    - NMapsGeometry
     - NMapsMap
 
 SPEC CHECKSUMS:
-  NMapsMap: a2593320fca2bb09e521c05b4dffee4da42e96ed
+  NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
+  NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
 
-PODFILE CHECKSUM: 85290dc3bb165727203b3725775b67ce97815752
+PODFILE CHECKSUM: b5a398f2e80545dc6e595ffd1896b3d8eccc684e
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1
