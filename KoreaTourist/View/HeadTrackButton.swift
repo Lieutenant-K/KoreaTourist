@@ -6,49 +6,53 @@
 //
 
 import UIKit
-import NMapsMap
+import Combine
 
 final class HeadTrackButton: UIButton {
-    
-    weak var locationOverlay: NMFLocationOverlay?
-    
-    override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                MapViewController.locationManager.startUpdatingHeading()
-                locationOverlay?.icon = NMFOverlayImage(image: .navigation)
-            } else {
-                MapViewController.locationManager.stopUpdatingHeading()
-                locationOverlay?.icon  = NMFOverlayImage(image: .location)
-            }
-        }
+    private let map: HeadTrackableMap
+    private var cancellables = Set<AnyCancellable>()
+    var headValue: Double = 0 {
+        didSet { self.map.changeHead(to: self.headValue) }
+    }
+    var isSelectedPublisher: AnyPublisher<Bool, Never> {
+        self.publisher(for: \.isSelected).eraseToAnyPublisher()
     }
     
     private func configureButton() {
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .semibold)
+        let selectImage = UIImage(systemName: "safari.fill")?.applyingSymbolConfiguration(symbolConfig)
+        let deselectImage = UIImage(systemName: "safari")?.applyingSymbolConfiguration(symbolConfig)
         
-        let selectImage = UIImage(systemName: "safari.fill")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25, weight: .semibold))
+        self.setImage(deselectImage, for: .normal)
+        self.setImage(selectImage, for: .selected)
+        self.backgroundColor = .white
         
-        let deselectImage = UIImage(systemName: "safari")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 25, weight: .semibold))
-        
-        setImage(deselectImage, for: .normal)
-        setImage(selectImage, for: .selected)
-        backgroundColor = .white
-        
-        layer.shadowOffset = .zero
-        layer.shadowOpacity = 0.3
-        
-        
+        self.layer.shadowOffset = .zero
+        self.layer.shadowOpacity = 0.3
     }
     
-    convenience init(location: NMFLocationOverlay) {
-        self.init(type: .system)
-        locationOverlay = location
+    private func subscribeSelectEvent() {
+        self.isSelectedPublisher
+            .sink { [weak self] in
+                self?.map.switchHeadTracking(isOn: $0)
+            }
+            .store(in: &self.cancellables)
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configureButton()
-        
+    private func subscribeTapEvent() {
+        self.tapPublisher
+            .sink { [weak self] _ in
+                self?.isSelected.toggle()
+            }
+            .store(in: &self.cancellables)
+    }
+    
+    init(map: HeadTrackableMap) {
+        self.map = map
+        super.init(frame: .zero)
+        self.configureButton()
+        self.subscribeSelectEvent()
+        self.subscribeTapEvent()
     }
     
     required init?(coder: NSCoder) {
