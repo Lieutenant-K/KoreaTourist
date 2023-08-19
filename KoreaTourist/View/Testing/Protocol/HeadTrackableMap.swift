@@ -9,6 +9,7 @@ import Foundation
 
 import NMapsMap
 
+/// 기기의 헤딩값을 추적할 수 있는 지도 객체
 protocol HeadTrackableMap: NMFMapView {}
 
 extension HeadTrackableMap {
