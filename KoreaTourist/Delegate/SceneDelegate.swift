@@ -37,10 +37,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navi = UINavigationController(rootViewController: vc)
         
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = vc
+        window?.rootViewController = mock()
         window?.makeKeyAndVisible()
         
         UserDefaults.standard.set(true, forKey: "notFirst")
+    }
+    
+    func mock() -> MockMapViewController {
+        let map = MainMapView()
+        let compass = CompassView(map: map)
+        let headTrackBtn = HeadTrackButton(map: map)
+        let camera = MapCameraModeButton(map: map)
+        let vc = MockMapViewController(map: map, compass: compass, headTrack: headTrackBtn, camera: camera)
+        
+        return vc
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

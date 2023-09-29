@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Coordinate {
+struct Coordinate: Equatable {
     static var seoul: Coordinate {
         return Coordinate(latitude: 37.56661, longitude: 126.97839)
     }

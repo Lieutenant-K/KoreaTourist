@@ -6,11 +6,15 @@
 //
 
 import UIKit
+import Combine
+
 import NMapsMap
 
 final class PlaceMarker: NMFMarker {
     // 디버그용
     static let minimumDistance: Double = 500
+    var cancellables = Set<AnyCancellable>()
+    let markerDidTapEvent = PassthroughSubject<PlaceMarker, Never>()
     let placeInfo: CommonPlaceInfo
     var distance: Double {
         didSet {
@@ -65,5 +69,12 @@ extension PlaceMarker {
         width = 50
         height = 65
          */
+        
+        self.touchHandler = { [weak self] in
+            if let marker = $0 as? PlaceMarker {
+                self?.markerDidTapEvent.send(marker)
+            }
+            return true
+        }
     }
 }

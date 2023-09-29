@@ -17,10 +17,10 @@ final class MapView: NMFNaverMapView {
     
     let localizedLabel = LocalizedTitleLabel()
     let compassView = NMFCompassView()
-    let cameraModeButton = MapCameraModeButton(type: .system)
+    let cameraModeButton = MapCameraModeButton(map: MainMapView())
     let circleMenuButton = CircleMenuButton()
     let boundaryCircleOverlay = NMFCircleOverlay(NMGLatLng(lat: 0, lng: 0), radius: Circle.defaultRadius)
-    lazy var trackButton = HeadTrackButton(location: mapView.locationOverlay)
+    lazy var trackButton = HeadTrackButton(map: MainMapView())
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -32,6 +32,16 @@
 		0D7B155728E77EC700E70D3B /* Pods-KoreaTourist-acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D7B155628E77EC700E70D3B /* Pods-KoreaTourist-acknowledgements.plist */; };
 		0D7B79B72A8E2AA600912BF7 /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 0D7B79B62A8E2AA600912BF7 /* JGProgressHUD */; };
 		0D7B79BD2A8E2B7F00912BF7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 0D7B79BC2A8E2B7F00912BF7 /* Kingfisher */; };
+		0D8CE8A72A8E6E2700E01FF8 /* MockMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CE89E2A8E6E2700E01FF8 /* MockMapViewController.swift */; };
+		0D8CE8A82A8E6E2700E01FF8 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CE89F2A8E6E2700E01FF8 /* LocationManager.swift */; };
+		0D8CE8A92A8E6E2700E01FF8 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CE8A02A8E6E2700E01FF8 /* MapViewModel.swift */; };
+		0D8CE8AA2A8E6E2700E01FF8 /* MapActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CE8A12A8E6E2700E01FF8 /* MapActivityIndicator.swift */; };
+		0D8CE8AB2A8E6E2700E01FF8 /* UserPlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CE8A22A8E6E2700E01FF8 /* UserPlaceRepository.swift */; };
+		0D8CE8AC2A8E6E2700E01FF8 /* CommonPlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CE8A32A8E6E2700E01FF8 /* CommonPlaceRepository.swift */; };
+		0D8CE8AD2A8E6E2700E01FF8 /* MainMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CE8A42A8E6E2700E01FF8 /* MainMapView.swift */; };
+		0D8CE8AE2A8E6E2700E01FF8 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CE8A52A8E6E2700E01FF8 /* NetworkManager.swift */; };
+		0D8CE8AF2A8E6E2700E01FF8 /* MapUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CE8A62A8E6E2700E01FF8 /* MapUseCase.swift */; };
+		0D8CE8B12A8E6E6200E01FF8 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8CE8B02A8E6E6200E01FF8 /* Coordinate.swift */; };
 		0D933E9E29119EBE00844644 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D933E9D29119EBE00844644 /* GalleryView.swift */; };
 		0DA61E0E2A8E5D5C00719D7B /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA61E0D2A8E5D5C00719D7B /* APIKey.swift */; };
 		0DA61E102A8E5F0D00719D7B /* CircleMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA61E0F2A8E5F0D00719D7B /* CircleMenuButton.swift */; };
@@ -45,6 +55,7 @@
 		0DC5E8C529140A5A000B43CB /* DetailInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC5E8C429140A5A000B43CB /* DetailInfoViewController.swift */; };
 		0DC5E8C729143EA2000B43CB /* SubInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC5E8C629143EA2000B43CB /* SubInfoViewController.swift */; };
 		0DC5E8C9291455DC000B43CB /* ExtraInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC5E8C8291455DC000B43CB /* ExtraInfoController.swift */; };
+		0DC685402A910CE4002A65A9 /* MapCameraMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC6853F2A910CE4002A65A9 /* MapCameraMode.swift */; };
 		0DD92A04294A260D00FD43F6 /* UIImage + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD92A03294A260D00FD43F6 /* UIImage + Extension.swift */; };
 		0DD92A06294A262500FD43F6 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD92A05294A262500FD43F6 /* UIViewController + Extension.swift */; };
 		0DD92A08294A26D800FD43F6 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD92A07294A26D800FD43F6 /* UILabel + Extension.swift */; };
@@ -70,6 +81,8 @@
 		0DE81B0C2950BB8600DF6C7B /* CameraMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE81B0B2950BB8600DF6C7B /* CameraMode.swift */; };
 		0DEE1CC92911F364008EE5F6 /* MainInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEE1CC82911F364008EE5F6 /* MainInfoViewController.swift */; };
 		0DEE1CCB2911FA66008EE5F6 /* SubInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEE1CCA2911FA66008EE5F6 /* SubInfoView.swift */; };
+		0DEF86582A8FCD650073CA42 /* HeadResetableMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF86572A8FCD650073CA42 /* HeadResetableMap.swift */; };
+		0DEF865B2A8FE1C50073CA42 /* HeadTrackableMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF865A2A8FE1C50073CA42 /* HeadTrackableMap.swift */; };
 		0DF3F5BD28D8567000D2F399 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3F5BC28D8567000D2F399 /* AppDelegate.swift */; };
 		0DF3F5BF28D8567000D2F399 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3F5BE28D8567000D2F399 /* SceneDelegate.swift */; };
 		0DF3F5C628D8567100D2F399 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DF3F5C528D8567100D2F399 /* Assets.xcassets */; };
@@ -93,6 +106,7 @@
 		0DF3F61128D8579A00D2F399 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3F5F728D8579A00D2F399 /* APIManager.swift */; };
 		0DF3F61328D8579A00D2F399 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF3F5F928D8579A00D2F399 /* Router.swift */; };
 		0DF3F61828D85B9600D2F399 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 0DF3F61728D85B9600D2F399 /* .gitignore */; };
+		0DF5734E2A90F73900944DE9 /* DynamicCameraModeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF5734D2A90F73900944DE9 /* DynamicCameraModeMap.swift */; };
 		0DFCE12C2A8DF393003A6FF4 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE12B2A8DF393003A6FF4 /* CombineCocoa */; };
 		0DFCE12F2A8DF39B003A6FF4 /* PaperOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE12E2A8DF39B003A6FF4 /* PaperOnboarding */; };
 		0DFCE1322A8DF3C5003A6FF4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE1312A8DF3C5003A6FF4 /* FirebaseAnalytics */; };
@@ -137,6 +151,16 @@
 		0D7B154B28E747F100E70D3B /* CollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionHeaderView.swift; sourceTree = "<group>"; };
 		0D7B155428E7606700E70D3B /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		0D7B155628E77EC700E70D3B /* Pods-KoreaTourist-acknowledgements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Pods-KoreaTourist-acknowledgements.plist"; path = "Pods/Target Support Files/Pods-KoreaTourist/Pods-KoreaTourist-acknowledgements.plist"; sourceTree = "<group>"; };
+		0D8CE89E2A8E6E2700E01FF8 /* MockMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMapViewController.swift; sourceTree = "<group>"; };
+		0D8CE89F2A8E6E2700E01FF8 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		0D8CE8A02A8E6E2700E01FF8 /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		0D8CE8A12A8E6E2700E01FF8 /* MapActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapActivityIndicator.swift; sourceTree = "<group>"; };
+		0D8CE8A22A8E6E2700E01FF8 /* UserPlaceRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPlaceRepository.swift; sourceTree = "<group>"; };
+		0D8CE8A32A8E6E2700E01FF8 /* CommonPlaceRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonPlaceRepository.swift; sourceTree = "<group>"; };
+		0D8CE8A42A8E6E2700E01FF8 /* MainMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMapView.swift; sourceTree = "<group>"; };
+		0D8CE8A52A8E6E2700E01FF8 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		0D8CE8A62A8E6E2700E01FF8 /* MapUseCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapUseCase.swift; sourceTree = "<group>"; };
+		0D8CE8B02A8E6E6200E01FF8 /* Coordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		0D933E9D29119EBE00844644 /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
 		0DA61E0D2A8E5D5C00719D7B /* APIKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		0DA61E0F2A8E5F0D00719D7B /* CircleMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleMenuButton.swift; sourceTree = "<group>"; };
@@ -150,6 +174,7 @@
 		0DC5E8C429140A5A000B43CB /* DetailInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInfoViewController.swift; sourceTree = "<group>"; };
 		0DC5E8C629143EA2000B43CB /* SubInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SubInfoViewController.swift; path = KoreaTourist/Controller/SubInfoViewController.swift; sourceTree = SOURCE_ROOT; };
 		0DC5E8C8291455DC000B43CB /* ExtraInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtraInfoController.swift; sourceTree = "<group>"; };
+		0DC6853F2A910CE4002A65A9 /* MapCameraMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCameraMode.swift; sourceTree = "<group>"; };
 		0DD92A03294A260D00FD43F6 /* UIImage + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extension.swift"; sourceTree = "<group>"; };
 		0DD92A05294A262500FD43F6 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 		0DD92A07294A26D800FD43F6 /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
@@ -176,6 +201,8 @@
 		0DE81B0B2950BB8600DF6C7B /* CameraMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraMode.swift; sourceTree = "<group>"; };
 		0DEE1CC82911F364008EE5F6 /* MainInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInfoViewController.swift; sourceTree = "<group>"; };
 		0DEE1CCA2911FA66008EE5F6 /* SubInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SubInfoView.swift; path = KoreaTourist/View/SubInfoView.swift; sourceTree = SOURCE_ROOT; };
+		0DEF86572A8FCD650073CA42 /* HeadResetableMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadResetableMap.swift; sourceTree = "<group>"; };
+		0DEF865A2A8FE1C50073CA42 /* HeadTrackableMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadTrackableMap.swift; sourceTree = "<group>"; };
 		0DF3F5BC28D8567000D2F399 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0DF3F5BE28D8567000D2F399 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		0DF3F5C528D8567100D2F399 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -200,6 +227,7 @@
 		0DF3F5F728D8579A00D2F399 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		0DF3F5F928D8579A00D2F399 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		0DF3F61728D85B9600D2F399 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		0DF5734D2A90F73900944DE9 /* DynamicCameraModeMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicCameraModeMap.swift; sourceTree = "<group>"; };
 		0DFCE1292A8DF339003A6FF4 /* KoreaTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KoreaTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DFFCA8828E38591008B5705 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		0DFFCA8A28E38641008B5705 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
@@ -237,6 +265,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D8CE89D2A8E6E1D00E01FF8 /* Testing */ = {
+			isa = PBXGroup;
+			children = (
+				0D8CE8A32A8E6E2700E01FF8 /* CommonPlaceRepository.swift */,
+				0D8CE89F2A8E6E2700E01FF8 /* LocationManager.swift */,
+				0D8CE8A42A8E6E2700E01FF8 /* MainMapView.swift */,
+				0D8CE8A12A8E6E2700E01FF8 /* MapActivityIndicator.swift */,
+				0D8CE8A62A8E6E2700E01FF8 /* MapUseCase.swift */,
+				0D8CE8A02A8E6E2700E01FF8 /* MapViewModel.swift */,
+				0D8CE89E2A8E6E2700E01FF8 /* MockMapViewController.swift */,
+				0D8CE8A52A8E6E2700E01FF8 /* NetworkManager.swift */,
+				0DEF86592A8FD2390073CA42 /* Protocol */,
+				0D8CE8A22A8E6E2700E01FF8 /* UserPlaceRepository.swift */,
+			);
+			path = Testing;
+			sourceTree = "<group>";
+		};
 		0D94573B28D8626900FBCAE2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,6 +331,16 @@
 			path = Delegate;
 			sourceTree = "<group>";
 		};
+		0DEF86592A8FD2390073CA42 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				0DEF86572A8FCD650073CA42 /* HeadResetableMap.swift */,
+				0DEF865A2A8FE1C50073CA42 /* HeadTrackableMap.swift */,
+				0DF5734D2A90F73900944DE9 /* DynamicCameraModeMap.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		0DF3F5B028D8567000D2F399 = {
 			isa = PBXGroup;
 			children = (
@@ -321,6 +376,7 @@
 				0D03F638294E697F00300749 /* AreaCode.swift */,
 				0D03F641294E69A200300749 /* Circle.swift */,
 				0D03F625294E677700300749 /* CommonPlaceInfo.swift */,
+				0D8CE8B02A8E6E6200E01FF8 /* Coordinate.swift */,
 				0D03F637294E697F00300749 /* ContentType.swift */,
 				0D03F631294E689100300749 /* CulturePlaceInfo.swift */,
 				0D03F633294E691700300749 /* EventPlaceInfo.swift */,
@@ -334,6 +390,7 @@
 				0D03F629294E67BD00300749 /* TourPlaceInfo.swift */,
 				0D03F643294E69B800300749 /* XMLDecoding.swift */,
 				0DE81B0B2950BB8600DF6C7B /* CameraMode.swift */,
+				0DC6853F2A910CE4002A65A9 /* MapCameraMode.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -341,6 +398,7 @@
 		0DF3F5DE28D8579A00D2F399 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0D8CE89D2A8E6E1D00E01FF8 /* Testing */,
 				0DF3F5E828D8579A00D2F399 /* BasePaddingLabel.swift */,
 				0DF3F5F028D8579A00D2F399 /* BaseView.swift */,
 				0DFA15AB28FDA33A00065D1F /* Cell */,
@@ -608,6 +666,7 @@
 				0DA61E182A8E5F3A00719D7B /* MapMenu.swift in Sources */,
 				0DD92A10294A279C00FD43F6 /* String + Extension.swift in Sources */,
 				0DD92A0E294A277900FD43F6 /* UICollectionReusableCell + Extension.swift in Sources */,
+				0DEF86582A8FCD650073CA42 /* HeadResetableMap.swift in Sources */,
 				0DF3F61128D8579A00D2F399 /* APIManager.swift in Sources */,
 				0DE81B0C2950BB8600DF6C7B /* CameraMode.swift in Sources */,
 				0DF3F60028D8579A00D2F399 /* LocationInfoCell.swift in Sources */,
@@ -618,6 +677,7 @@
 				0DC5E8C529140A5A000B43CB /* DetailInfoViewController.swift in Sources */,
 				0DD92A08294A26D800FD43F6 /* UILabel + Extension.swift in Sources */,
 				0DE2DB622910DE1500F9E41B /* PlaceInfoViewController.swift in Sources */,
+				0DC685402A910CE4002A65A9 /* MapCameraMode.swift in Sources */,
 				0D03F63F294E697F00300749 /* PlaceImage.swift in Sources */,
 				0D03F5FA294E603D00300749 /* MainInfoView.swift in Sources */,
 				0DD92A06294A262500FD43F6 /* UIViewController + Extension.swift in Sources */,
@@ -630,6 +690,7 @@
 				0DD92A1E294A299400FD43F6 /* NSDirectionalEdgeInset + Extension.swift in Sources */,
 				0D03F628294E679600300749 /* Intro.swift in Sources */,
 				0D7B154C28E747F100E70D3B /* CollectionHeaderView.swift in Sources */,
+				0D8CE8B12A8E6E6200E01FF8 /* Coordinate.swift in Sources */,
 				0D03F632294E689100300749 /* CulturePlaceInfo.swift in Sources */,
 				0D03F63E294E697F00300749 /* AreaCode.swift in Sources */,
 				0DA61E162A8E5F3000719D7B /* MapCameraModeButton.swift in Sources */,
@@ -646,6 +707,7 @@
 				0DD92A04294A260D00FD43F6 /* UIImage + Extension.swift in Sources */,
 				0DF3F60C28D8579A00D2F399 /* BaseView.swift in Sources */,
 				0DD92A1C294A294D00FD43F6 /* CLLocationManager + Extension.swift in Sources */,
+				0D8CE8AA2A8E6E2700E01FF8 /* MapActivityIndicator.swift in Sources */,
 				0DA61E1A2A8E5F3F00719D7B /* MyLocationOverlay.swift in Sources */,
 				0DD92A0A294A270300FD43F6 /* UIImageView + Extension.swift in Sources */,
 				0D7B154A28E7109500E70D3B /* CategoryCell.swift in Sources */,
@@ -658,6 +720,7 @@
 				0DBAF56728DB5A9B00BC943C /* RealmRepository.swift in Sources */,
 				0DEE1CC92911F364008EE5F6 /* MainInfoViewController.swift in Sources */,
 				0D03F63C294E697F00300749 /* ExtraPlaceInfo.swift in Sources */,
+				0DEF865B2A8FE1C50073CA42 /* HeadTrackableMap.swift in Sources */,
 				0DFFCA8B28E38641008B5705 /* CollectionView.swift in Sources */,
 				0DE2DB642910DE7200F9E41B /* PlaceInfoView.swift in Sources */,
 				0DC5E8C729143EA2000B43CB /* SubInfoViewController.swift in Sources */,
@@ -665,25 +728,34 @@
 				0DA61E142A8E5F2900719D7B /* LocalizedTitleLabel.swift in Sources */,
 				0DF3F60728D8579A00D2F399 /* PopupView.swift in Sources */,
 				0D933E9E29119EBE00844644 /* GalleryView.swift in Sources */,
+				0DF5734E2A90F73900944DE9 /* DynamicCameraModeMap.swift in Sources */,
 				0DE3BC1A28F58DF500FBFBFC /* WorldMapView.swift in Sources */,
 				0DF3F5BF28D8567000D2F399 /* SceneDelegate.swift in Sources */,
 				0DA61E0E2A8E5D5C00719D7B /* APIKey.swift in Sources */,
 				0DB85AEB296208B6008E0590 /* APIResult.swift in Sources */,
 				0DDB471729154F57001CB6F4 /* DetailInfoCell.swift in Sources */,
+				0D8CE8A72A8E6E2700E01FF8 /* MockMapViewController.swift in Sources */,
 				0DF3F60428D8579A00D2F399 /* BasePaddingLabel.swift in Sources */,
 				0D03F624294E674B00300749 /* ResponseData.swift in Sources */,
 				0D03F62A294E67BE00300749 /* TourPlaceInfo.swift in Sources */,
+				0D8CE8AE2A8E6E2700E01FF8 /* NetworkManager.swift in Sources */,
 				0D03F640294E697F00300749 /* PlaceImageInfo.swift in Sources */,
 				0D03F626294E677700300749 /* CommonPlaceInfo.swift in Sources */,
 				0DF3F60A28D8579A00D2F399 /* PlaceMarker.swift in Sources */,
 				0D03F63B294E697F00300749 /* ExtraPlaceElement.swift in Sources */,
 				0DD92A18294A28CF00FD43F6 /* UIButton + Extension.swift in Sources */,
 				0DF3F60228D8579A00D2F399 /* ExtraInfoCell.swift in Sources */,
+				0D8CE8AB2A8E6E2700E01FF8 /* UserPlaceRepository.swift in Sources */,
 				0DE5C9CB28E85930003542C4 /* OnBoardingViewController.swift in Sources */,
 				0DF3F60328D8579A00D2F399 /* LabelStackView.swift in Sources */,
+				0D8CE8AF2A8E6E2700E01FF8 /* MapUseCase.swift in Sources */,
 				0D03F622294E670800300749 /* Protocol.swift in Sources */,
+				0D8CE8A82A8E6E2700E01FF8 /* LocationManager.swift in Sources */,
+				0D8CE8A92A8E6E2700E01FF8 /* MapViewModel.swift in Sources */,
+				0D8CE8AC2A8E6E2700E01FF8 /* CommonPlaceRepository.swift in Sources */,
 				0DC5E8C9291455DC000B43CB /* ExtraInfoController.swift in Sources */,
 				0D000B6529120C6F0044BAC6 /* IntroInfoController.swift in Sources */,
+				0D8CE8AD2A8E6E2700E01FF8 /* MainMapView.swift in Sources */,
 				0DF3F61028D8579A00D2F399 /* PopupViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -54,3 +54,16 @@ extension MapCameraMode {
         }
     }
 }
+
+extension MapCameraMode: Equatable {
+    static func == (lhs: MapCameraMode, rhs: MapCameraMode) -> Bool {
+        switch (lhs, rhs) {
+        case (.navigation, .navigation), (.search, .search):
+            return true
+        case let (.select(pos1), .select(pos2)):
+            return pos1 == pos2
+        default:
+            return false
+        }
+    }
+}

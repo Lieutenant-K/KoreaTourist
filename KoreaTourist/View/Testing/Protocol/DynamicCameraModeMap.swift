@@ -16,6 +16,10 @@ protocol DynamicCameraModeMap: NMFMapView {
 }
 
 extension DynamicCameraModeMap {
+    
+}
+
+extension DynamicCameraModeMap {
     func cameraModeParameter(config: MapCameraMode.Configuration) -> NMFCameraUpdateParams {
         let param = NMFCameraUpdateParams()
         
