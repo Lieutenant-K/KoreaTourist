@@ -102,7 +102,7 @@ final class MockMapViewController: UIViewController {
             .sink { [weak self] in
                 guard let self = self else { return }
                 
-                if $0 { self.activityIndicator.show(in: self.mapView, animated: true) }
+                if $0 { self.activityIndicator.show(in: self.view, animated: true) }
                 else { self.activityIndicator.dismiss(animated: true) }
             }
             .store(in: &self.cancellables)

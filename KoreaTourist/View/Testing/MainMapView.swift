@@ -16,7 +16,6 @@ final class MainMapView: NMFMapView {
     var cameraIsChangingByModeEvent: AnyPublisher<Bool, Never> {
         self.cameraChangingByModeSubject.eraseToAnyPublisher()
     }
-//    let cameraModeDidChangeEvent = PassthroughSubject<Void, Never>()
     
     /// 카메라 이동 중 제스처 비활성화 With 핸들러
     func moveCameraGestureDisabled(_ cameraUpdate: NMFCameraUpdate, completion: ((Bool) -> Void)? = nil) {
@@ -63,7 +62,11 @@ extension MainMapView: DynamicCameraModeMap {
         update.animationDuration = 0.7
         self.contentInset = inset
         
-        self.moveCameraGestureDisabled(update)
+        self.moveCameraGestureDisabled(update) { isCancelled in
+            if isCancelled {
+                self.cameraChangingByModeSubject.send(false)
+            }
+        }
         self.changeLocOverlaySize(size: overlaySize)
         
 //        if let pos = mode.position {
