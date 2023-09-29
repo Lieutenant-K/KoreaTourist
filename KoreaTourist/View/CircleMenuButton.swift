@@ -20,7 +20,7 @@ final class CircleMenuButton: CircleMenu {
     }
     
     init() {
-        super.init(frame: .zero, normalIcon: "", selectedIcon: "")
+        super.init(frame: .zero, normalIcon: nil, selectedIcon: nil)
         self.delegate = self
         self.configureButton()
     }
