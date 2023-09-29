@@ -40,6 +40,7 @@ final class MockMapViewController: UIViewController {
         super.viewDidLoad()
         self.bindViewModel()
         self.configureSubviews()
+        self.observeCameraMoving()
     }
     
     private func bindViewModel() {
@@ -120,6 +121,20 @@ extension MockMapViewController {
         self.markers.removeAll()
         self.markers = markers
         self.markers.forEach { $0.mapView = self.mapView }
+    }
+    
+    private func observeCameraMoving() {
+        self.mapView.cameraIsChangingByModeEvent
+            .map { !$0 }
+            .sink { [weak self] in
+                self?.trackButton.isEnabled = $0
+                self?.circleMenuButton.isEnabled = $0
+                self?.cameraModeButton.isEnabled = $0
+                if !$0 {
+                    self?.circleMenuButton.hideButtons(0.3)
+                }
+            }
+            .store(in: &self.cancellables)
     }
 }
 
