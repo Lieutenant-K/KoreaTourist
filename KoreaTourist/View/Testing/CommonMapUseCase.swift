@@ -16,6 +16,7 @@ final class CommonMapUseCase {
     let isTracking = CurrentValueSubject<Bool, Never>(false)
     let places = PassthroughSubject<[CommonPlaceInfo], Never>()
     let coordinate = CurrentValueSubject<Coordinate, Never>(.seoul)
+    let errorMessage = PassthroughSubject<String, Never>()
     
     func observeNearbyPlaces() {
         self.placeRepository.nearbyPlaces
@@ -37,13 +38,10 @@ final class CommonMapUseCase {
     }
     
     func shouldTrackHeading() {
-        if self.isTracking.value {
-            self.locationServcie.stopUpdatingHeading()
-            self.isTracking.send(false)
-        }
-        else {
-            self.locationServcie.startUpdatingHeading()
-            self.isTracking.send(true)
+        if self.locationServcie.headingAvailable {
+            self.toggleHeadTracking()
+        } else {
+            self.errorMessage.send("방향 추적 기능을 사용할 수 없습니다.")
         }
     }
     
@@ -64,6 +62,23 @@ final class CommonMapUseCase {
             self.locationServcie.startUpdatingLocation()
         } else {
             self.locationServcie.stopUpdatingLocation()
+        }
+    }
+    
+    func tryToDiscoverPlace(id: Int, completionHandler: () -> ()) {
+        self.userRepository.discoverPlace(with: id, completion: completionHandler)
+    }
+}
+
+extension CommonMapUseCase {
+    private func toggleHeadTracking() {
+        if self.isTracking.value {
+            self.locationServcie.stopUpdatingHeading()
+            self.isTracking.send(false)
+        }
+        else {
+            self.locationServcie.startUpdatingHeading()
+            self.isTracking.send(true)
         }
     }
 }

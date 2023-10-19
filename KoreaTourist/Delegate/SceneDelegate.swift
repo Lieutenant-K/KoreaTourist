@@ -9,9 +9,8 @@ import UIKit
 import Toast
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
-    var window: UIWindow?
-
+    
+    var appCoordinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -30,28 +29,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ToastManager.shared.duration = 1.5
         
         
-        var notFirst = UserDefaults.standard.bool(forKey: "notFirst")
+//        var notFirst = UserDefaults.standard.bool(forKey: "notFirst")
 //        notFirst = false
 //        let vc = PlaceInfoViewController()
-        let vc = notFirst ? MapViewController() : OnBoardingViewController() //MapViewController()
-        let navi = UINavigationController(rootViewController: vc)
+//        let vc = notFirst ? MapViewController() : OnBoardingViewController() //MapViewController()
+//        let navi = UINavigationController(rootViewController: vc)
+//        
+//        window = UIWindow(windowScene: scene)
+//        window?.rootViewController = mock()
+//        window?.makeKeyAndVisible()
         
-        window = UIWindow(windowScene: scene)
-        window?.rootViewController = mock()
-        window?.makeKeyAndVisible()
+        self.appCoordinator = AppCoordinator(UIWindow(windowScene: scene))
+        self.appCoordinator?.start()
         
-        UserDefaults.standard.set(true, forKey: "notFirst")
+//        UserDefaults.standard.set(true, forKey: "notFirst")
     }
     
-    func mock() -> MockMapViewController {
-        let map = MainMapView()
-        let compass = CompassView(map: map)
-        let headTrackBtn = HeadTrackButton(map: map)
-        let camera = MapCameraModeButton(map: map)
-        let vc = MockMapViewController(map: map, compass: compass, headTrack: headTrackBtn, camera: camera)
-        
-        return vc
-    }
+//    func mock() -> MockMapViewController {
+//        let map = MainMapView()
+//        let compass = CompassView(map: map)
+//        let headTrackBtn = HeadTrackButton(map: map)
+//        let camera = MapCameraModeButton(map: map)
+//        let vc = MockMapViewController(map: map, compass: compass, headTrack: headTrackBtn, camera: camera)
+//        
+//        return vc
+//    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

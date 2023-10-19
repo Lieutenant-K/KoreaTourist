@@ -14,7 +14,7 @@ final class HeadTrackButton: UIButton {
     var headValue: Double = 0 {
         didSet { self.map.changeHead(to: self.headValue) }
     }
-    var isSelectedPublisher: AnyPublisher<Bool, Never> {
+    private var isSelectedPublisher: AnyPublisher<Bool, Never> {
         self.publisher(for: \.isSelected).eraseToAnyPublisher()
     }
     
@@ -39,20 +39,11 @@ final class HeadTrackButton: UIButton {
             .store(in: &self.cancellables)
     }
     
-    private func subscribeTapEvent() {
-        self.tapPublisher
-            .sink { [weak self] _ in
-                self?.isSelected.toggle()
-            }
-            .store(in: &self.cancellables)
-    }
-    
     init(map: HeadTrackableMap) {
         self.map = map
         super.init(frame: .zero)
         self.configureButton()
         self.subscribeSelectEvent()
-        self.subscribeTapEvent()
     }
     
     required init?(coder: NSCoder) {

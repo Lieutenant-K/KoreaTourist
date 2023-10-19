@@ -10,11 +10,9 @@ import PaperOnboarding
 import Then
 
 final class OnBoardingViewController: BaseViewController {
-    
+    weak var coordinator: OnboardingFinishDelegate?
     private let noImage = UIImage()
-    
     private let onboarding = PaperOnboarding()
-    
     private let button = UIButton(type: .system).then {
         var config = UIButton.Configuration.filled()
         config.cornerStyle = .large
@@ -92,14 +90,14 @@ final class OnBoardingViewController: BaseViewController {
     
     @objc private func touchButton(_ sender: UIButton) {
         
-        if let delegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-            
-            delegate.window?.rootViewController = MapViewController()
-            delegate.window?.makeKeyAndVisible()
-            
-        }
+//        if let delegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+//            
+//            delegate.window?.rootViewController = MapViewController()
+//            delegate.window?.makeKeyAndVisible()
+//            
+//        }
         
-        
+        self.coordinator?.finishOnboardingFlow()
     }
 
 }

@@ -22,6 +22,19 @@ final class UserPlaceRepository {
             }
         }
     }
+    
+    func discoverPlace(with contentId: Int, completion: () -> ()) {
+        if let place = self.dbService?.object(ofType: CommonPlaceInfo.self, forPrimaryKey: contentId) {
+            do {
+                try self.dbService?.write {
+                    place.discoverDate = Date()
+                    completion()
+                }
+            } catch {
+                print(error)
+            }
+        }
+    }
 }
 
 extension UserPlaceRepository {
@@ -40,10 +53,10 @@ extension UserPlaceRepository {
     }
     
     private func replace(with: CommonPlaceInfo) -> CommonPlaceInfo? {
-        guard let service = self.dbService, let object = service.object(ofType: CommonPlaceInfo.self, forPrimaryKey: with.contentId) else { return nil }
+        guard let object = self.dbService?.object(ofType: CommonPlaceInfo.self, forPrimaryKey: with.contentId) else { return nil }
         
         do {
-            try service.write {
+            try self.dbService?.write {
                 object.dist = with.dist
             }
         } catch {

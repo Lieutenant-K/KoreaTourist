@@ -14,11 +14,15 @@ final class LocationManager: NSObject {
     let locationPublisher = PassthroughSubject<CLLocation, Never>()
     let headingPublisher = PassthroughSubject<CLHeading, Never>()
     let isAuthorized = PassthroughSubject<Bool, Never>()
+    var headingAvailable: Bool {
+        CLLocationManager.headingAvailable()
+    }
     
     override init() {
         super.init()
         self.service.delegate = self
         self.service.desiredAccuracy = kCLLocationAccuracyBest
+        
     }
     
     func startUpdatingLocation() {
@@ -36,7 +40,6 @@ final class LocationManager: NSObject {
     func stopUpdatingHeading() {
         self.service.stopUpdatingHeading()
     }
-    
 }
 
 extension LocationManager: CLLocationManagerDelegate {

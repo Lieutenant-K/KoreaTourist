@@ -11,8 +11,10 @@ import Combine
 import CombineCocoa
 import NMapsMap
 import SnapKit
+import Toast
 
 final class MockMapViewController: UIViewController {
+    private var viewModel: MapViewModel
     private let mapView: MainMapView
     private let compassView: CompassView
     private let trackButton: HeadTrackButton
@@ -21,10 +23,10 @@ final class MockMapViewController: UIViewController {
     private let circleMenuButton = CircleMenuButton()
     private let activityIndicator = MapActivityIndicator()
     private var markers: [PlaceMarker] = []
-    private var viewModel = MapViewModel()
     private var cancellables = Set<AnyCancellable>()
     
-    init(map: MainMapView, compass: CompassView, headTrack: HeadTrackButton, camera: MapCameraModeButton) {
+    init(viewModel: MapViewModel, map: MainMapView, compass: CompassView, headTrack: HeadTrackButton, camera: MapCameraModeButton) {
+        self.viewModel = viewModel
         self.mapView = map
         self.compassView = compass
         self.trackButton = headTrack
@@ -86,6 +88,12 @@ final class MockMapViewController: UIViewController {
             }
             .store(in: &self.cancellables)
         
+        output.isHeadTrackOn
+            .sink { [weak self] in
+                self?.trackButton.isSelected = $0
+            }
+            .store(in: &self.cancellables)
+        
         output.isLocationServiceAlertShowed
             .filter { $0 }
             .sink { [weak self] _ in
@@ -110,6 +118,12 @@ final class MockMapViewController: UIViewController {
         output.currentCameraMode
             .sink { [weak self] in
                 self?.cameraModeButton.switchMode(to: $0)
+            }
+            .store(in: &self.cancellables)
+        
+        output.toastMessage
+            .sink { [weak self] in
+                self?.view.makeToast($0, point: .top, title: nil, image: nil, completion: nil)
             }
             .store(in: &self.cancellables)
     }
