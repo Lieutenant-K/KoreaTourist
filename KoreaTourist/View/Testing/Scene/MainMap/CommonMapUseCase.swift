@@ -11,7 +11,7 @@ import Combine
 final class CommonMapUseCase {
     private let locationServcie = LocationManager()
     private let placeRepository = CommonPlaceRepository()
-    private let userRepository = UserPlaceRepository()
+    private let userRepository = CommonUserRepository()
     private var cancellables = Set<AnyCancellable>()
     let isTracking = CurrentValueSubject<Bool, Never>(false)
     let places = PassthroughSubject<[CommonPlaceInfo], Never>()

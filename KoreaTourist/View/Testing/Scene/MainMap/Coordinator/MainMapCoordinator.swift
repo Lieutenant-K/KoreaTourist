@@ -38,7 +38,6 @@ extension MainMapCoordinator {
         let navi = UINavigationController(rootViewController: vc)
         navi.modalPresentationStyle = .fullScreen
         self.navigationController.present(navi, animated: true)
-        return
     }
     
     func showPlaceDiscoverAlert(place: CommonPlaceInfo, confirmAction: @escaping () -> ()) {
@@ -54,8 +53,10 @@ extension MainMapCoordinator {
     }
     
     func pushDiscoverPopupScene(place: CommonPlaceInfo) {
-        let viewController = PopupViewController(place: place)
-        self.navigationController.present(viewController, animated: true)
+        let coordinator = PopupCoordinator(navigationController: self.navigationController)
+        coordinator.finishDelegate = self
+        self.childCoordinators.append(coordinator)
+        coordinator.start(placeInfo: place)
     }
     
     func pushPlaceCollectionScene() {
@@ -65,4 +66,16 @@ extension MainMapCoordinator {
         navi.modalTransitionStyle = .coverVertical
         self.navigationController.present(navi, animated: true)
     }
+}
+
+extension MainMapCoordinator: FinishDelegate {
+    func finish(coordinator: Coordinator) {
+        if let index = self.childCoordinators.firstIndex(where: { $0 === coordinator }) {
+            self.childCoordinators.remove(at: index)
+        }
+    }
+}
+
+protocol FinishDelegate: Coordinator {
+    func finish(coordinator: Coordinator)
 }
