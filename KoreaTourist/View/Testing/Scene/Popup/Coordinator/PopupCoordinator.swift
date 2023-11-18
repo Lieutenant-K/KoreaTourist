@@ -34,10 +34,15 @@ final class PopupCoordinator: Coordinator {
 //        let vc = PlaceInfoViewController(place: place, mainInfoVC: main)
         self.navigationController.dismiss(animated: true)
         let useCase = CommonPlaceDetailUseCase(placeInfo: place)
-        let viewModel = PlaceDetailTapMenuViewModel(useCase: useCase)
-        let viewController = PlaceDetailTabMenuViewController(viewModel: viewModel)
+        let tabMenuViewModel = PlaceDetailTabMenuViewModel(useCase: useCase)
+        let tabMenuViewController = PlaceDetailTabMenuViewController(viewModel: tabMenuViewModel)
+        let viewModel = PlaceDetailViewModel(useCase: useCase)
+        let viewController = PlaceDetailViewController(tabMenuViewController: tabMenuViewController, viewModel: viewModel)
+        
         let navi = UINavigationController(rootViewController: viewController)
+//        viewController.modalPresentationStyle = .fullScreen
         navi.modalPresentationStyle = .fullScreen
+//        self.navigationController.present(viewController, animated: true)
         self.navigationController.present(navi, animated: true)
     }
 }

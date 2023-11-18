@@ -46,6 +46,15 @@
       }
     },
     {
+      "identity" : "combineinterception",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/chorim/CombineInterception.git",
+      "state" : {
+        "revision" : "9ed5378cff67ab5ccff2bc5abf055991d4d65368",
+        "version" : "0.1.1"
+      }
+    },
+    {
       "identity" : "firebase-ios-sdk",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/firebase-ios-sdk",

@@ -12,8 +12,8 @@ import SnapKit
 import Then
 
 final class PlaceDetailTabMenuViewController: UIViewController {
-    typealias TabMenu = PlaceDetailTapMenuViewModel.TabMenu
-    typealias Section = PlaceDetailTapMenuViewModel.Section
+    typealias TabMenu = PlaceDetailTabMenuViewModel.TabMenu
+    typealias Section = PlaceDetailTabMenuViewModel.Section
     
     // MARK: - View
     //    private var tabMenuButtons: [UIButton] = []
@@ -27,13 +27,13 @@ final class PlaceDetailTabMenuViewController: UIViewController {
     }
     
     // MARK: - Properties
-    private let viewModel: PlaceDetailTapMenuViewModel
+    private let viewModel: PlaceDetailTabMenuViewModel
     private var cancellables = Set<AnyCancellable>()
     private let tabMenuTapEvent = PassthroughSubject<Int, Never>()
     private var dataSource: UITableViewDiffableDataSource<Int, Section>?
     
     // MARK: - Initializer
-    init(viewModel: PlaceDetailTapMenuViewModel) {
+    init(viewModel: PlaceDetailTabMenuViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -51,7 +51,7 @@ final class PlaceDetailTabMenuViewController: UIViewController {
     }
     
     func bindViewModel() {
-        let input = PlaceDetailTapMenuViewModel.Input(
+        let input = PlaceDetailTabMenuViewModel.Input(
             viewDidLoadEvent: Just(()).eraseToAnyPublisher(),
             tabMenuTapEvent: self.tabMenuTapEvent.eraseToAnyPublisher()
         )
@@ -68,6 +68,7 @@ final class PlaceDetailTabMenuViewController: UIViewController {
             .withUnretained(self)
             .sink {
                 $0.updateSnapshot(tabMenu: $1)
+                $0.updateContainerViewHeight()
             }
             .store(in: &self.cancellables)
     }
@@ -86,10 +87,8 @@ extension PlaceDetailTabMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if let cell = tableView.cellForRow(at: indexPath) as? ExpandableCell, let snapshot = self.dataSource?.snapshot() {
             cell.isExpand.toggle()
-            self.containerView.snp.updateConstraints {
-                $0.height.equalTo(tableView.contentSize.height).priority(.high)
-            }
             self.dataSource?.applySnapshotUsingReloadData(snapshot)
+            self.updateContainerViewHeight()
         }
         
         return nil
@@ -133,22 +132,30 @@ extension PlaceDetailTabMenuViewController: UITableViewDelegate {
         }
         self.dataSource?.applySnapshotUsingReloadData(snapshot)
     }
+    
+    private func updateContainerViewHeight() {
+        print("ContentSizeHeight: ", self.tableView.contentSize.height)
+        print("TableViewBoundsHeight: ", self.tableView.bounds.height)
+        self.containerView.snp.updateConstraints {
+            $0.height.equalTo(self.tableView.contentSize).priority(.high)
+        }
+    }
 }
 
 // MARK: - Helper Method
 extension PlaceDetailTabMenuViewController {
     private func addTabMenuButton(using tabMenus: [TabMenu]) {
-        
         tabMenus.enumerated().forEach { (idx, tabMenu) in
             let button = UIButton(type: .custom)
             button.tag = idx
             button.configurationUpdateHandler = self.tabMenuButtonUpdateHandler(title: tabMenu.title)
             button.tapPublisher.map { button.tag }
                 .withUnretained(self)
-                .sink { $0.tabMenuTapEvent.send($1) }
+                .sink { 
+                    $0.tabMenuTapEvent.send($1)
+                    $0.updateTabMenuButton($1)
+                }
                 .store(in: &self.cancellables)
-            
-            //            self.tabMenuButtons.append(button)
             self.tabMenuButtonStackView.addArrangedSubview(button)
         }
     }
@@ -178,6 +185,14 @@ extension PlaceDetailTabMenuViewController {
             config.background.backgroundColor = .clear
             
             button.configuration = config
+        }
+    }
+    
+    private func updateTabMenuButton(_ buttonIdx: Int) {
+        guard let buttons = self.tabMenuButtonStackView.arrangedSubviews as? [UIButton] else { return }
+        
+        buttons.enumerated().forEach { idx, button in
+            button.isSelected = idx == buttonIdx
         }
     }
 }

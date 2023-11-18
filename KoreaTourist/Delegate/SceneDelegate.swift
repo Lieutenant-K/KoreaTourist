@@ -7,6 +7,7 @@
 
 import UIKit
 import Toast
+import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -28,32 +29,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ToastManager.shared.isTapToDismissEnabled = true
         ToastManager.shared.duration = 1.5
         
-        
-//        var notFirst = UserDefaults.standard.bool(forKey: "notFirst")
-//        notFirst = false
-//        let vc = PlaceInfoViewController()
-//        let vc = notFirst ? MapViewController() : OnBoardingViewController() //MapViewController()
-//        let navi = UINavigationController(rootViewController: vc)
-//        
-//        window = UIWindow(windowScene: scene)
-//        window?.rootViewController = mock()
-//        window?.makeKeyAndVisible()
+        // 개발용. 실행 시 DB 초기화
+        let dbService = try? Realm()
+        do {
+            try dbService?.write {
+                dbService?.deleteAll()
+            }
+        } catch {
+            print("초기화 시 모든 데이터 삭제 실패")
+        }
         
         self.appCoordinator = AppCoordinator(UIWindow(windowScene: scene))
         self.appCoordinator?.start()
-        
-//        UserDefaults.standard.set(true, forKey: "notFirst")
     }
-    
-//    func mock() -> MockMapViewController {
-//        let map = MainMapView()
-//        let compass = CompassView(map: map)
-//        let headTrackBtn = HeadTrackButton(map: map)
-//        let camera = MapCameraModeButton(map: map)
-//        let vc = MockMapViewController(map: map, compass: compass, headTrack: headTrackBtn, camera: camera)
-//        
-//        return vc
-//    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

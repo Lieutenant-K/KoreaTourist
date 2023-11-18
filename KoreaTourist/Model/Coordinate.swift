@@ -7,6 +7,8 @@
 
 import Foundation
 
+import NMapsMap
+
 struct Coordinate: Equatable {
     static var seoul: Coordinate {
         return Coordinate(latitude: 37.56661, longitude: 126.97839)
@@ -14,4 +16,8 @@ struct Coordinate: Equatable {
     
     let latitude: Double
     let longitude: Double
+    
+    var mapCoordinate: NMGLatLng {
+        return NMGLatLng(lat: self.latitude, lng: self.longitude)
+    }
 }

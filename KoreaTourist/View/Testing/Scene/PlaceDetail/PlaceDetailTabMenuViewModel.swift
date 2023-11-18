@@ -9,7 +9,7 @@ import Foundation
 
 import Combine
 
-final class PlaceDetailTapMenuViewModel {
+final class PlaceDetailTabMenuViewModel {
     private let useCase: CommonPlaceDetailUseCase
     private var tabMenus: [TabMenu] = []
     
@@ -65,7 +65,7 @@ final class PlaceDetailTapMenuViewModel {
     }
 }
 
-extension PlaceDetailTapMenuViewModel {
+extension PlaceDetailTabMenuViewModel {
     // MARK: TabMenu
     enum TabMenu {
         case intro(Intro)
@@ -108,8 +108,8 @@ extension PlaceDetailTapMenuViewModel {
     }
 }
 
-extension PlaceDetailTapMenuViewModel.Section: Hashable {
-    static func == (lhs: PlaceDetailTapMenuViewModel.Section, rhs: PlaceDetailTapMenuViewModel.Section) -> Bool {
+extension PlaceDetailTabMenuViewModel.Section: Hashable {
+    static func == (lhs: PlaceDetailTabMenuViewModel.Section, rhs: PlaceDetailTabMenuViewModel.Section) -> Bool {
         switch (lhs, rhs) {
         case let (.overview(l), .overview(r)):
             return l == r

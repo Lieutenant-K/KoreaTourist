@@ -16,14 +16,7 @@ final class CommonUserRepository {
     
     init() {
         let url = self.dbService?.configuration.fileURL
-        print(url?.absoluteString)
-        do {
-            try self.dbService?.write {
-                self.dbService?.deleteAll()
-            }
-        } catch {
-            print("초기화 시 모든 데이터 삭제 실패")
-        }
+        print("RealmURL: ", url!.absoluteString)
     }
     
     /// 새로운 장소를 DB에 저장하고 저장된 장소를 불러오는 메서드

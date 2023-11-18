@@ -29,3 +29,9 @@ extension NMFMapView {
         }
     }
 }
+
+extension NMGLatLng {
+    var coordinate: Coordinate {
+        Coordinate(latitude: self.lat, longitude: self.lng)
+    }
+}

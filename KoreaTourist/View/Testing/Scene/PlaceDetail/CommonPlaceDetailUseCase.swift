@@ -36,6 +36,28 @@ final class CommonPlaceDetailUseCase {
 }
 
 extension CommonPlaceDetailUseCase {
+    func commonPlaceInfo() -> AnyPublisher<CommonPlaceInfo, Never> {
+        return Just(self.placeInfo).eraseToAnyPublisher()
+    }
+    
+    func placeImages() -> AnyPublisher<PlaceImageInfo, NetworkError> {
+        let id = self.placeInfo.contentId
+        if let images = self.userRepository.load(type: PlaceImageInfo.self, contentId: id) {
+            return Future<PlaceImageInfo, NetworkError> {
+                $0(.success(images))
+            }
+            .eraseToAnyPublisher()
+        } else {
+            return self.placeRepository.placeImages(contentId: id)
+                .handleEvents(receiveOutput: { [weak self] info in
+                    self?.userRepository.save(object: info)
+                })
+                .eraseToAnyPublisher()
+        }
+    }
+}
+
+extension CommonPlaceDetailUseCase {
     private func fetchOrLoadIntro(id: Int) {
         if let intro = self.placeInfo.intro {
             self.intro.send(intro)

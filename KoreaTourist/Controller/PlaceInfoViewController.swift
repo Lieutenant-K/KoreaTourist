@@ -37,6 +37,10 @@ class PlaceInfoViewController: BaseViewController {
         navigationController?.navigationBar.tintColor = .tintColor
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
     
     // MARK: - Navigation Item
     override func configureNavigationItem() {

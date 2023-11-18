@@ -67,3 +67,15 @@ extension CommonPlaceRepository {
             .eraseToAnyPublisher()
     }
 }
+
+extension CommonPlaceRepository {
+    func placeImages(contentId: Int) -> AnyPublisher<PlaceImageInfo, NetworkError> {
+        self.isNetworking.send(true)
+        return self.networkService.request(router: .detailImage(contentId), type: PlaceImage.self)
+            .handleEvents(receiveCompletion: { [weak self] _ in
+                self?.isNetworking.send(false)
+            })
+            .map { PlaceImageInfo(id: contentId, imageList: $0) }
+            .eraseToAnyPublisher()
+    }
+}
