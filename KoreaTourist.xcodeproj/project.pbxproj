@@ -31,8 +31,6 @@
 		0D3B56122AE17DC600AAB8F2 /* PopupCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3B56112AE17DC600AAB8F2 /* PopupCoordinator.swift */; };
 		0D3CD5832AFFD06100242AD3 /* PlaceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3CD5822AFFD06100242AD3 /* PlaceDetailViewController.swift */; };
 		0D3CD5852AFFD8CE00242AD3 /* PlaceDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3CD5842AFFD8CE00242AD3 /* PlaceDetailViewModel.swift */; };
-		0D3CD5872AFFF3F800242AD3 /* DiscoveredPlaceMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3CD5862AFFF3F800242AD3 /* DiscoveredPlaceMapView.swift */; };
-		0D3CD5892AFFF89F00242AD3 /* AutoScrollGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3CD5882AFFF89F00242AD3 /* AutoScrollGalleryView.swift */; };
 		0D431E082AD8297800D8E65B /* MainMapCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D431E072AD8297800D8E65B /* MainMapCoordinator.swift */; };
 		0D431E0A2AD82A4600D8E65B /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D431E092AD82A4600D8E65B /* Coordinator.swift */; };
 		0D431E0C2AD8327E00D8E65B /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D431E0B2AD8327E00D8E65B /* AppCoordinator.swift */; };
@@ -141,6 +139,8 @@
 		0DFFCA8D28E3895C008B5705 /* PlaceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFFCA8C28E3895C008B5705 /* PlaceCollectionCell.swift */; };
 		535B966F2B07B2D50011C3E5 /* CombineInterception in Frameworks */ = {isa = PBXBuildFile; productRef = 535B966E2B07B2D50011C3E5 /* CombineInterception */; };
 		535B96712B07D2E90011C3E5 /* TopFloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535B96702B07D2E90011C3E5 /* TopFloatingView.swift */; };
+		535B96732B08A31F0011C3E5 /* AutoScrollGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535B96722B08A31F0011C3E5 /* AutoScrollGalleryView.swift */; };
+		535B96752B08A3350011C3E5 /* DiscoveredPlaceMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535B96742B08A3350011C3E5 /* DiscoveredPlaceMapView.swift */; };
 		D045CE37CB2C47864BCCA0D1 /* Pods_KoreaTourist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54DA04C722821319ECFCAEC1 /* Pods_KoreaTourist.framework */; };
 /* End PBXBuildFile section */
 
@@ -169,8 +169,6 @@
 		0D3B56112AE17DC600AAB8F2 /* PopupCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupCoordinator.swift; sourceTree = "<group>"; };
 		0D3CD5822AFFD06100242AD3 /* PlaceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		0D3CD5842AFFD8CE00242AD3 /* PlaceDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailViewModel.swift; sourceTree = "<group>"; };
-		0D3CD5862AFFF3F800242AD3 /* DiscoveredPlaceMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DiscoveredPlaceMapView.swift; path = ../../../../../../../../Desktop/Testing/Testing/DiscoveredPlaceMapView.swift; sourceTree = "<group>"; };
-		0D3CD5882AFFF89F00242AD3 /* AutoScrollGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AutoScrollGalleryView.swift; path = ../../../../../../../../Desktop/Testing/AutoScrollGalleryView.swift; sourceTree = "<group>"; };
 		0D431E072AD8297800D8E65B /* MainMapCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapCoordinator.swift; sourceTree = "<group>"; };
 		0D431E092AD82A4600D8E65B /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		0D431E0B2AD8327E00D8E65B /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -266,6 +264,8 @@
 		0DFFCA8C28E3895C008B5705 /* PlaceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCollectionCell.swift; sourceTree = "<group>"; };
 		3A7A42D0455E55A2828FB41C /* Pods-KoreaTourist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaTourist.debug.xcconfig"; path = "Target Support Files/Pods-KoreaTourist/Pods-KoreaTourist.debug.xcconfig"; sourceTree = "<group>"; };
 		535B96702B07D2E90011C3E5 /* TopFloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopFloatingView.swift; sourceTree = "<group>"; };
+		535B96722B08A31F0011C3E5 /* AutoScrollGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoScrollGalleryView.swift; sourceTree = "<group>"; };
+		535B96742B08A3350011C3E5 /* DiscoveredPlaceMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredPlaceMapView.swift; sourceTree = "<group>"; };
 		54DA04C722821319ECFCAEC1 /* Pods_KoreaTourist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KoreaTourist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4754B79013F5839232E6CFA /* Pods-KoreaTourist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaTourist.release.xcconfig"; path = "Target Support Files/Pods-KoreaTourist/Pods-KoreaTourist.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -393,14 +393,14 @@
 		0DAECDB32AE3974700A3A4AD /* PlaceDetail */ = {
 			isa = PBXGroup;
 			children = (
-				0D3CD5882AFFF89F00242AD3 /* AutoScrollGalleryView.swift */,
-				0D3CD5862AFFF3F800242AD3 /* DiscoveredPlaceMapView.swift */,
 				0D3CD5822AFFD06100242AD3 /* PlaceDetailViewController.swift */,
 				535B96702B07D2E90011C3E5 /* TopFloatingView.swift */,
 				0D3CD5842AFFD8CE00242AD3 /* PlaceDetailViewModel.swift */,
 				0DAECDB42AE398D100A3A4AD /* PlaceDetailTabMenuViewController.swift */,
 				0DAECDB62AE3A0C600A3A4AD /* PlaceDetailTabMenuViewModel.swift */,
 				0DAECDB82AE3E87200A3A4AD /* CommonPlaceDetailUseCase.swift */,
+				535B96722B08A31F0011C3E5 /* AutoScrollGalleryView.swift */,
+				535B96742B08A3350011C3E5 /* DiscoveredPlaceMapView.swift */,
 			);
 			path = PlaceDetail;
 			sourceTree = "<group>";
@@ -778,9 +778,9 @@
 				0DEF86582A8FCD650073CA42 /* HeadResetableMap.swift in Sources */,
 				0DF3F61128D8579A00D2F399 /* APIManager.swift in Sources */,
 				0DE81B0C2950BB8600DF6C7B /* CameraMode.swift in Sources */,
+				535B96732B08A31F0011C3E5 /* AutoScrollGalleryView.swift in Sources */,
 				0DF3F60028D8579A00D2F399 /* LocationInfoCell.swift in Sources */,
 				0DF3F5BD28D8567000D2F399 /* AppDelegate.swift in Sources */,
-				0D3CD5872AFFF3F800242AD3 /* DiscoveredPlaceMapView.swift in Sources */,
 				0DF3F60E28D8579A00D2F399 /* BaseViewController.swift in Sources */,
 				0DA61E122A8E5F1400719D7B /* CompassView.swift in Sources */,
 				0D03F634294E691700300749 /* EventPlaceInfo.swift in Sources */,
@@ -851,7 +851,6 @@
 				0DE3BC1A28F58DF500FBFBFC /* WorldMapView.swift in Sources */,
 				0D3B56122AE17DC600AAB8F2 /* PopupCoordinator.swift in Sources */,
 				0DF3F5BF28D8567000D2F399 /* SceneDelegate.swift in Sources */,
-				0D3CD5892AFFF89F00242AD3 /* AutoScrollGalleryView.swift in Sources */,
 				0DA61E0E2A8E5D5C00719D7B /* APIKey.swift in Sources */,
 				0D3CD5832AFFD06100242AD3 /* PlaceDetailViewController.swift in Sources */,
 				0DB85AEB296208B6008E0590 /* APIResult.swift in Sources */,
@@ -879,6 +878,7 @@
 				0D8CE8AC2A8E6E2700E01FF8 /* CommonPlaceRepository.swift in Sources */,
 				0DC5E8C9291455DC000B43CB /* ExtraInfoController.swift in Sources */,
 				0D000B6529120C6F0044BAC6 /* IntroInfoController.swift in Sources */,
+				535B96752B08A3350011C3E5 /* DiscoveredPlaceMapView.swift in Sources */,
 				0D8CE8AD2A8E6E2700E01FF8 /* MainMapView.swift in Sources */,
 				0DF3F61028D8579A00D2F399 /* PopupViewController.swift in Sources */,
 			);
