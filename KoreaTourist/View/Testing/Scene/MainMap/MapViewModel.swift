@@ -44,7 +44,6 @@ final class MapViewModel {
         
         input.viewDidLoadEvent
             .sink { [weak self] _ in
-                self?.useCase.observeNearbyPlaces()
                 self?.useCase.observeUserLocation()
             }
             .store(in: &cancellables)

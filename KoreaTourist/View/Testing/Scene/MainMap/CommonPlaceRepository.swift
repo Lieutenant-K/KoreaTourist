@@ -14,25 +14,16 @@ final class CommonPlaceRepository {
     private let networkService = NetworkManager()
     private var cancellables = Set<AnyCancellable>()
     let isNetworking = PassthroughSubject<Bool, Never>()
-    let nearbyPlaces = PassthroughSubject<[CommonPlaceInfo], Never>()
     
     /// 위치 좌표 근처의 장소 정보 가져오기
-    func fetchPlacesNearby(coordinate: Coordinate) {
+    func nearbyPlaces(coordinate: Coordinate) -> AnyPublisher<[CommonPlaceInfo], NetworkError> {
         let circle = Circle(x: coordinate.longitude, y: coordinate.latitude, radius: Circle.defaultRadius)
         self.isNetworking.send(true)
-        self.networkService.request(router: .location(circle), type: CommonPlaceInfo.self)
-            .sink { [weak self] completion in
+        return self.networkService.request(router: .location(circle), type: CommonPlaceInfo.self)
+            .handleEvents(receiveCompletion: { [weak self] _ in
                 self?.isNetworking.send(false)
-                switch completion {
-                case let .failure(error):
-                    print(error)
-                case .finished:
-                    break
-                }
-            } receiveValue: { [weak self] in
-                self?.nearbyPlaces.send($0)
-            }
-            .store(in: &self.cancellables)
+            })
+            .eraseToAnyPublisher()
     }
 }
 

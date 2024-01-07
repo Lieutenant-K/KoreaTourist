@@ -18,14 +18,6 @@ final class CommonMapUseCase {
     let coordinate = CurrentValueSubject<Coordinate, Never>(.seoul)
     let errorMessage = PassthroughSubject<String, Never>()
     
-    func observeNearbyPlaces() {
-        self.placeRepository.nearbyPlaces
-            .map { $0.sorted(by: { left, right in left.dist < right.dist }) }
-            .compactMap { [weak self] in self?.userRepository.updatePlaces(places: $0) }
-            .subscribe(self.places)
-            .store(in: &self.cancellables)
-    }
-    
     func observeUserLocation() {
         self.locationServcie.locationPublisher
             .map { Coordinate(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude) }
@@ -34,7 +26,22 @@ final class CommonMapUseCase {
     }
     
     func tryFetchNearbyPlaces() {
-        self.placeRepository.fetchPlacesNearby(coordinate: self.coordinate.value)
+        self.placeRepository.nearbyPlaces(coordinate: self.coordinate.value)
+            .map { $0.sorted(by: { left, right in left.dist < right.dist }) }
+            .compactMap { [weak self] in self?.userRepository.updatePlaces(places: $0) }
+            .sink(receiveCompletion: { [weak self] in
+                if case let .failure(error) = $0 {
+                    switch error {
+                    case .noData:
+                        self?.errorMessage.send("발견할 장소를 찾지 못했어요!")
+                    default:
+                        self?.errorMessage.send("네트워크 에러가 발생했어요 🚫")
+                    }
+                }
+            }, receiveValue: { [weak self] in
+                self?.places.send($0)
+            })
+            .store(in: &self.cancellables)
     }
     
     func shouldTrackHeading() {
