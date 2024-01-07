@@ -114,7 +114,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
     
     func configureCollectionView() {
         
-        let categoryCellRegistration = UICollectionView.CellRegistration<CategoryCell, AreaCode> { cell, indexPath, itemIdentifier in
+        let categoryCellRegistration = UICollectionView.CellRegistration<AreaCategoryCell, AreaCode> { cell, indexPath, itemIdentifier in
             
             cell.label.text = itemIdentifier.name
             

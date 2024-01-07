@@ -39,6 +39,13 @@ final class PlaceDetailViewController: UIViewController {
         $0.numberOfLines = 0
         $0.textAlignment = .center
     }
+    private let closeButton =  UIBarButtonItem().then {
+        let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .heavy)
+        let image = UIImage(systemName: "chevron.left")?.applyingSymbolConfiguration(config)
+        $0.image = image
+        $0.style = .plain
+        $0.tintColor = .label
+    }
     private let galleryView = AutoScrollGalleryView()
     private let mapView = DiscoveredPlaceMapView()
     private let tabMenuContainerView = UIView()
@@ -73,8 +80,8 @@ final class PlaceDetailViewController: UIViewController {
     
     private func bindViewModel() {
         let input = PlaceDetailViewModel.Input(
-            viewDidLoadEvent: Just(()).eraseToAnyPublisher(),
-            mapViewTabEvent: self.mapView.tapPublisher
+            mapViewTabEvent: self.mapView.tapPublisher,
+            closeButtonTapEvent: self.closeButton.tapPublisher
         )
         let output = self.viewModel.transform(input: input, cancellables: &self.cancellables)
         
@@ -128,35 +135,18 @@ extension PlaceDetailViewController: UIScrollViewDelegate {
         self.navigationController?.navigationBar.standardAppearance = self.clearNaviBarAppearance()
         self.navigationController?.navigationBar.alpha = isEnabled ? 1 : 0
         self.navigationController?.navigationBar.isUserInteractionEnabled = isEnabled
-//        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 }
 
 extension PlaceDetailViewController {
     private func configureTopFloatingView(title: String) {
         let titleLabel = UILabel()
-        titleLabel.font = .systemFont(ofSize: 18, weight: .bold)
+        titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
         titleLabel.text = title
         titleLabel.textColor = .label
         
         self.topFloatingView.titleView = titleLabel
-        self.topFloatingView.leftBarItem = self.closeButton()
-    }
-    
-    private func closeButton() -> UIBarButtonItem {
-        let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .heavy)
-        let image = UIImage(systemName: "chevron.left")?.applyingSymbolConfiguration(config)
-        let closeButton = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
-        
-        closeButton.tintColor = .label
-        closeButton.tapPublisher
-            .withUnretained(self)
-            .sink { object, _ in
-                object.handleCloseButtonTapEvent()
-            }
-            .store(in: &self.cancellables)
-        
-        return closeButton
+        self.topFloatingView.leftBarItem = self.closeButton
     }
     
     private func clearNaviBarAppearance() -> UINavigationBarAppearance {
@@ -164,14 +154,6 @@ extension PlaceDetailViewController {
         standard.configureWithTransparentBackground()
         standard.backgroundColor = .clear
         return standard
-    }
-    
-    private func handleCloseButtonTapEvent() {
-        if self.isModal {
-            self.dismiss(animated: true)
-        } else {
-            self.navigationController?.popViewController(animated: true)
-        }
     }
 }
 

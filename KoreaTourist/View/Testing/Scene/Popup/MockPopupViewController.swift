@@ -11,6 +11,7 @@ import Combine
 import SnapKit
 import Then
 import Kingfisher
+import Hero
 
 final class MockPopupViewController: UIViewController {
     // MARK: - View
@@ -107,7 +108,7 @@ final class MockPopupViewController: UIViewController {
     init(viewModel: PopupViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.modalTransitionStyle = .crossDissolve
+        self.modalTransitionStyle = .coverVertical
         self.modalPresentationStyle = .overFullScreen
     }
     

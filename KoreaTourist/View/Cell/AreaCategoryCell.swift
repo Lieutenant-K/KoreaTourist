@@ -8,7 +8,7 @@
 import UIKit
 import Then
 
-final class CategoryCell: UICollectionViewCell {
+final class AreaCategoryCell: UICollectionViewCell {
     let label = BasePaddingLabel(padding: UIEdgeInsets(top: 4, left: 10, bottom: 4, right: 10)).then {
         $0.numberOfLines = 1
         $0.textAlignment = .center

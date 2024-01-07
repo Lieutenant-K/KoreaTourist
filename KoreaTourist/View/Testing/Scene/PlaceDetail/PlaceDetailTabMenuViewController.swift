@@ -16,21 +16,16 @@ final class PlaceDetailTabMenuViewController: UIViewController {
     typealias Section = PlaceDetailTabMenuViewModel.Section
     
     // MARK: - View
-    //    private var tabMenuButtons: [UIButton] = []
     private let containerView = UIView()
     private let tableView = UITableView()
-    private let tabMenuButtonStackView = UIStackView().then {
-        $0.alignment = .fill
-        $0.distribution = .fillEqually
-        $0.axis = .horizontal
-        $0.spacing = 0
-    }
+    private let tabMenuView = TabMenuView(frame: .zero)
     
     // MARK: - Properties
     private let viewModel: PlaceDetailTabMenuViewModel
     private var cancellables = Set<AnyCancellable>()
     private let tabMenuTapEvent = PassthroughSubject<Int, Never>()
     private var dataSource: UITableViewDiffableDataSource<Int, Section>?
+    private var containerHeight: Constraint?
     
     // MARK: - Initializer
     init(viewModel: PlaceDetailTabMenuViewModel) {
@@ -53,22 +48,23 @@ final class PlaceDetailTabMenuViewController: UIViewController {
     func bindViewModel() {
         let input = PlaceDetailTabMenuViewModel.Input(
             viewDidLoadEvent: Just(()).eraseToAnyPublisher(),
-            tabMenuTapEvent: self.tabMenuTapEvent.eraseToAnyPublisher()
+            viewDidAppearEvent: self.viewDidAppearPublisher,
+            tabMenuTapEvent: self.tabMenuView.selectedButtonPublisher
         )
         let output = self.viewModel.transform(input: input, cancellables: &self.cancellables)
-        
-        output.visibleTabMenus
-            .withUnretained(self)
-            .sink {
-                $0.addTabMenuButton(using: $1)
-            }
-            .store(in: &self.cancellables)
         
         output.selectedMenu
             .withUnretained(self)
             .sink {
-                $0.updateSnapshot(tabMenu: $1)
-                $0.updateContainerViewHeight()
+                $0.updateTableViewUsing(tabMenu: $1)
+            }
+            .store(in: &self.cancellables)
+        
+        output.visibleTabMenus
+            .map { $0.map { $0.title } }
+            .withUnretained(self)
+            .sink {
+                $0.tabMenuView.addButtonWithTitle($1)
             }
             .store(in: &self.cancellables)
     }
@@ -87,8 +83,7 @@ extension PlaceDetailTabMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if let cell = tableView.cellForRow(at: indexPath) as? ExpandableCell, let snapshot = self.dataSource?.snapshot() {
             cell.isExpand.toggle()
-            self.dataSource?.applySnapshotUsingReloadData(snapshot)
-            self.updateContainerViewHeight()
+            self.updateTableViewWith(snapshot: snapshot)
         }
         
         return nil
@@ -124,76 +119,20 @@ extension PlaceDetailTabMenuViewController: UITableViewDelegate {
         }
     }
     
-    private func updateSnapshot(tabMenu: TabMenu) {
+    private func updateTableViewUsing(tabMenu: TabMenu) {
         var snapshot = NSDiffableDataSourceSnapshot<Int, Section>()
         tabMenu.sections.enumerated().forEach { idx, section in
             snapshot.appendSections([idx])
             snapshot.appendItems([section], toSection: idx)
         }
+        self.updateTableViewWith(snapshot: snapshot)
+    }
+    
+    private func updateTableViewWith(snapshot: NSDiffableDataSourceSnapshot<Int, Section>) {
+        self.containerHeight?.update(offset: CGFloat.greatestFiniteMagnitude)
         self.dataSource?.applySnapshotUsingReloadData(snapshot)
-    }
-    
-    private func updateContainerViewHeight() {
-        print("ContentSizeHeight: ", self.tableView.contentSize.height)
-        print("TableViewBoundsHeight: ", self.tableView.bounds.height)
-        self.containerView.snp.updateConstraints {
-            $0.height.equalTo(self.tableView.contentSize).priority(.high)
-        }
-    }
-}
-
-// MARK: - Helper Method
-extension PlaceDetailTabMenuViewController {
-    private func addTabMenuButton(using tabMenus: [TabMenu]) {
-        tabMenus.enumerated().forEach { (idx, tabMenu) in
-            let button = UIButton(type: .custom)
-            button.tag = idx
-            button.configurationUpdateHandler = self.tabMenuButtonUpdateHandler(title: tabMenu.title)
-            button.tapPublisher.map { button.tag }
-                .withUnretained(self)
-                .sink { 
-                    $0.tabMenuTapEvent.send($1)
-                    $0.updateTabMenuButton($1)
-                }
-                .store(in: &self.cancellables)
-            self.tabMenuButtonStackView.addArrangedSubview(button)
-        }
-    }
-    
-    private func tabMenuButtonUpdateHandler(title: String) -> UIButton.ConfigurationUpdateHandler {
-        return { button in
-            var color: UIColor
-            var font: UIFont
-            
-            switch button.state {
-            case .selected:
-                color = .label
-                font = .systemFont(ofSize: 18, weight: .semibold)
-                button.setBorderLine()
-            default:
-                color = .secondaryLabel
-                font = .systemFont(ofSize: 18, weight: .medium)
-                button.setBorderLine()
-            }
-            
-            let container = AttributeContainer([.font:font, .foregroundColor:color])
-            let attrTitle = AttributedString(title, attributes: container)
-            
-            var config = UIButton.Configuration.plain()
-            config.attributedTitle = attrTitle
-            config.background.cornerRadius = 0
-            config.background.backgroundColor = .clear
-            
-            button.configuration = config
-        }
-    }
-    
-    private func updateTabMenuButton(_ buttonIdx: Int) {
-        guard let buttons = self.tabMenuButtonStackView.arrangedSubviews as? [UIButton] else { return }
-        
-        buttons.enumerated().forEach { idx, button in
-            button.isSelected = idx == buttonIdx
-        }
+        self.tableView.layoutIfNeeded()
+        self.containerHeight?.update(offset: self.tableView.contentSize.height)
     }
 }
 
@@ -201,18 +140,18 @@ extension PlaceDetailTabMenuViewController {
 extension PlaceDetailTabMenuViewController {
     private func configureSubviews() {
         self.view.addSubview(self.containerView)
-        self.view.addSubview(self.tabMenuButtonStackView)
+        self.view.addSubview(self.tabMenuView)
         self.containerView.addSubview(self.tableView)
         
-        self.tabMenuButtonStackView.snp.makeConstraints {
+        self.tabMenuView.snp.makeConstraints {
             $0.leading.top.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            $0.height.equalTo(48)
+            $0.height.equalTo(40)
         }
         
         self.containerView.snp.makeConstraints {
-            $0.top.equalTo(self.tabMenuButtonStackView.snp.bottom)
+            $0.top.equalTo(self.tabMenuView.snp.bottom)
             $0.leading.bottom.trailing.equalToSuperview()
-            $0.height.equalTo(1000).priority(.high)
+            self.containerHeight = $0.height.equalTo(1000).priority(.high).constraint
         }
         
         self.tableView.snp.makeConstraints {

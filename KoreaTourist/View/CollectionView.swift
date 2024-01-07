@@ -30,7 +30,6 @@ class CollectionView: BaseView {
     func createLayout() -> UICollectionViewLayout {
         
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
-            layoutEnvironment.traitCollection
             let sectionKind = CollectionViewController.SectionLayoutKind(rawValue: sectionIndex)!
             
             let item: NSCollectionLayoutItem

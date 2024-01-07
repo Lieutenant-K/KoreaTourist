@@ -9,21 +9,13 @@ import UIKit
 import NMapsMap
 
 extension NMFMapView {
-//    func moveCameraGestureDisabled(_ cameraUpdate: NMFCameraUpdate, completion: ((Bool) -> Void)? = nil) {
-//        self.gestureRecognizers?.forEach { $0.isEnabled = false }
-//        self.moveCamera(cameraUpdate) {
-//            completion?($0)
-//            self.gestureRecognizers?.forEach { $0.isEnabled = true }
-//        }
-//    }
-    
     func adjustInterfaceStyle(style: UIUserInterfaceStyle) {
         if style == .dark {
-            self.backgroundImage = NMFDefaultBackgroundDarkImage
+            self.backgroundImage = NMFMapView.defaultBackgroundDarkImage
             self.backgroundColor = NMFDefaultBackgroundDarkColor
             self.isNightModeEnabled = true
         } else {
-            self.backgroundImage = NMFDefaultBackgroundLightImage
+            self.backgroundImage = NMFMapView.defaultBackgroundLightImage
             self.backgroundColor = NMFDefaultBackgroundLightColor
             self.isNightModeEnabled = false
         }

@@ -19,6 +19,7 @@ final class PlaceDetailTabMenuViewModel {
     
     struct Input {
         let viewDidLoadEvent: AnyPublisher<Void, Never>
+        let viewDidAppearEvent: AnyPublisher<Void, Never>
         let tabMenuTapEvent: AnyPublisher<Int, Never>
     }
     
@@ -29,20 +30,6 @@ final class PlaceDetailTabMenuViewModel {
     
     func transform(input: Input, cancellables: inout Set<AnyCancellable>) -> Output {
         let output = Output()
-        
-        input.viewDidLoadEvent
-            .withUnretained(self)
-            .sink { object, _ in
-                object.useCase.tryFetchPlaceDetailInformation()
-            }
-            .store(in: &cancellables)
-        
-        input.tabMenuTapEvent
-            .withUnretained(self)
-            .sink {
-                output.selectedMenu.send($0.tabMenus[$1])
-            }
-            .store(in: &cancellables)
         
         self.useCase.detailInformations
             .withUnretained(self)
@@ -57,7 +44,20 @@ final class PlaceDetailTabMenuViewModel {
                     object.tabMenus.append(.extra(extra.list))
                 }
                 output.visibleTabMenus.send(object.tabMenus)
-                output.selectedMenu.send(object.tabMenus[0])
+            }
+            .store(in: &cancellables)
+        
+        input.viewDidLoadEvent
+            .withUnretained(self)
+            .sink { object, _ in
+                object.useCase.tryFetchPlaceDetailInformation()
+            }
+            .store(in: &cancellables)
+        
+        input.tabMenuTapEvent
+            .withUnretained(self)
+            .sink {
+                output.selectedMenu.send($0.tabMenus[$1])
             }
             .store(in: &cancellables)
         

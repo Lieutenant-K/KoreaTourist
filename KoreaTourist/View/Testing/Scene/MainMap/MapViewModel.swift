@@ -178,7 +178,8 @@ extension MapViewModel {
     ///   - failureMessage: 장소를 발견할 수 없을 때 유저에게 보여줄 메시지를 방핼할 Publisher 객체
     private func presentDiscoverFlow(marker: PlaceMarker, failureMessage: PassthroughSubject<String, Never>) {
         if marker.placeInfo.isDiscovered {
-            self.coordinator?.pushDetailPlaceInfoScene(place: marker.placeInfo)
+            self.coordinator?.pushPlaceDetailScene(place: marker.placeInfo)
+//            self.coordinator?.pushDetailPlaceInfoScene(place: marker.placeInfo)
         } else if marker.distance <= PlaceMarker.minimumDistance {
             self.coordinator?.showPlaceDiscoverAlert(place: marker.placeInfo) { [weak self] in
                 self?.useCase.tryToDiscoverPlace(id: marker.placeInfo.contentId) {

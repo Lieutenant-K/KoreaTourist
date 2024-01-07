@@ -16,6 +16,7 @@ final class CommonPlaceRepository {
     let isNetworking = PassthroughSubject<Bool, Never>()
     let nearbyPlaces = PassthroughSubject<[CommonPlaceInfo], Never>()
     
+    /// 위치 좌표 근처의 장소 정보 가져오기
     func fetchPlacesNearby(coordinate: Coordinate) {
         let circle = Circle(x: coordinate.longitude, y: coordinate.latitude, radius: Circle.defaultRadius)
         self.isNetworking.send(true)
@@ -76,6 +77,17 @@ extension CommonPlaceRepository {
                 self?.isNetworking.send(false)
             })
             .map { PlaceImageInfo(id: contentId, imageList: $0) }
+            .eraseToAnyPublisher()
+    }
+}
+
+extension CommonPlaceRepository {
+    func areaCodeList() -> AnyPublisher<[AreaCode], NetworkError> {
+        self.isNetworking.send(true)
+        return self.networkService.request(router: .areaCode, type: AreaCode.self)
+            .handleEvents(receiveCompletion: { [weak self] _ in
+                self?.isNetworking.send(false)
+            })
             .eraseToAnyPublisher()
     }
 }

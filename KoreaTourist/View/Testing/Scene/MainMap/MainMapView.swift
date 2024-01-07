@@ -16,6 +16,11 @@ final class MainMapView: NMFMapView {
     var cameraIsChangingByModeEvent: AnyPublisher<Bool, Never> {
         self.cameraChangingByModeSubject.eraseToAnyPublisher()
     }
+    private var mapContentInsetMode: MapContentInsetMode = .lowCenter {
+        willSet {
+            self.contentInset = newValue.inset
+        }
+    }
     
     /// 카메라 이동 중 제스처 비활성화 With 핸들러
     func moveCameraGestureDisabled(_ cameraUpdate: NMFCameraUpdate, completion: ((Bool) -> Void)? = nil) {
@@ -51,16 +56,41 @@ final class MainMapView: NMFMapView {
     }
 }
 
+extension MainMapView {
+    enum MapContentInsetMode {
+        case center
+        case lowCenter
+        
+        var inset: UIEdgeInsets {
+            switch self {
+            case .center:
+                return .zero
+            case .lowCenter:
+                return UIEdgeInsets(top: 0, left: 0, bottom: -UIScreen.main.bounds.midY, right: 0)
+            }
+        }
+        
+        var mapCameraCenterY: CGFloat {
+            let bounds = UIScreen.main.bounds
+            switch self {
+            case .center:
+                return bounds.midY
+            case .lowCenter:
+                return 3*bounds.midY/2
+            }
+        }
+    }
+}
+
 extension MainMapView: DynamicCameraModeMap {
     func changeCameraMode(to mode: MapCameraMode) {
-        let inset = mode.inset == .default ? self.defaultContentInset : .zero
         let param = self.cameraModeParameter(config: mode.config)
         let overlaySize = self.locOveraySize(from: mode.config.zoom)
         let update = NMFCameraUpdate(params: param)
         update.reason = MapCameraChangeReason.byMode.rawValue
         update.animation = .easeOut
         update.animationDuration = 0.7
-        self.contentInset = inset
+        self.mapContentInsetMode = mode.inset == .default ? .lowCenter : .center
         
         self.moveCameraGestureDisabled(update) { isCancelled in
             if isCancelled {
@@ -68,33 +98,6 @@ extension MainMapView: DynamicCameraModeMap {
             }
         }
         self.changeLocOverlaySize(size: overlaySize)
-        
-//        if let pos = mode.position {
-//            let inset: UIEdgeInsets = mode.isCenterd ? .zero : self.mapView.defaultContentInset
-//            let tilt = mode.isClosed ? self.mapView.maxTilt : self.mapView.minTilt
-//            let zoom = mode.isClosed ? self.mapView.maxZoomLevel : self.mapView.minZoomLevel
-//            let size = mode.isClosed ? self.mapView.maxLocationOverlaySize : self.mapView.minLocationOverlaySize
-//            let param = NMFCameraUpdateParams()
-//            let update = NMFCameraUpdate(params: param)
-//            let buttons = [self.trackButton, self.circleMenuButton, self.cameraModeButton]
-//            
-//            param.tilt(to: tilt)
-//            param.zoom(to: zoom)
-//            param.scroll(to: pos)
-//            update.animation = .easeOut
-//            update.animationDuration = 0.7
-//            
-//            if self.circleMenuButton.buttonsIsShown() {
-//                self.circleMenuButton.hideButtons(0.3)
-//            }
-//            
-//            buttons.forEach { $0.isEnabled = false }
-//            self.mapView.contentInset = inset
-//            self.mapView.changeLocationOverlaySize(size: size)
-//            self.mapView.moveCameraGestureDisabled(update) { _ in
-//                buttons.forEach { $0.isEnabled = true }
-//            }
-//        }
     }
     
     private func locOveraySize(from zoom: MapCameraMode.Configuration.ValueType) -> Double {
@@ -187,17 +190,13 @@ extension MainMapView {
         self.locationOverlay.location = location
     }
     
-    var defaultContentInset: UIEdgeInsets {
-        UIEdgeInsets(top: 0, left: 0, bottom: -UIScreen.main.bounds.height/2, right: 0)
-    }
-    
     private func configureMap() {
         self.addCameraDelegate(delegate: self)
         self.logoAlign = .rightTop
         self.maxZoomLevel = 18
         self.minZoomLevel = 15
         self.maxTilt = 63
-        self.contentInset = self.defaultContentInset
+        self.mapContentInsetMode = .lowCenter
         self.setLayerGroup(NMF_LAYER_GROUP_BUILDING, isEnabled: false)
         self.symbolScale = 0.5
         self.mapType = .navi
@@ -219,12 +218,13 @@ extension MainMapView {
     @objc private func rotateHandler(_ sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: self)
         let location = sender.location(in: self)
-
+        let pointY = self.mapContentInsetMode.mapCameraCenterY
+        
         if sender.state == .began { }
         else if sender.state == .changed {
             // rotating map camera
             let bounds = self.bounds
-            let vector1 = CGVector(dx: location.x - bounds.midX, dy: location.y - 3*bounds.midY/2)
+            let vector1 = CGVector(dx: location.x - bounds.midX, dy: location.y - pointY)
             let vector2 = CGVector(dx: vector1.dx + translation.x, dy: vector1.dy + translation.y)
             let angle1 = atan2(vector1.dx, vector1.dy)
             let angle2 = atan2(vector2.dx, vector2.dy)

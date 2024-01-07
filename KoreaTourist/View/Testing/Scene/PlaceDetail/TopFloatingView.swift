@@ -80,14 +80,19 @@ extension TopFloatingView {
     }
     
     private func configure() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
+        let titleBarAppear = UINavigationBarAppearance()
+        titleBarAppear.configureWithTransparentBackground()
+        titleBarAppear.shadowColor = .separator
+        
+        let itemBarAppear = UINavigationBarAppearance()
+        itemBarAppear.configureWithTransparentBackground()
+        
         self.backgroundColor = .clear
         self.titleBar.backgroundColor = .clear
-        self.titleBar.standardAppearance = appearance
-        self.titleBar.scrollEdgeAppearance = appearance
+        self.titleBar.standardAppearance = titleBarAppear
+        self.titleBar.scrollEdgeAppearance = titleBarAppear
         self.itemBar.backgroundColor = .clear
-        self.itemBar.standardAppearance = appearance
-        self.itemBar.scrollEdgeAppearance = appearance
+        self.itemBar.standardAppearance = itemBarAppear
+        self.itemBar.scrollEdgeAppearance = itemBarAppear
     }
 }

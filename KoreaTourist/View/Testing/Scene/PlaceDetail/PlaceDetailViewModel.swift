@@ -11,14 +11,15 @@ import Combine
 
 final class PlaceDetailViewModel {
     private let useCase: CommonPlaceDetailUseCase
+    weak var coordinator: PlaceDetailCoordinator?
     
     init(useCase: CommonPlaceDetailUseCase) {
         self.useCase = useCase
     }
     
     struct Input {
-        let viewDidLoadEvent: AnyPublisher<Void, Never>
         let mapViewTabEvent: AnyPublisher<Void, Never>
+        let closeButtonTapEvent: AnyPublisher<Void, Never>
     }
     
     struct Output {
@@ -28,6 +29,23 @@ final class PlaceDetailViewModel {
     
     func transform(input: Input, cancellables: inout Set<AnyCancellable>) -> Output {
         let output = Output()
+        
+        input.closeButtonTapEvent
+            .withUnretained(self)
+            .sink { object, _ in
+                object.coordinator?.finish()
+            }
+            .store(in: &cancellables)
+        
+        input.mapViewTabEvent
+            .withUnretained(self)
+            .map { object, _ in object.useCase.commonPlaceInfo() }
+            .switchToLatest()
+            .withUnretained(self)
+            .sink {
+                $0.coordinator?.presentDiscoverdMapScene(place: $1)
+            }
+            .store(in: &cancellables)
         
         self.useCase.commonPlaceInfo()
             .map {

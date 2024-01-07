@@ -31,15 +31,6 @@ final class MainMapCoordinator: Coordinator {
 }
 
 extension MainMapCoordinator {
-    func pushDetailPlaceInfoScene(place: CommonPlaceInfo) {
-        let sub = SubInfoViewController(place: place)
-        let main = MainInfoViewController(place: place, subInfoVC: sub)
-        let vc = PlaceInfoViewController(place: place, mainInfoVC: main)
-        let navi = UINavigationController(rootViewController: vc)
-        navi.modalPresentationStyle = .fullScreen
-        self.navigationController.present(navi, animated: true)
-    }
-    
     func showPlaceDiscoverAlert(place: CommonPlaceInfo, confirmAction: @escaping () -> ()) {
         let ok = UIAlertAction(title: "네", style: .cancel) { _ in
             confirmAction()
@@ -60,22 +51,24 @@ extension MainMapCoordinator {
     }
     
     func pushPlaceCollectionScene() {
-        let viewController = CollectionViewController()
-        let navi = UINavigationController(rootViewController: viewController)
-        navi.modalPresentationStyle = .fullScreen
-        navi.modalTransitionStyle = .coverVertical
-        self.navigationController.present(navi, animated: true)
+        let coordinator = MyCollectionCoordinator(navigationController: self.navigationController)
+        coordinator.finishDelegate = self
+        self.childCoordinators.append(coordinator)
+        coordinator.start()
     }
 }
 
-extension MainMapCoordinator: FinishDelegate {
+extension MainMapCoordinator: PopupFinishDelegate {
     func finish(coordinator: Coordinator) {
         if let index = self.childCoordinators.firstIndex(where: { $0 === coordinator }) {
             self.childCoordinators.remove(at: index)
         }
     }
-}
-
-protocol FinishDelegate: Coordinator {
-    func finish(coordinator: Coordinator)
+    
+    func pushPlaceDetailScene(place: CommonPlaceInfo) {
+        let coordinator = PlaceDetailCoordinator(navigationController: self.navigationController)
+        self.childCoordinators.append(coordinator)
+        coordinator.finishDelegate = self
+        coordinator.start(placeInfo: place, isModal: true)
+    }
 }

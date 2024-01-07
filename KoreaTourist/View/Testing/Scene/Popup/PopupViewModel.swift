@@ -50,7 +50,7 @@ final class PopupViewModel {
         input.detailInfoButtonTapEvent
             .compactMap { [weak self] _ in self?.placeInfo }
             .sink { [weak self] in
-                self?.coordinator?.pushDetailPlaceInfoScene(place: $0)
+                self?.coordinator?.startPlaceDetailScene(place: $0)
             }
             .store(in: &cancellables)
         

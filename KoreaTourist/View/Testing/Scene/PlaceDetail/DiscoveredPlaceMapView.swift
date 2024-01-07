@@ -11,6 +11,7 @@ import Combine
 import NMapsMap
 import Then
 import CombineCocoa
+import Hero
 
 final class DiscoveredPlaceMapView: UIView {
     private let addressLabel = UILabel().then {
@@ -21,6 +22,7 @@ final class DiscoveredPlaceMapView: UIView {
     private let mapView = NMFMapView().then {
         $0.adjustInterfaceStyle(style: UITraitCollection.current.userInterfaceStyle)
         $0.mapType = .navi
+        $0.heroID = "mapView"
     }
     private lazy var gestureRecognizer = UITapGestureRecognizer().then {
         self.addGestureRecognizer($0)
@@ -84,6 +86,8 @@ extension DiscoveredPlaceMapView {
     
     private func updateMapCameraPos(to position: Coordinate) {
         let update = NMFCameraUpdate(scrollTo: position.mapCoordinate, zoomTo: 15)
+        update.animation = .none
+        update.animationDuration = 0
         self.mapView.moveCamera(update)
     }
 }

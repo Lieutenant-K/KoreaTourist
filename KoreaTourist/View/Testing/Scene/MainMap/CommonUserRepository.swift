@@ -74,6 +74,14 @@ final class CommonUserRepository {
     func load<T: Object>(type: T.Type, contentId: Int) -> T? {
         self.dbService?.object(ofType: type, forPrimaryKey: contentId)
     }
+    
+    func load<T: Object>(type: T.Type) -> [T] {
+        if let list = self.dbService?.objects(type).map({ $0 }) {
+            return Array(list)
+        } else {
+            return []
+        }
+    }
 }
 
 extension CommonUserRepository {

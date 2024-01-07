@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "alamofirenetworkactivitylogger",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/konkab/AlamofireNetworkActivityLogger",
+      "state" : {
+        "revision" : "8db9d4e27176905298e7215e3d800e349cdfa30b",
+        "version" : "3.4.0"
+      }
+    },
+    {
       "identity" : "circle-menu",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Ramotion/circle-menu.git",
@@ -106,6 +115,15 @@
       "state" : {
         "revision" : "d415594121c9e8a4f9d79cecee0965cf35e74dbd",
         "version" : "3.1.1"
+      }
+    },
+    {
+      "identity" : "hero",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/HeroTransitions/Hero.git",
+      "state" : {
+        "revision" : "66a554b21116fccf61b3aa2205a86f6b0cdc9766",
+        "version" : "1.6.2"
       }
     },
     {
