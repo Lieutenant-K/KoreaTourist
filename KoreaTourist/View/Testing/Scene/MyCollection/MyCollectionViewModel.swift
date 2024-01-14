@@ -66,9 +66,10 @@ final class MyCollectionViewModel {
             .sink { object, item in
                 switch item {
                 case let .region(areaCode):
+                    object.useCase.tryFetchCollectedPlaceList(filteredBy: areaCode)
                     break
                 case let .place(info):
-                    self.coordinator?.pushPlaceDetailScene(place: info)
+                    object.coordinator?.pushPlaceDetailScene(place: info)
                 }
             }
             .store(in: &cancellables)

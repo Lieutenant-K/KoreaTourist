@@ -40,6 +40,7 @@ final class MyCollectionViewController: UIViewController {
         }
         return UIBarButtonItem(customView: button)
     }()
+    private weak var collectionHeaderView: UICollectionReusableView?
     
     // MARK: - Properties
     private var dataSource: UICollectionViewDiffableDataSource<SectionLayoutKind, Item>!
@@ -60,7 +61,7 @@ final class MyCollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureSubviews()
-        self.configureCollectionView()
+        self.configureCollectionViewDataSource()
         self.configureNavigationItem()
         self.bindViewModel()
     }
@@ -76,16 +77,26 @@ final class MyCollectionViewController: UIViewController {
         let output = self.viewModel.transform(input: input, cancellables: &self.cancellables)
         
         output.areaCodeList
+            .map { $0.map{ Item.region($0) } }
             .withUnretained(self)
             .sink {
-                $0.updateSnapshot(areaCodeList: $1)
+                $0.updateSnapshot(section: .region, items: $1)
+            }
+            .store(in: &self.cancellables)
+        
+        output.collectedPlaceList
+            .map { $0.filter { $0.isDiscovered } }
+            .map { $0.map { Item.place($0) } }
+            .withUnretained(self)
+            .sink {
+                $0.updateSnapshot(section: .place, items: $1)
+                $0.emptyView.isHidden = $1.isEmpty ? false : true
             }
             .store(in: &self.cancellables)
         
         output.collectedPlaceList
             .withUnretained(self)
             .sink {
-                $0.updateSnapshot(collectedPlaceList: $1)
                 $0.updateCollectedPlaceCount(placeList: $1)
             }
             .store(in: &self.cancellables)
@@ -94,29 +105,34 @@ final class MyCollectionViewController: UIViewController {
 
 // MARK: - Helper Method
 extension MyCollectionViewController {
-    private func updateSnapshot(areaCodeList: [AreaCode] = [], collectedPlaceList: [CommonPlaceInfo] = []) {
-        let currentSnapshot = self.dataSource.snapshot()
-        let regionItems = areaCodeList.isEmpty ? currentSnapshot.itemIdentifiers(inSection: .region) : areaCodeList.map { Item.region($0) }
-        let placeItems = collectedPlaceList.isEmpty ? currentSnapshot.itemIdentifiers(inSection: .place) : collectedPlaceList.filter({ $0.isDiscovered }).map { Item.place($0) }
-        
-        var snapshot = NSDiffableDataSourceSnapshot<SectionLayoutKind, Item>()
-        snapshot.appendSections([SectionLayoutKind.region, SectionLayoutKind.place])
-        snapshot.appendItems(regionItems, toSection: SectionLayoutKind.region)
-        snapshot.appendItems(placeItems, toSection: SectionLayoutKind.place)
-        
-        self.dataSource.apply(snapshot)
-        self.emptyView.isHidden = !placeItems.isEmpty
+    private func updateSnapshot(section: SectionLayoutKind, items: [Item]) {
+        var currentSnapshot = self.dataSource.snapshot(for: section)
+        switch section {
+        case .region:
+            currentSnapshot.append(items)
+        case .place:
+            currentSnapshot.deleteAll()
+            currentSnapshot.append(items)
+        }
+        self.dataSource.apply(currentSnapshot, to: section)
     }
     
     private func updateCollectedPlaceCount(placeList: [CommonPlaceInfo]) {
         let collectedCnt = placeList.count
         let discoveredCnt = placeList.filter { $0.isDiscovered }.count
-        let headerRegistration = UICollectionView.SupplementaryRegistration<CollectionHeaderView>(elementKind: self.headerElementKind) { supplementaryView, elementKind, indexPath in
+        
+        let headerRegistration = UICollectionView.SupplementaryRegistration<CollectionHeaderView>(elementKind: self.headerElementKind) { supplementaryView, _, _ in
             supplementaryView.label.text = "발견한 장소: \(discoveredCnt) 찾은 장소: \(collectedCnt)"
         }
         
-        self.dataSource.supplementaryViewProvider = { collectionView, _, indexPath in
-            collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+        self.dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath in
+            let view = collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+            self?.collectionHeaderView = view
+            return view
+        }
+        
+        if let view = self.collectionHeaderView as? CollectionHeaderView {
+            view.label.text = "발견한 장소: \(discoveredCnt) 찾은 장소: \(collectedCnt)"
         }
     }
     
@@ -129,50 +145,19 @@ extension MyCollectionViewController {
     
     private func configureNavigationItem() {
         self.title = "나의 컬렉션"
-//        self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.leftBarButtonItem = self.closeButton
         self.navigationItem.rightBarButtonItems = [self.settingButton, self.worldMapButton]
         self.navigationItem.backButtonTitle = "뒤로"
-//        self.navigationItem.largeTitleDisplayMode = .always
     }
 }
 
 // MARK: - CollectionView Delegate Method
 extension MyCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if let sectionKind = SectionLayoutKind(rawValue: indexPath.section) {
             let item = self.dataSource.snapshot(for: sectionKind).items[indexPath.row]
             self.didSelectItemAtEvent.send(item)
         }
-        
-//        switch sectionKind {
-//        case .region:
-//            if case let .region(areaCode) = self.dataSource.snapshot(for: .region).items[indexPath.row] {
-//                print("지역 셀 선택")
-//            }
-//        case .place:
-//            if case let .place(placeInfo) = self.dataSource.snapshot(for: .place).items[indexPath.row] {
-//                print("장소 셀 선택")
-//            }
-//        default:
-//            return
-//            
-//        }
-        
-        //            if let regionId = regionList?[indexPath.row].id {
-        //                placeList = realm.loadPlaces(type: CommonPlaceInfo.self).where {
-        //                    $0.discoverDate != nil && $0.areaCode == regionId
-        //                }.sorted(byKeyPath: "discoverDate", ascending: false)
-        //            }
-        //        case .place:
-        //            if let place = placeList?[indexPath.row] {
-        //                let sub = SubInfoViewController(place: place)
-        //                let main = MainInfoViewController(place: place, subInfoVC: sub)
-        //                let vc = PlaceInfoViewController(place: place, mainInfoVC: main)
-        //
-        //                navigationController?.pushViewController(vc, animated: true)
-        //            }
     }
 }
 
@@ -190,7 +175,7 @@ extension MyCollectionViewController {
         return "header-element-kind"
     }
     
-    private func configureCollectionView() {
+    private func configureCollectionViewDataSource() {
         let regionCategoryCellRegistration = UICollectionView.CellRegistration<AreaCategoryCell, AreaCode> { cell, indexPath, item in
             cell.label.text = item.name
         }

@@ -20,9 +20,13 @@ final class CommonMyCollectionUseCase {
         self.fetchOrLoadAreaCodeList()
     }
     
-    func tryFetchCollectedPlaceList() {
+    func tryFetchCollectedPlaceList(filteredBy areaCode: AreaCode? = nil) {
         let list = self.userRepository.load(type: CommonPlaceInfo.self)
-        self.collectedPlaceList.send(list)
+        if let areaCodeId = areaCode?.id {
+            self.collectedPlaceList.send(list.filter ({ $0.areaCode == areaCodeId }))
+        } else {
+            self.collectedPlaceList.send(list)
+        }
     }
 }
 
