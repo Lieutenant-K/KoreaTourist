@@ -136,13 +136,13 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDe
             
         }
         
-        let headerRegistration = UICollectionView.SupplementaryRegistration<CollectionHeaderView>(elementKind: Self.layoutHeaderElementKind) { [unowned self] supplementaryView, elementKind, indexPath in
+        let headerRegistration = UICollectionView.SupplementaryRegistration<MyCollectionHeaderView>(elementKind: Self.layoutHeaderElementKind) { [unowned self] supplementaryView, elementKind, indexPath in
             
             let places = realm.loadPlaces(type: CommonPlaceInfo.self)
             
             let discovered = places.where { $0.discoverDate != nil }
             
-            supplementaryView.label.text = "발견한 장소: \(discovered.count) 찾은 장소: \(places.count)"
+            supplementaryView.updateLabel(discoveredCnt: discovered.count, collectedCnt: places.count)
             
             
         }

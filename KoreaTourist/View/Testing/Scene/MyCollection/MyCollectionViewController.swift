@@ -121,8 +121,8 @@ extension MyCollectionViewController {
         let collectedCnt = placeList.count
         let discoveredCnt = placeList.filter { $0.isDiscovered }.count
         
-        let headerRegistration = UICollectionView.SupplementaryRegistration<CollectionHeaderView>(elementKind: self.headerElementKind) { supplementaryView, _, _ in
-            supplementaryView.label.text = "발견한 장소: \(discoveredCnt) 찾은 장소: \(collectedCnt)"
+        let headerRegistration = UICollectionView.SupplementaryRegistration<MyCollectionHeaderView>(elementKind: self.headerElementKind) { supplementaryView, _, _ in
+            supplementaryView.updateLabel(discoveredCnt: discoveredCnt, collectedCnt: collectedCnt)
         }
         
         self.dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath in
@@ -131,8 +131,8 @@ extension MyCollectionViewController {
             return view
         }
         
-        if let view = self.collectionHeaderView as? CollectionHeaderView {
-            view.label.text = "발견한 장소: \(discoveredCnt) 찾은 장소: \(collectedCnt)"
+        if let view = self.collectionHeaderView as? MyCollectionHeaderView {
+            view.updateLabel(discoveredCnt: discoveredCnt, collectedCnt: collectedCnt)
         }
     }
     
