@@ -74,6 +74,13 @@ final class MyCollectionViewModel {
             }
             .store(in: &cancellables)
         
+        input.settingButtonTapEvent
+            .withUnretained(self)
+            .sink { object, _ in
+                object.coordinator?.pushSettingScene()
+            }
+            .store(in: &cancellables)
+        
         return output
     }
 }

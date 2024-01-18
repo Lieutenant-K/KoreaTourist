@@ -54,3 +54,14 @@ extension MyCollectionCoordinator: PopupFinishDelegate {
         }
     }
 }
+
+extension MyCollectionCoordinator {
+    func pushSettingScene() {
+        if let navigationController = self.ownNavigationController {
+            let coordinator = SettingCoordinator(navigationController: navigationController)
+            self.childCoordinators.append(coordinator)
+            coordinator.finishDelegate = self
+            coordinator.start()
+        }
+    }
+}

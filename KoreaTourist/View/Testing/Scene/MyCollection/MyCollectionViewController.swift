@@ -148,6 +148,7 @@ extension MyCollectionViewController {
         self.navigationItem.leftBarButtonItem = self.closeButton
         self.navigationItem.rightBarButtonItems = [self.settingButton, self.worldMapButton]
         self.navigationItem.backButtonTitle = "뒤로"
+        self.navigationItem.largeTitleDisplayMode = .always
     }
 }
 

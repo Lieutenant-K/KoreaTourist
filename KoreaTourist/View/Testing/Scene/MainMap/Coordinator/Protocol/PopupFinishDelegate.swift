@@ -7,7 +7,10 @@
 
 import Foundation
 
-protocol PopupFinishDelegate: Coordinator {
-    func finish(coordinator: Coordinator)
+protocol PopupFinishDelegate: FinishDelegate {
     func pushPlaceDetailScene(place: CommonPlaceInfo)
+}
+
+protocol FinishDelegate: Coordinator {
+    func finish(coordinator: Coordinator)
 }
