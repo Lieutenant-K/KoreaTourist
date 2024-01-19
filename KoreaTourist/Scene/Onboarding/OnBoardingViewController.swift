@@ -9,7 +9,7 @@ import UIKit
 import PaperOnboarding
 import Then
 
-final class OnBoardingViewController: BaseViewController {
+final class OnBoardingViewController: UIViewController {
     weak var coordinator: OnboardingFinishDelegate?
     private let noImage = UIImage()
     private let onboarding = PaperOnboarding()
@@ -22,13 +22,9 @@ final class OnBoardingViewController: BaseViewController {
         var container = AttributeContainer()
         container.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         container.foregroundColor = UIColor.discoverdMarker
-        
         config.attributedTitle = AttributedString("시작하기", attributes: container)
-        
-        
         $0.configuration = config
         $0.isHidden = true
-        
     }
     
     private lazy var items = [
@@ -57,46 +53,29 @@ final class OnBoardingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.tintColor = .white
-        
-        setupOnboardingView()
-        
-        setupButton()
+        self.setupOnboardingView()
+        self.setupButton()
     }
     
     private func setupOnboardingView() {
-        
-        onboarding.delegate = self
-        onboarding.dataSource = self
-        
-        view.addSubview(onboarding)
-
-        onboarding.snp.makeConstraints { $0.edges.equalToSuperview() }
+        self.onboarding.delegate = self
+        self.onboarding.dataSource = self
+        self.view.addSubview(onboarding)
+        self.onboarding.snp.makeConstraints { $0.edges.equalToSuperview() }
     }
     
     private func setupButton() {
-        
-        view.addSubview(button)
-        
-        button.snp.makeConstraints { make in
+        self.view.addSubview(button)
+        self.button.snp.makeConstraints { make in
             make.bottom.equalTo(-100)
             make.leading.trailing.equalToSuperview().inset(30)
             make.height.equalTo(60)
         }
-        view.bringSubviewToFront(button)
-        
-        button.addTarget(self, action: #selector(touchButton(_:)), for: .touchUpInside)
-        
+        self.view.bringSubviewToFront(button)
+        self.button.addTarget(self, action: #selector(touchButton(_:)), for: .touchUpInside)
     }
     
     @objc private func touchButton(_ sender: UIButton) {
-        
-//        if let delegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-//            
-//            delegate.window?.rootViewController = MapViewController()
-//            delegate.window?.makeKeyAndVisible()
-//            
-//        }
-        
         self.coordinator?.finishOnboardingFlow()
     }
 
@@ -114,10 +93,8 @@ extension OnBoardingViewController: PaperOnboardingDelegate, PaperOnboardingData
     
     func onboardingWillTransitonToIndex(_ index: Int) {
         print("will transition to \(index), current : \(onboarding.currentIndex)")
-//        print(onboarding.currentIndex)
         button.isHidden = true
         button.alpha = 0
-
     }
     
     func onboardingDidTransitonToIndex(_ index: Int) {
@@ -133,6 +110,4 @@ extension OnBoardingViewController: PaperOnboardingDelegate, PaperOnboardingData
             }
         }
     }
-    
-    
 }
