@@ -19,7 +19,7 @@ final class MockMapViewController: UIViewController {
     private let compassView: CompassView
     private let trackButton: HeadTrackButton
     private let cameraModeButton: MapCameraModeButton
-    private let localizedLabel = LocalizedTitleLabel()
+//    private let localizedLabel = LocalizedTitleLabel()
     private let circleMenuButton = CircleMenuButton()
     private let activityIndicator = MapActivityIndicator()
     private var markers: [PlaceMarker] = []
@@ -166,13 +166,13 @@ extension MockMapViewController {
             $0.edges.equalToSuperview()
         }
         
-        self.view.addSubview(self.localizedLabel)
-        self.localizedLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.view.safeAreaLayoutGuide)
-            $0.leading.greaterThanOrEqualTo(20)
-            $0.trailing.lessThanOrEqualTo(-20)
-        }
+//        self.view.addSubview(self.localizedLabel)
+//        self.localizedLabel.snp.makeConstraints {
+//            $0.centerX.equalToSuperview()
+//            $0.top.equalTo(self.view.safeAreaLayoutGuide)
+//            $0.leading.greaterThanOrEqualTo(20)
+//            $0.trailing.lessThanOrEqualTo(-20)
+//        }
         
         self.view.addSubview(self.compassView)
         self.compassView.mapView = self.mapView
