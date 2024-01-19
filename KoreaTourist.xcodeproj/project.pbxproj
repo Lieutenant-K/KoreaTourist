@@ -247,7 +247,7 @@
 		0DE2DB612910DE1500F9E41B /* PlaceInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoViewController.swift; sourceTree = "<group>"; };
 		0DE2DB632910DE7200F9E41B /* PlaceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlaceInfoView.swift; path = KoreaTourist/View/PlaceInfoView.swift; sourceTree = SOURCE_ROOT; };
 		0DE3BC1728F58CEC00FBFBFC /* WorldMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldMapViewController.swift; sourceTree = "<group>"; };
-		0DE3BC1928F58DF500FBFBFC /* WorldMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WorldMapView.swift; path = KoreaTourist/View/WorldMapView.swift; sourceTree = SOURCE_ROOT; };
+		0DE3BC1928F58DF500FBFBFC /* WorldMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WorldMapView.swift; path = KoreaTourist/View/Testing/Scene/MyCollection/WorldMapView.swift; sourceTree = SOURCE_ROOT; };
 		0DE3BC1B28F5BD2100FBFBFC /* KoreaTourist.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KoreaTourist.entitlements; sourceTree = "<group>"; };
 		0DE3BC1C28F5C34100FBFBFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0DE5C9CA28E85930003542C4 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
@@ -413,6 +413,8 @@
 				0D6572802B46E68D0081BF37 /* MyCollectionViewController.swift */,
 				0D00CBBE2B4A1A46003010F4 /* MyCollectionViewModel.swift */,
 				0D00CBC02B4A1B1A003010F4 /* CommonMyCollectionUseCase.swift */,
+				0DE3BC1728F58CEC00FBFBFC /* WorldMapViewController.swift */,
+				0DE3BC1928F58DF500FBFBFC /* WorldMapView.swift */,
 			);
 			path = MyCollection;
 			sourceTree = "<group>";
@@ -581,7 +583,6 @@
 				0DF3F5EE28D8579A00D2F399 /* PlaceMarker.swift */,
 				0DF3F5EB28D8579A00D2F399 /* PopupView.swift */,
 				0DEE1CCA2911FA66008EE5F6 /* SubInfoView.swift */,
-				0DE3BC1928F58DF500FBFBFC /* WorldMapView.swift */,
 				0DFA15AB28FDA33A00065D1F /* Cell */,
 				0D8CE89D2A8E6E1D00E01FF8 /* Testing */,
 			);
@@ -603,7 +604,6 @@
 				0DF3F5F528D8579A00D2F399 /* PopupViewController.swift */,
 				0D7B155428E7606700E70D3B /* SettingViewController.swift */,
 				0DC5E8C629143EA2000B43CB /* SubInfoViewController.swift */,
-				0DE3BC1728F58CEC00FBFBFC /* WorldMapViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

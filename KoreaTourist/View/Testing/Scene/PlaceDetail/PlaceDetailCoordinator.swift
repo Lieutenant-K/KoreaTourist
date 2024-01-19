@@ -12,7 +12,7 @@ import Hero
 final class PlaceDetailCoordinator: Coordinator {
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
-    weak var finishDelegate: PopupFinishDelegate? // 임시 델리게이트
+    weak var finishDelegate: FinishDelegate? // 임시 델리게이트
     private var ownNavigationController: UINavigationController?
     
     init(navigationController: UINavigationController) {

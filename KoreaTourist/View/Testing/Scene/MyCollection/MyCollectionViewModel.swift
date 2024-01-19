@@ -81,6 +81,13 @@ final class MyCollectionViewModel {
             }
             .store(in: &cancellables)
         
+        input.worldMapButtonTapEvent
+            .withUnretained(self)
+            .sink { object, _ in
+                object.coordinator?.pushWorldMapScene()
+            }
+            .store(in: &cancellables)
+        
         return output
     }
 }

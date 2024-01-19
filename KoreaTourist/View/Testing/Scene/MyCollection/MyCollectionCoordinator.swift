@@ -11,7 +11,7 @@ final class MyCollectionCoordinator: Coordinator {
     let navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     private var ownNavigationController: UINavigationController?
-    weak var finishDelegate: PopupFinishDelegate?
+    weak var finishDelegate: FinishDelegate?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -63,5 +63,11 @@ extension MyCollectionCoordinator {
             coordinator.finishDelegate = self
             coordinator.start()
         }
+    }
+    
+    func pushWorldMapScene() {
+        let repository = CommonUserRepository()
+        let viewController = WorldMapViewController(repository: repository)
+        self.ownNavigationController?.pushViewController(viewController, animated: true)
     }
 }

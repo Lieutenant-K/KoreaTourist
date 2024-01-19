@@ -32,13 +32,13 @@ final class MyCollectionViewController: UIViewController {
     }
     private let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: nil, action: nil)
     private let settingButton = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill"), style: .plain, target: nil, action: nil)
-    private let worldMapButton: UIBarButtonItem = {
+    private let worldMapButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(.map, for: .normal)
         button.snp.makeConstraints {
             $0.size.equalTo(27)
         }
-        return UIBarButtonItem(customView: button)
+        return button
     }()
     private weak var collectionHeaderView: UICollectionReusableView?
     
@@ -144,9 +144,10 @@ extension MyCollectionViewController {
     }
     
     private func configureNavigationItem() {
+        let worldMapButton = UIBarButtonItem(customView: self.worldMapButton)
         self.title = "나의 컬렉션"
         self.navigationItem.leftBarButtonItem = self.closeButton
-        self.navigationItem.rightBarButtonItems = [self.settingButton, self.worldMapButton]
+        self.navigationItem.rightBarButtonItems = [self.settingButton, worldMapButton]
         self.navigationItem.backButtonTitle = "뒤로"
         self.navigationItem.largeTitleDisplayMode = .always
     }
