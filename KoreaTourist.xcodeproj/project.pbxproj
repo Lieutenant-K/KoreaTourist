@@ -40,6 +40,7 @@
 		0D4A883C2B596B5F00A2AC91 /* MockSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4A883B2B596B5F00A2AC91 /* MockSettingViewController.swift */; };
 		0D4A883E2B596BAF00A2AC91 /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4A883D2B596BAF00A2AC91 /* SettingCoordinator.swift */; };
 		0D4A88402B5970BD00A2AC91 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4A883F2B5970BD00A2AC91 /* SettingViewModel.swift */; };
+		0D4A88422B59853E00A2AC91 /* Package.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 0D4A88412B59853E00A2AC91 /* Package.resolved */; };
 		0D580AA52B2D625100AC944B /* AlamofireNetworkActivityLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 0D580AA42B2D625100AC944B /* AlamofireNetworkActivityLogger */; };
 		0D580AA72B2D654800AC944B /* TabMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D580AA62B2D654800AC944B /* TabMenuView.swift */; };
 		0D65727F2B46E58B0081BF37 /* MyCollectionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D65727E2B46E58B0081BF37 /* MyCollectionCoordinator.swift */; };
@@ -191,6 +192,7 @@
 		0D4A883B2B596B5F00A2AC91 /* MockSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSettingViewController.swift; sourceTree = "<group>"; };
 		0D4A883D2B596BAF00A2AC91 /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
 		0D4A883F2B5970BD00A2AC91 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		0D4A88412B59853E00A2AC91 /* Package.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Package.resolved; path = KoreaTourist.xcworkspace/xcshareddata/swiftpm/Package.resolved; sourceTree = "<group>"; };
 		0D580AA62B2D654800AC944B /* TabMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabMenuView.swift; sourceTree = "<group>"; };
 		0D65727E2B46E58B0081BF37 /* MyCollectionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionCoordinator.swift; sourceTree = "<group>"; };
 		0D6572802B46E68D0081BF37 /* MyCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewController.swift; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 			children = (
 				0DE3BC1C28F5C34100FBFBFC /* GoogleService-Info.plist */,
 				0D7B155628E77EC700E70D3B /* Pods-KoreaTourist-acknowledgements.plist */,
+				0D4A88412B59853E00A2AC91 /* Package.resolved */,
 				0DF3F61728D85B9600D2F399 /* .gitignore */,
 				0DF3F5BB28D8567000D2F399 /* KoreaTourist */,
 				94B57056A34E7D6CC818F1E0 /* Pods */,
@@ -761,6 +764,7 @@
 				0DE3BC1D28F5C34100FBFBFC /* GoogleService-Info.plist in Resources */,
 				0DF3F5C928D8567100D2F399 /* LaunchScreen.storyboard in Resources */,
 				0D7B155728E77EC700E70D3B /* Pods-KoreaTourist-acknowledgements.plist in Resources */,
+				0D4A88422B59853E00A2AC91 /* Package.resolved in Resources */,
 				0DF3F5C628D8567100D2F399 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
