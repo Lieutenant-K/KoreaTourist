@@ -9,7 +9,7 @@ import UIKit
 import Then
 import Combine
 
-final class MockSettingViewController: UIViewController {
+final class SettingViewController: UIViewController {
     typealias Item = SettingViewModel.Item
     
     private lazy var listCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout()).then {
@@ -64,7 +64,7 @@ final class MockSettingViewController: UIViewController {
 }
 
 // MARK: - Helper Method
-extension MockSettingViewController {
+extension SettingViewController {
     private func updateSnapshot(items: [Item]) {
         var snapshot = NSDiffableDataSourceSnapshot<Int, Item>()
         snapshot.appendSections([0])
@@ -105,7 +105,7 @@ extension MockSettingViewController {
 }
 
 // MARK: - CollectionView Delegate
-extension MockSettingViewController: UICollectionViewDelegate {
+extension SettingViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = self.dataSource.snapshot(for: 0).items[indexPath.row]
         self.didSelectItemAtEvent.send(item)

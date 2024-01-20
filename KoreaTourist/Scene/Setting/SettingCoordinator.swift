@@ -21,7 +21,7 @@ final class SettingCoordinator: Coordinator {
     func start() {
         let viewModel = SettingViewModel()
         viewModel.coordinator = self
-        let viewController = MockSettingViewController(viewModel: viewModel)
+        let viewController = SettingViewController(viewModel: viewModel)
         self.navigationController.pushViewController(viewController, animated: true)
     }
     

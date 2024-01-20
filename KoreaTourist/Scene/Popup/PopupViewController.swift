@@ -13,7 +13,7 @@ import Then
 import Kingfisher
 import Hero
 
-final class MockPopupViewController: UIViewController {
+final class PopupViewController: UIViewController {
     // MARK: - View
     private let announceLabel = BasePaddingLabel(value: 20).then {
         $0.font = .systemFont(ofSize: 24, weight: .semibold)
@@ -156,7 +156,7 @@ final class MockPopupViewController: UIViewController {
     }
 }
 
-extension MockPopupViewController {
+extension PopupViewController {
     private func configureSubviews() {
         [self.imageView, self.titleLabel, self.descriptionLabel, self.buttonStackView].forEach {
             self.contentView.addSubview($0)

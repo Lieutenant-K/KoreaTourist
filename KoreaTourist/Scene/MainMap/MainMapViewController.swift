@@ -13,7 +13,7 @@ import NMapsMap
 import SnapKit
 import Toast
 
-final class MockMapViewController: UIViewController {
+final class MainMapViewController: UIViewController {
     private var viewModel: MapViewModel
     private let mapView: MainMapView
     private let compassView: CompassView
@@ -129,7 +129,7 @@ final class MockMapViewController: UIViewController {
     }
 }
 
-extension MockMapViewController {
+extension MainMapViewController {
     private func resetMarkers(with markers: [PlaceMarker]) {
         self.markers.forEach { $0.mapView = nil }
         self.markers.removeAll()
@@ -152,7 +152,7 @@ extension MockMapViewController {
     }
 }
 
-extension MockMapViewController {
+extension MainMapViewController {
     private var buttonWidth: CGFloat {
         return 50
     }

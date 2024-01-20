@@ -18,7 +18,7 @@ final class PopupCoordinator: Coordinator {
     
     func start(placeInfo: CommonPlaceInfo) {
         let viewModel = PopupViewModel(placeInfo: placeInfo)
-        let viewController = MockPopupViewController(viewModel: viewModel)
+        let viewController = PopupViewController(viewModel: viewModel)
         viewModel.coordinator = self
         self.navigationController.present(viewController, animated: true)
     }
