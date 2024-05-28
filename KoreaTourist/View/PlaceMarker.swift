@@ -18,7 +18,7 @@ final class PlaceMarker: NMFMarker {
     let placeInfo: CommonPlaceInfo
     var distance: Double {
         didSet {
-            self.updateMarkerAppearnce()
+            self.updateAppearance()
         }
     }
     var isDiscovered: Bool {
@@ -32,17 +32,14 @@ final class PlaceMarker: NMFMarker {
         self.configureMarker()
     }
     
-    func updateMarkerAppearnce() {
-        let statusColor: UIColor = distance <= Self.minimumDistance ? .enabledMarker : .disabledMarker
-        let markerColor: UIColor = placeInfo.isDiscovered ? .discoverdMarker : statusColor
-        let statusText = distance <= Self.minimumDistance ? "발견가능" : "미발견"
+    func updateAppearance() {
         let zIndex = distance <= Self.minimumDistance ? 2 : 1
         
-        self.captionText = placeInfo.isDiscovered ? placeInfo.title : statusText
-        self.subCaptionText = placeInfo.isDiscovered ? "" : "\(Int(distance))m"
-        self.zIndex = placeInfo.isDiscovered ? 0 : zIndex
-        self.captionColor = markerColor
-        self.iconTintColor = markerColor
+        self.captionText = self.placeInfo.isDiscovered ? self.placeInfo.title : self.statusText
+        self.subCaptionText = self.placeInfo.isDiscovered ? "" : "\(Int(distance))m"
+        self.zIndex = self.placeInfo.isDiscovered ? 0 : zIndex
+        self.captionColor = self.markerColor
+        self.iconTintColor = self.markerColor
         self.captionHaloColor = .systemBackground
         self.subCaptionHaloColor = .systemBackground
         self.subCaptionColor = .label
@@ -50,25 +47,40 @@ final class PlaceMarker: NMFMarker {
 }
 
 extension PlaceMarker {
+    var statusColor: UIColor {
+        if self.distance <= Self.minimumDistance {
+            return .enabledMarker
+        } else {
+            return .disabledMarker
+        }
+    }
+    
+    var markerColor: UIColor {
+        if self.placeInfo.isDiscovered {
+            return .discoverdMarker
+        } else {
+            return self.statusColor
+        }
+    }
+    
+    var statusText: String {
+        if self.distance <= Self.minimumDistance {
+            return "발견가능"
+        } else {
+            return "미발견"
+        }
+    }
+    
+    
     private func configureMarker() {
         self.position = NMGLatLng(lat: placeInfo.lat, lng: placeInfo.lng)
         self.iconImage = NMF_MARKER_IMAGE_BLACK
-        self.updateMarkerAppearnce()
+        self.updateAppearance()
+        self.configureCaption()
         self.globalZIndex = 3
         self.isHideCollidedSymbols = true
         self.isHideCollidedCaptions = true
         self.iconPerspectiveEnabled = true
-        self.captionRequestedWidth = 4
-        self.captionTextSize = 30
-        self.captionOffset = 4
-        self.subCaptionTextSize = 24
-        
-        /*
-        captionPerspectiveEnabled = true
-        captionMinZoom = 14
-        width = 50
-        height = 65
-         */
         
         self.touchHandler = { [weak self] in
             if let marker = $0 as? PlaceMarker {
@@ -76,5 +88,12 @@ extension PlaceMarker {
             }
             return true
         }
+    }
+    
+    private func configureCaption() {
+        self.captionRequestedWidth = 4
+        self.captionTextSize = 24
+        self.captionOffset = 4
+        self.subCaptionTextSize = 20
     }
 }

@@ -43,6 +43,7 @@ final class MainMapViewController: UIViewController {
         self.bindViewModel()
         self.configureSubviews()
         self.observeCameraMoving()
+//        self.startRippleAnimation(at: CGPoint(x: view.bounds.midX, y: view.bounds.midY))
     }
     
     private func bindViewModel() {
@@ -152,6 +153,8 @@ extension MainMapViewController {
     }
 }
 
+
+// MARK: - Layout Method
 extension MainMapViewController {
     private var buttonWidth: CGFloat {
         return 50
@@ -166,19 +169,22 @@ extension MainMapViewController {
             $0.edges.equalToSuperview()
         }
         
-//        self.view.addSubview(self.localizedLabel)
-//        self.localizedLabel.snp.makeConstraints {
-//            $0.centerX.equalToSuperview()
-//            $0.top.equalTo(self.view.safeAreaLayoutGuide)
-//            $0.leading.greaterThanOrEqualTo(20)
-//            $0.trailing.lessThanOrEqualTo(-20)
-//        }
+        /*
+        self.view.addSubview(self.localizedLabel)
+        self.localizedLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(self.view.safeAreaLayoutGuide)
+            $0.leading.greaterThanOrEqualTo(20)
+            $0.trailing.lessThanOrEqualTo(-20)
+        }
+        */
         
         self.view.addSubview(self.compassView)
         self.compassView.mapView = self.mapView
         self.compassView.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide)
-            $0.leading.equalTo(12)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(12)
+            $0.leading.equalToSuperview().offset(18)
+            $0.size.equalTo(self.buttonWidth)
         }
         
         self.view.addSubview(self.circleMenuButton)
@@ -205,5 +211,46 @@ extension MainMapViewController {
             $0.width.equalTo(self.buttonWidth)
             $0.height.equalTo(self.trackButton.snp.width)
         }
+    }
+}
+
+extension MainMapViewController {
+    private func startRippleAnimation(at point: CGPoint) {
+           let rippleLayer = CAShapeLayer()
+           rippleLayer.position = point
+           mapView.layer.addSublayer(rippleLayer)
+
+           // 초기 원형 경로 설정
+           let startPath = UIBezierPath(circleCenter: .zero, radius: 10).cgPath
+           rippleLayer.path = startPath
+
+           // 최종 원형 경로 설정
+           let endPath = UIBezierPath(circleCenter: .zero, radius: 150).cgPath
+
+           // 경로 애니메이션
+           let pathAnimation = CABasicAnimation(keyPath: "path")
+           pathAnimation.toValue = endPath
+           pathAnimation.duration = 2.0
+
+           // 투명도 애니메이션
+           let opacityAnimation = CABasicAnimation(keyPath: "opacity")
+           opacityAnimation.fromValue = 1.0
+           opacityAnimation.toValue = 0.0
+           opacityAnimation.duration = 2.0
+
+           // 애니메이션 그룹
+           let animationGroup = CAAnimationGroup()
+           animationGroup.animations = [pathAnimation, opacityAnimation]
+           animationGroup.duration = 2.0
+           animationGroup.timingFunction = CAMediaTimingFunction(name: .easeOut)
+           animationGroup.repeatCount = .infinity
+
+           rippleLayer.add(animationGroup, forKey: "rippleEffect")
+       }
+}
+
+extension UIBezierPath {
+    convenience init(circleCenter center: CGPoint, radius: CGFloat) {
+        self.init(arcCenter: center, radius: radius, startAngle: 0, endAngle: 2 * .pi, clockwise: true)
     }
 }

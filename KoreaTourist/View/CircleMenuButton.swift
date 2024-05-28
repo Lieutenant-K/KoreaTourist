@@ -61,7 +61,7 @@ extension CircleMenuButton {
         self.backgroundColor = .white
         self.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.layer.shadowOffset = .zero
-        self.layer.shadowOpacity = 0.3
+        self.layer.shadowOpacity = 0.15
         self.duration = 0.3
         self.distance = 85
         self.startAngle = -90

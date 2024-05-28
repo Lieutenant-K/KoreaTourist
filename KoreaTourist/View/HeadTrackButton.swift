@@ -28,7 +28,7 @@ final class HeadTrackButton: UIButton {
         self.backgroundColor = .white
         
         self.layer.shadowOffset = .zero
-        self.layer.shadowOpacity = 0.3
+        self.layer.shadowOpacity = 0.15
     }
     
     private func subscribeSelectEvent() {

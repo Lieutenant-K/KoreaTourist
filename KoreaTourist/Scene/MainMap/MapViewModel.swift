@@ -178,13 +178,12 @@ extension MapViewModel {
     private func presentDiscoverFlow(marker: PlaceMarker, failureMessage: PassthroughSubject<String, Never>) {
         if marker.placeInfo.isDiscovered {
             self.coordinator?.pushPlaceDetailScene(place: marker.placeInfo)
-//            self.coordinator?.pushDetailPlaceInfoScene(place: marker.placeInfo)
         } else if marker.distance <= PlaceMarker.minimumDistance {
             self.coordinator?.showPlaceDiscoverAlert(place: marker.placeInfo) { [weak self] in
                 self?.useCase.tryToDiscoverPlace(id: marker.placeInfo.contentId) {
                     self?.coordinator?.pushDiscoverPopupScene(place: marker.placeInfo)
                 }
-                marker.updateMarkerAppearnce()
+                marker.updateAppearance()
             }
         } else {
             let title = "아직 발견할 수 없습니다. \(Int(PlaceMarker.minimumDistance))m 이내로 접근해주세요."

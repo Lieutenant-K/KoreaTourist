@@ -192,14 +192,16 @@ extension MainMapView {
     
     private func configureMap() {
         self.addCameraDelegate(delegate: self)
-        self.logoAlign = .rightTop
+        self.logoAlign = .rightBottom
+        self.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: -20, right: 0)
         self.maxZoomLevel = 18
         self.minZoomLevel = 15
-        self.maxTilt = 63
+        self.maxTilt = NMF_MAXIMUM_TILT
         self.mapContentInsetMode = .lowCenter
-        self.setLayerGroup(NMF_LAYER_GROUP_BUILDING, isEnabled: false)
-        self.symbolScale = 0.5
-        self.mapType = .navi
+        self.setLayerGroup(NMF_LAYER_GROUP_BUILDING, isEnabled: true)
+        self.symbolScale = 1
+        self.mapType = .basic
+        self.lightness = -0.02
         self.adjustInterfaceStyle(style: UITraitCollection.current.userInterfaceStyle)
     }
 }
