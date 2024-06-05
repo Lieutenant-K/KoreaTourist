@@ -24,7 +24,15 @@ final class MainMapCoordinator: Coordinator {
         let compass = CompassView(map: map)
         let headTrackBtn = HeadTrackButton(map: map)
         let camera = MapCameraModeButton(map: map)
-        let viewController = MainMapViewController(viewModel: viewModel, map: map, compass: compass, headTrack: headTrackBtn, camera: camera)
+        let lab: MapLaboratoryButton?
+        
+        #if DEV
+        lab = MapLaboratoryButton(map: map)
+        #else
+        lab = nil
+        #endif
+        
+        let viewController = MainMapViewController(viewModel: viewModel, map: map, compass: compass, headTrack: headTrackBtn, camera: camera, lab: lab)
         
         self.navigationController.pushViewController(viewController, animated: false)
     }

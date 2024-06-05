@@ -98,8 +98,13 @@ final class MapViewModel {
             .store(in: &cancellables)
         
         self.useCase.places
-            .compactMap { [weak self] in self?.createMarkers(places: $0, cameraMode: output.currentCameraMode, message: output.toastMessage) }
-            .handleEvents(receiveOutput: {
+            .compactMap { [weak self]
+                in self?.createMarkers(places: $0,
+                                       cameraMode: output.currentCameraMode,
+                                       message: output.toastMessage)
+            }
+            .handleEvents(receiveOutput: { [weak self] in
+                self?.changeCameraMode(to: .search)
                 output.currentCameraMode.send(.search)
                 output.toastMessage.send("\($0.count)개의 장소를 발견했습니다!")
             })
@@ -178,7 +183,7 @@ extension MapViewModel {
     private func presentDiscoverFlow(marker: PlaceMarker, failureMessage: PassthroughSubject<String, Never>) {
         if marker.placeInfo.isDiscovered {
             self.coordinator?.pushPlaceDetailScene(place: marker.placeInfo)
-        } else if marker.distance <= PlaceMarker.minimumDistance {
+        } else if marker.distance <= Constant.minimumDiscoveryDistance {
             self.coordinator?.showPlaceDiscoverAlert(place: marker.placeInfo) { [weak self] in
                 self?.useCase.tryToDiscoverPlace(id: marker.placeInfo.contentId) {
                     self?.coordinator?.pushDiscoverPopupScene(place: marker.placeInfo)
@@ -186,7 +191,7 @@ extension MapViewModel {
                 marker.updateAppearance()
             }
         } else {
-            let title = "아직 발견할 수 없습니다. \(Int(PlaceMarker.minimumDistance))m 이내로 접근해주세요."
+            let title = "아직 발견할 수 없습니다. \(Int(Constant.minimumDiscoveryDistance))m 이내로 접근해주세요."
             failureMessage.send(title)
         }
     }

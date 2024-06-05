@@ -178,7 +178,7 @@ extension MainMapView {
         self.boundaryOverlay.fillColor = .clear
         self.boundaryOverlay.outlineWidth = 2.5
         self.boundaryOverlay.outlineColor = .secondaryLabel
-        self.boundaryOverlay.radius = Circle.defaultRadius
+        self.boundaryOverlay.radius = Constant.defaultSearchRadius
     }
     
     private func setDefaultLocation() {
@@ -198,10 +198,8 @@ extension MainMapView {
         self.minZoomLevel = 15
         self.maxTilt = NMF_MAXIMUM_TILT
         self.mapContentInsetMode = .lowCenter
-        self.setLayerGroup(NMF_LAYER_GROUP_BUILDING, isEnabled: true)
-        self.symbolScale = 1
         self.mapType = .basic
-        self.lightness = -0.02
+        self.setLayerGroup(NMF_LAYER_GROUP_BUILDING, isEnabled: false)
         self.adjustInterfaceStyle(style: UITraitCollection.current.userInterfaceStyle)
     }
 }

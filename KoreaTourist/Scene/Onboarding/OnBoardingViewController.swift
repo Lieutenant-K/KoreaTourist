@@ -37,7 +37,7 @@ final class OnBoardingViewController: UIViewController {
         
         OnboardingItemInfo(informationImage: .map,
                            title: "장소 발견하기",
-                           description: "근처 \(Int(PlaceMarker.minimumDistance))m 이내에 있는 장소를 발견하고 내 컬렉션에 추가할 수 있어요!",
+                           description: "근처 \(Int(Constant.minimumDiscoveryDistance))m 이내에 있는 장소를 발견하고 내 컬렉션에 추가할 수 있어요!",
                            pageIcon: noImage,
                            color: .enabledMarker,
                            titleColor: UIColor.white, descriptionColor: UIColor.white, titleFont: .systemFont(ofSize: 32, weight: .bold), descriptionFont: .systemFont(ofSize: 24, weight: .medium), descriptionLabelPadding: 18),

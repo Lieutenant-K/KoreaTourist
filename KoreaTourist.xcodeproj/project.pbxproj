@@ -87,7 +87,6 @@
 		0DDB471729154F57001CB6F4 /* DetailInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDB471629154F57001CB6F4 /* DetailInfoCell.swift */; };
 		0DE3BC1828F58CEC00FBFBFC /* WorldMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE3BC1728F58CEC00FBFBFC /* WorldMapViewController.swift */; };
 		0DE3BC1A28F58DF500FBFBFC /* WorldMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE3BC1928F58DF500FBFBFC /* WorldMapView.swift */; };
-		0DE3BC1D28F5C34100FBFBFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DE3BC1C28F5C34100FBFBFC /* GoogleService-Info.plist */; };
 		0DE5C9CB28E85930003542C4 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE5C9CA28E85930003542C4 /* OnBoardingViewController.swift */; };
 		0DEF86582A8FCD650073CA42 /* HeadResetableMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF86572A8FCD650073CA42 /* HeadResetableMap.swift */; };
 		0DEF865B2A8FE1C50073CA42 /* HeadTrackableMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEF865A2A8FE1C50073CA42 /* HeadTrackableMap.swift */; };
@@ -122,6 +121,8 @@
 		0DFCE14D2A8DF44D003A6FF4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE14C2A8DF44D003A6FF4 /* RealmSwift */; };
 		0DFCE1502A8DF45E003A6FF4 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE14F2A8DF45E003A6FF4 /* Then */; };
 		0DFFCA8D28E3895C008B5705 /* PlaceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFFCA8C28E3895C008B5705 /* PlaceCollectionCell.swift */; };
+		533ED68E2C0AF289002A16A7 /* MapLaboratoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533ED68D2C0AF289002A16A7 /* MapLaboratoryButton.swift */; };
+		533ED6912C0AFFBC002A16A7 /* MapLaboratoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533ED6902C0AFFBC002A16A7 /* MapLaboratoryViewController.swift */; };
 		535B966F2B07B2D50011C3E5 /* CombineInterception in Frameworks */ = {isa = PBXBuildFile; productRef = 535B966E2B07B2D50011C3E5 /* CombineInterception */; };
 		535B96712B07D2E90011C3E5 /* TopFloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535B96702B07D2E90011C3E5 /* TopFloatingView.swift */; };
 		535B96732B08A31F0011C3E5 /* AutoScrollGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535B96722B08A31F0011C3E5 /* AutoScrollGalleryView.swift */; };
@@ -130,6 +131,7 @@
 		535B967A2B08DA190011C3E5 /* PlaceDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535B96792B08DA190011C3E5 /* PlaceDetailCoordinator.swift */; };
 		535B967C2B08EC710011C3E5 /* PopupFinishDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535B967B2B08EC710011C3E5 /* PopupFinishDelegate.swift */; };
 		535B967F2B08F9810011C3E5 /* DiscoveredPlaceMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535B967E2B08F9810011C3E5 /* DiscoveredPlaceMapViewController.swift */; };
+		53D040BB2C109083006D9100 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D040BA2C109083006D9100 /* Const.swift */; };
 		D045CE37CB2C47864BCCA0D1 /* Pods_KoreaTourist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54DA04C722821319ECFCAEC1 /* Pods_KoreaTourist.framework */; };
 /* End PBXBuildFile section */
 
@@ -236,14 +238,19 @@
 		0DFCE1292A8DF339003A6FF4 /* KoreaTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KoreaTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DFFCA8C28E3895C008B5705 /* PlaceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCollectionCell.swift; sourceTree = "<group>"; };
 		3A7A42D0455E55A2828FB41C /* Pods-KoreaTourist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaTourist.debug.xcconfig"; path = "Target Support Files/Pods-KoreaTourist/Pods-KoreaTourist.debug.xcconfig"; sourceTree = "<group>"; };
+		533ED68D2C0AF289002A16A7 /* MapLaboratoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLaboratoryButton.swift; sourceTree = "<group>"; };
+		533ED6902C0AFFBC002A16A7 /* MapLaboratoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLaboratoryViewController.swift; sourceTree = "<group>"; };
 		535B96702B07D2E90011C3E5 /* TopFloatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopFloatingView.swift; sourceTree = "<group>"; };
 		535B96722B08A31F0011C3E5 /* AutoScrollGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoScrollGalleryView.swift; sourceTree = "<group>"; };
 		535B96742B08A3350011C3E5 /* DiscoveredPlaceMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredPlaceMapView.swift; sourceTree = "<group>"; };
 		535B96792B08DA190011C3E5 /* PlaceDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlaceDetailCoordinator.swift; path = KoreaTourist/Scene/PlaceDetail/PlaceDetailCoordinator.swift; sourceTree = SOURCE_ROOT; };
 		535B967B2B08EC710011C3E5 /* PopupFinishDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFinishDelegate.swift; sourceTree = "<group>"; };
 		535B967E2B08F9810011C3E5 /* DiscoveredPlaceMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredPlaceMapViewController.swift; sourceTree = "<group>"; };
+		53D040BA2C109083006D9100 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
+		53E52A892C0B6AC300C4182B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		54DA04C722821319ECFCAEC1 /* Pods_KoreaTourist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KoreaTourist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4754B79013F5839232E6CFA /* Pods-KoreaTourist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaTourist.release.xcconfig"; path = "Target Support Files/Pods-KoreaTourist/Pods-KoreaTourist.release.xcconfig"; sourceTree = "<group>"; };
+		DC2E0683F5F281302A2E4573 /* Pods-KoreaTourist.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaTourist.dev.xcconfig"; path = "Target Support Files/Pods-KoreaTourist/Pods-KoreaTourist.dev.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +305,7 @@
 		0D3B56092AE1748100AAB8F2 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				533ED68F2C0AFFAD002A16A7 /* Common */,
 				0D2CDD9B2B5ACE830023D1F4 /* Onboarding */,
 				0D4A883A2B596B4B00A2AC91 /* Setting */,
 				0D65727D2B46E53B0081BF37 /* MyCollection */,
@@ -457,7 +465,6 @@
 		0DF3F5B028D8567000D2F399 = {
 			isa = PBXGroup;
 			children = (
-				0DE3BC1C28F5C34100FBFBFC /* GoogleService-Info.plist */,
 				0D7B155628E77EC700E70D3B /* Pods-KoreaTourist-acknowledgements.plist */,
 				0D4A88412B59853E00A2AC91 /* Package.resolved */,
 				0DF3F61728D85B9600D2F399 /* .gitignore */,
@@ -471,7 +478,9 @@
 		0DF3F5BB28D8567000D2F399 /* KoreaTourist */ = {
 			isa = PBXGroup;
 			children = (
+				53D040B92C109079006D9100 /* Const */,
 				0DE3BC1B28F5BD2100FBFBFC /* KoreaTourist.entitlements */,
+				53E52A862C0B6A0000C4182B /* Firebase */,
 				0DF3F5F628D8579A00D2F399 /* APIManager */,
 				0DD92A21294A29F200FD43F6 /* Delegate */,
 				0DD92A02294A25C400FD43F6 /* Extension */,
@@ -512,16 +521,17 @@
 			isa = PBXGroup;
 			children = (
 				0DF3F5E828D8579A00D2F399 /* BasePaddingLabel.swift */,
+				0DFA15AB28FDA33A00065D1F /* Cell */,
 				0DA61E0F2A8E5F0D00719D7B /* CircleMenuButton.swift */,
-				0D7B154B28E747F100E70D3B /* MyCollectionHeaderView.swift */,
 				0DA61E112A8E5F1400719D7B /* CompassView.swift */,
 				0D03F5FD294E609D00300749 /* HeadTrackButton.swift */,
 				0DF3F5E728D8579A00D2F399 /* LabelStackView.swift */,
 				0DA61E132A8E5F2900719D7B /* LocalizedTitleLabel.swift */,
 				0DA61E152A8E5F3000719D7B /* MapCameraModeButton.swift */,
 				0DA61E172A8E5F3A00719D7B /* MapMenu.swift */,
+				0D7B154B28E747F100E70D3B /* MyCollectionHeaderView.swift */,
 				0DF3F5EE28D8579A00D2F399 /* PlaceMarker.swift */,
-				0DFA15AB28FDA33A00065D1F /* Cell */,
+				533ED68D2C0AF289002A16A7 /* MapLaboratoryButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -552,12 +562,53 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		533ED68F2C0AFFAD002A16A7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				533ED6902C0AFFBC002A16A7 /* MapLaboratoryViewController.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		535B967D2B08F9470011C3E5 /* DiscoveredPlace */ = {
 			isa = PBXGroup;
 			children = (
 				535B967E2B08F9810011C3E5 /* DiscoveredPlaceMapViewController.swift */,
 			);
 			path = DiscoveredPlace;
+			sourceTree = "<group>";
+		};
+		53D040B92C109079006D9100 /* Const */ = {
+			isa = PBXGroup;
+			children = (
+				53D040BA2C109083006D9100 /* Const.swift */,
+			);
+			path = Const;
+			sourceTree = "<group>";
+		};
+		53E52A862C0B6A0000C4182B /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				53E52A882C0B6A4E00C4182B /* Release */,
+				53E52A872C0B6A4A00C4182B /* Dev */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		53E52A872C0B6A4A00C4182B /* Dev */ = {
+			isa = PBXGroup;
+			children = (
+				53E52A892C0B6AC300C4182B /* GoogleService-Info.plist */,
+			);
+			path = Dev;
+			sourceTree = "<group>";
+		};
+		53E52A882C0B6A4E00C4182B /* Release */ = {
+			isa = PBXGroup;
+			children = (
+				0DE3BC1C28F5C34100FBFBFC /* GoogleService-Info.plist */,
+			);
+			path = Release;
 			sourceTree = "<group>";
 		};
 		8C33514E64A2B72CE3674E12 /* Frameworks */ = {
@@ -573,6 +624,7 @@
 			children = (
 				3A7A42D0455E55A2828FB41C /* Pods-KoreaTourist.debug.xcconfig */,
 				C4754B79013F5839232E6CFA /* Pods-KoreaTourist.release.xcconfig */,
+				DC2E0683F5F281302A2E4573 /* Pods-KoreaTourist.dev.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -587,6 +639,7 @@
 				9E14C113D3160588DA7219BD /* [CP] Check Pods Manifest.lock */,
 				0DF3F5B528D8567000D2F399 /* Sources */,
 				0DF3F5B628D8567000D2F399 /* Frameworks */,
+				53E52A8B2C0B6B0100C4182B /* Setup Firebase plist files */,
 				0DF3F5B728D8567000D2F399 /* Resources */,
 				9B71E8501BDFDF6617277076 /* [CP] Embed Pods Frameworks */,
 				0DE3BC2528F5E53F00FBFBFC /* Crashlytics */,
@@ -678,7 +731,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DF3F61828D85B9600D2F399 /* .gitignore in Resources */,
-				0DE3BC1D28F5C34100FBFBFC /* GoogleService-Info.plist in Resources */,
 				0DF3F5C928D8567100D2F399 /* LaunchScreen.storyboard in Resources */,
 				0D7B155728E77EC700E70D3B /* Pods-KoreaTourist-acknowledgements.plist in Resources */,
 				0D4A88422B59853E00A2AC91 /* Package.resolved in Resources */,
@@ -708,6 +760,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+		53E52A8B2C0B6B0100C4182B /* Setup Firebase plist files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Setup Firebase plist files";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# Name of the resource to copy\nINFO_PLIST_FILE=GoogleService-Info.plist\n\n# Get references to debug and release versions of the plist file\nDEV_INFO_PLIST_FILE=${PROJECT_DIR}/${TARGET_NAME}/Firebase/Dev/${INFO_PLIST_FILE}\nRELEASE_INFO_PLIST_FILE=${PROJECT_DIR}/${TARGET_NAME}/Firebase/Release/${INFO_PLIST_FILE}\n\n# Make sure the debug version exists\necho \"Looking for ${INFO_PLIST_FILE} in ${DEV_INFO_PLIST_FILE}\"\nif [ ! -f $DEV_INFO_PLIST_FILE ] ; then\n    echo \"File GoogleService-Info.plist (dev) not found.\"\n    exit 1\nfi\n\n# Make sure the release version exists\necho \"Looking for ${INFO_PLIST_FILE} in ${RELEASE_INFO_PLIST_FILE}\"\nif [ ! -f $RELEASE_INFO_PLIST_FILE ] ; then\n    echo \"File GoogleService-Info.plist (release) not found.\"\n    exit 1\nfi\n\n# Get a reference to the destination location for the plist file\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\necho \"Copying ${INFO_PLIST_FILE} to final destination: ${PLIST_DESTINATION}\"\n\n# Copy the appropiate file to app bundle\nif [ \"${CONFIGURATION}\" == \"Dev\" ] ; then\n    echo \"File ${DEV_INFO_PLIST_FILE} copied\"\n    cp \"${DEV_INFO_PLIST_FILE}\" \"${PLIST_DESTINATION}\"\nelse\n    echo \"File ${RELEASE_INFO_PLIST_FILE} copied\"\n    cp \"${RELEASE_INFO_PLIST_FILE}\" \"${PLIST_DESTINATION}\"\nfi\n";
 		};
 		9B71E8501BDFDF6617277076 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -779,11 +849,13 @@
 				0D4A883E2B596BAF00A2AC91 /* SettingCoordinator.swift in Sources */,
 				0DAECDB92AE3E87200A3A4AD /* CommonPlaceDetailUseCase.swift in Sources */,
 				0D00CBC12B4A1B1A003010F4 /* CommonMyCollectionUseCase.swift in Sources */,
+				533ED68E2C0AF289002A16A7 /* MapLaboratoryButton.swift in Sources */,
 				0DF3F61328D8579A00D2F399 /* Router.swift in Sources */,
 				0DD92A14294A282300FD43F6 /* UIColor + Extension.swift in Sources */,
 				0DA61E102A8E5F0D00719D7B /* CircleMenuButton.swift in Sources */,
 				0DD92A1E294A299400FD43F6 /* NSDirectionalEdgeInset + Extension.swift in Sources */,
 				0D03F628294E679600300749 /* Intro.swift in Sources */,
+				53D040BB2C109083006D9100 /* Const.swift in Sources */,
 				0D7B154C28E747F100E70D3B /* MyCollectionHeaderView.swift in Sources */,
 				0D8CE8B12A8E6E6200E01FF8 /* Coordinate.swift in Sources */,
 				535B967C2B08EC710011C3E5 /* PopupFinishDelegate.swift in Sources */,
@@ -838,6 +910,7 @@
 				0D03F640294E697F00300749 /* PlaceImageInfo.swift in Sources */,
 				0D03F626294E677700300749 /* CommonPlaceInfo.swift in Sources */,
 				0DF3F60A28D8579A00D2F399 /* PlaceMarker.swift in Sources */,
+				533ED6912C0AFFBC002A16A7 /* MapLaboratoryViewController.swift in Sources */,
 				0D03F63B294E697F00300749 /* ExtraPlaceElement.swift in Sources */,
 				0DD92A18294A28CF00FD43F6 /* UIButton + Extension.swift in Sources */,
 				0DF3F60228D8579A00D2F399 /* ExtraInfoCell.swift in Sources */,
@@ -978,6 +1051,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -990,14 +1064,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUNDLE_DISPLAY_NAME = "시플";
 				CODE_SIGN_ENTITLEMENTS = KoreaTourist/KoreaTourist.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 5QA7Y24MQ4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KoreaTourist/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "시플";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(BUNDLE_DISPLAY_NAME)";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "항상 또는 사용 중에 허용해주세요";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 권한을 항상 허용해주세요";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 주변의 장소를 탐색하기 위해 사용자의 위치 정보가 필요합니다.";
@@ -1005,6 +1081,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "location-services";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1013,6 +1090,7 @@
 				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = lieutenantK.SetreetPlace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1025,13 +1103,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUNDLE_DISPLAY_NAME = "시플";
 				CODE_SIGN_ENTITLEMENTS = KoreaTourist/KoreaTourist.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5QA7Y24MQ4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KoreaTourist/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "시플";
+				INFOPLIST_KEY_CFBundleDisplayName = "$(BUNDLE_DISPLAY_NAME)";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "항상 또는 사용 중에 허용해주세요";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 권한을 항상 허용해주세요";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 주변의 장소를 탐색하기 위해 사용자의 위치 정보가 필요합니다.";
@@ -1039,6 +1119,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "location-services";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1047,11 +1128,111 @@
 				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = lieutenantK.SetreetPlace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
+		};
+		530630362C063CAB0022B217 /* Dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEV;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Dev;
+		};
+		530630372C063CAB0022B217 /* Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DC2E0683F5F281302A2E4573 /* Pods-KoreaTourist.dev.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUNDLE_DISPLAY_NAME = "시플 개발";
+				CODE_SIGN_ENTITLEMENTS = KoreaTourist/KoreaTourist.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 5QA7Y24MQ4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KoreaTourist/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(BUNDLE_DISPLAY_NAME)";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "항상 또는 사용 중에 허용해주세요";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 권한을 항상 허용해주세요";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 주변의 장소를 탐색하기 위해 사용자의 위치 정보가 필요합니다.";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = "location-services";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = lieutenantK.SetreetPlace.dev;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Dev;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1060,6 +1241,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0DF3F5CB28D8567100D2F399 /* Debug */,
+				530630362C063CAB0022B217 /* Dev */,
 				0DF3F5CC28D8567100D2F399 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1069,6 +1251,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0DF3F5CE28D8567100D2F399 /* Debug */,
+				530630372C063CAB0022B217 /* Dev */,
 				0DF3F5CF28D8567100D2F399 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

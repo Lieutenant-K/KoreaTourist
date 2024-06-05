@@ -14,23 +14,26 @@ import SnapKit
 import Toast
 
 final class MainMapViewController: UIViewController {
-    private var viewModel: MapViewModel
     private let mapView: MainMapView
     private let compassView: CompassView
     private let trackButton: HeadTrackButton
     private let cameraModeButton: MapCameraModeButton
+    private let laboratoryButtton: MapLaboratoryButton?
 //    private let localizedLabel = LocalizedTitleLabel()
     private let circleMenuButton = CircleMenuButton()
     private let activityIndicator = MapActivityIndicator()
     private var markers: [PlaceMarker] = []
+    
+    private let viewModel: MapViewModel
     private var cancellables = Set<AnyCancellable>()
     
-    init(viewModel: MapViewModel, map: MainMapView, compass: CompassView, headTrack: HeadTrackButton, camera: MapCameraModeButton) {
+    init(viewModel: MapViewModel, map: MainMapView, compass: CompassView, headTrack: HeadTrackButton, camera: MapCameraModeButton, lab: MapLaboratoryButton? = nil) {
         self.viewModel = viewModel
         self.mapView = map
         self.compassView = compass
         self.trackButton = headTrack
         self.cameraModeButton = camera
+        self.laboratoryButtton = lab
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -178,6 +181,17 @@ extension MainMapViewController {
             $0.trailing.lessThanOrEqualTo(-20)
         }
         */
+        
+        if let laboratoryButtton {
+            self.view.addSubview(laboratoryButtton)
+            laboratoryButtton.viewController = self
+            laboratoryButtton.layer.cornerRadius = self.buttonWidth/2
+            laboratoryButtton.snp.makeConstraints {
+                $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(12)
+                $0.trailing.equalToSuperview().offset(-18)
+                $0.size.equalTo(self.buttonWidth)
+            }
+        }
         
         self.view.addSubview(self.compassView)
         self.compassView.mapView = self.mapView

@@ -17,7 +17,7 @@ final class CommonPlaceRepository {
     
     /// 위치 좌표 근처의 장소 정보 가져오기
     func nearbyPlaces(coordinate: Coordinate) -> AnyPublisher<[CommonPlaceInfo], NetworkError> {
-        let circle = Circle(x: coordinate.longitude, y: coordinate.latitude, radius: Circle.defaultRadius)
+        let circle = Circle(x: coordinate.longitude, y: coordinate.latitude, radius: Constant.defaultSearchRadius)
         self.isNetworking.send(true)
         return self.networkService.request(router: .location(circle), type: CommonPlaceInfo.self)
             .handleEvents(receiveCompletion: { [weak self] _ in

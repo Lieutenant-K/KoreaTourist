@@ -11,8 +11,6 @@ import Combine
 import NMapsMap
 
 final class PlaceMarker: NMFMarker {
-    // 디버그용
-    static let minimumDistance: Double = 500
     var cancellables = Set<AnyCancellable>()
     let markerDidTapEvent = PassthroughSubject<PlaceMarker, Never>()
     let placeInfo: CommonPlaceInfo
@@ -33,7 +31,7 @@ final class PlaceMarker: NMFMarker {
     }
     
     func updateAppearance() {
-        let zIndex = distance <= Self.minimumDistance ? 2 : 1
+        let zIndex = distance <= Constant.minimumDiscoveryDistance ? 2 : 1
         
         self.captionText = self.placeInfo.isDiscovered ? self.placeInfo.title : self.statusText
         self.subCaptionText = self.placeInfo.isDiscovered ? "" : "\(Int(distance))m"
@@ -48,7 +46,7 @@ final class PlaceMarker: NMFMarker {
 
 extension PlaceMarker {
     var statusColor: UIColor {
-        if self.distance <= Self.minimumDistance {
+        if self.distance <= Constant.minimumDiscoveryDistance {
             return .enabledMarker
         } else {
             return .disabledMarker
@@ -64,17 +62,18 @@ extension PlaceMarker {
     }
     
     var statusText: String {
-        if self.distance <= Self.minimumDistance {
+        if self.distance <= Constant.minimumDiscoveryDistance {
             return "발견가능"
         } else {
             return "미발견"
         }
     }
     
-    
     private func configureMarker() {
         self.position = NMGLatLng(lat: placeInfo.lat, lng: placeInfo.lng)
         self.iconImage = NMF_MARKER_IMAGE_BLACK
+        self.width = Constant.defaultMarkerImageWidth
+        self.height = Constant.defaultMarkerImageHeight
         self.updateAppearance()
         self.configureCaption()
         self.globalZIndex = 3
@@ -92,8 +91,8 @@ extension PlaceMarker {
     
     private func configureCaption() {
         self.captionRequestedWidth = 4
-        self.captionTextSize = 24
         self.captionOffset = 4
-        self.subCaptionTextSize = 20
+        self.captionTextSize = Constant.defaultMarkerCaptionTextSize
+        self.subCaptionTextSize = Constant.defaultMarkerSubCaptionTextSize
     }
 }

@@ -29,15 +29,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ToastManager.shared.isTapToDismissEnabled = true
         ToastManager.shared.duration = 1.5
         
-//        // 개발용. 실행 시 DB 초기화
-//        let dbService = try? Realm()
-//        do {
-//            try dbService?.write {
-//                dbService?.deleteAll()
-//            }
-//        } catch {
-//            print("초기화 시 모든 데이터 삭제 실패")
-//        }
+        /*
+        // 개발용. 실행 시 DB 초기화
+        #if DEBUG
+        let dbService = try? Realm()
+        do {
+            try dbService?.write {
+                dbService?.deleteAll()
+            }
+        } catch {
+            print("초기화 시 모든 데이터 삭제 실패")
+        }
+        #endif
+        */
         
         self.appCoordinator = AppCoordinator(UIWindow(windowScene: scene))
         self.appCoordinator?.start()
