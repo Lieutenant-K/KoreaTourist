@@ -1,0 +1,4 @@
+module GoogleDataTransport {
+umbrella header "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/GoogleDataTransport/GoogleDataTransport/GDTCORLibrary/Public/GoogleDataTransport/GoogleDataTransport.h"
+export *
+}

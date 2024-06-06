@@ -11,13 +11,19 @@ import NMapsMap
 extension NMFMapView {
     func adjustInterfaceStyle(style: UIUserInterfaceStyle) {
         if style == .dark {
-            self.backgroundImage = NMFDefaultBackgroundDarkImage
+            self.backgroundImage = NMFMapView.defaultBackgroundDarkImage
             self.backgroundColor = NMFDefaultBackgroundDarkColor
             self.isNightModeEnabled = true
         } else {
-            self.backgroundImage = NMFDefaultBackgroundLightImage
+            self.backgroundImage = NMFMapView.defaultBackgroundLightImage
             self.backgroundColor = NMFDefaultBackgroundLightColor
             self.isNightModeEnabled = false
         }
+    }
+}
+
+extension NMGLatLng {
+    var coordinate: Coordinate {
+        Coordinate(latitude: self.lat, longitude: self.lng)
     }
 }

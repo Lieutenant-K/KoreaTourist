@@ -7,11 +7,11 @@
 
 import UIKit
 import Toast
+import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
-    var window: UIWindow?
-
+    
+    var appCoordinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -29,18 +29,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ToastManager.shared.isTapToDismissEnabled = true
         ToastManager.shared.duration = 1.5
         
+        /*
+        // 개발용. 실행 시 DB 초기화
+        #if DEBUG
+        let dbService = try? Realm()
+        do {
+            try dbService?.write {
+                dbService?.deleteAll()
+            }
+        } catch {
+            print("초기화 시 모든 데이터 삭제 실패")
+        }
+        #endif
+        */
         
-        var notFirst = UserDefaults.standard.bool(forKey: "notFirst")
-//        notFirst = false
-//        let vc = PlaceInfoViewController()
-        let vc = notFirst ? MapViewController() : OnBoardingViewController() //MapViewController()
-        let navi = UINavigationController(rootViewController: vc)
-        
-        window = UIWindow(windowScene: scene)
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
-        
-        UserDefaults.standard.set(true, forKey: "notFirst")
+        self.appCoordinator = AppCoordinator(UIWindow(windowScene: scene))
+        self.appCoordinator?.start()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

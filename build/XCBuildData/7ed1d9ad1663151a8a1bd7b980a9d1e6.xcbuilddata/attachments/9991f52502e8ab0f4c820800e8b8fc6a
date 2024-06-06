@@ -1,0 +1,15 @@
+{
+  "" : {
+    "const-values" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AlamofireNetworkActivityLogger/build/AlamofireNetworkActivityLogger.build/Release-iphoneos/AlamofireNetworkActivityLogger.build/Objects-normal/arm64/AlamofireNetworkActivityLogger-master.swiftconstvalues",
+    "dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AlamofireNetworkActivityLogger/build/AlamofireNetworkActivityLogger.build/Release-iphoneos/AlamofireNetworkActivityLogger.build/Objects-normal/arm64/AlamofireNetworkActivityLogger-master.d",
+    "diagnostics" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AlamofireNetworkActivityLogger/build/AlamofireNetworkActivityLogger.build/Release-iphoneos/AlamofireNetworkActivityLogger.build/Objects-normal/arm64/AlamofireNetworkActivityLogger-master.dia",
+    "emit-module-dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AlamofireNetworkActivityLogger/build/AlamofireNetworkActivityLogger.build/Release-iphoneos/AlamofireNetworkActivityLogger.build/Objects-normal/arm64/AlamofireNetworkActivityLogger-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AlamofireNetworkActivityLogger/build/AlamofireNetworkActivityLogger.build/Release-iphoneos/AlamofireNetworkActivityLogger.build/Objects-normal/arm64/AlamofireNetworkActivityLogger-master-emit-module.dia",
+    "swift-dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AlamofireNetworkActivityLogger/build/AlamofireNetworkActivityLogger.build/Release-iphoneos/AlamofireNetworkActivityLogger.build/Objects-normal/arm64/AlamofireNetworkActivityLogger-master.swiftdeps"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AlamofireNetworkActivityLogger/Source/NetworkActivityLogger.swift" : {
+    "index-unit-output-path" : "/AlamofireNetworkActivityLogger.build/Release-iphoneos/AlamofireNetworkActivityLogger.build/Objects-normal/arm64/NetworkActivityLogger.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AlamofireNetworkActivityLogger/build/AlamofireNetworkActivityLogger.build/Release-iphoneos/AlamofireNetworkActivityLogger.build/Objects-normal/arm64/NetworkActivityLogger.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AlamofireNetworkActivityLogger/build/AlamofireNetworkActivityLogger.build/Release-iphoneos/AlamofireNetworkActivityLogger.build/Objects-normal/arm64/NetworkActivityLogger.o"
+  }
+}

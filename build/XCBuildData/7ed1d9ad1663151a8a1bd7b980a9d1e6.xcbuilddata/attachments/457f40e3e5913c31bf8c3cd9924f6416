@@ -1,0 +1,15 @@
+{
+  "" : {
+    "const-values" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Then/build/Then.build/Release-iphoneos/Then.build/Objects-normal/arm64/Then-master.swiftconstvalues",
+    "dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Then/build/Then.build/Release-iphoneos/Then.build/Objects-normal/arm64/Then-master.d",
+    "diagnostics" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Then/build/Then.build/Release-iphoneos/Then.build/Objects-normal/arm64/Then-master.dia",
+    "emit-module-dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Then/build/Then.build/Release-iphoneos/Then.build/Objects-normal/arm64/Then-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Then/build/Then.build/Release-iphoneos/Then.build/Objects-normal/arm64/Then-master-emit-module.dia",
+    "swift-dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Then/build/Then.build/Release-iphoneos/Then.build/Objects-normal/arm64/Then-master.swiftdeps"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Then/Sources/Then/Then.swift" : {
+    "index-unit-output-path" : "/Then.build/Release-iphoneos/Then.build/Objects-normal/arm64/Then.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Then/build/Then.build/Release-iphoneos/Then.build/Objects-normal/arm64/Then.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Then/build/Then.build/Release-iphoneos/Then.build/Objects-normal/arm64/Then.o"
+  }
+}

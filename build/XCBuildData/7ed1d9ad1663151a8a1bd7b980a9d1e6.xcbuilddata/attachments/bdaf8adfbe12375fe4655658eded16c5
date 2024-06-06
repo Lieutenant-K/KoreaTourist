@@ -1,0 +1,65 @@
+{
+  "" : {
+    "const-values" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowList-master.swiftconstvalues",
+    "dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowList-master.d",
+    "diagnostics" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowList-master.dia",
+    "emit-module-dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowList-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowList-master-emit-module.dia",
+    "swift-dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowList-master.swiftdeps"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/DerivedSources/resource_bundle_accessor.swift" : {
+    "index-unit-output-path" : "/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/resource_bundle_accessor.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/resource_bundle_accessor.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/resource_bundle_accessor.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/Sources/AcknowList/Acknow.swift" : {
+    "index-unit-output-path" : "/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/Acknow.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/Acknow.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/Acknow.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/Sources/AcknowList/AcknowList.swift" : {
+    "index-unit-output-path" : "/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowList.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowList.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowList.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/Sources/AcknowList/AcknowListSwiftUI.swift" : {
+    "index-unit-output-path" : "/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowListSwiftUI.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowListSwiftUI.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowListSwiftUI.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/Sources/AcknowList/AcknowListViewController.swift" : {
+    "index-unit-output-path" : "/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowListViewController.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowListViewController.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowListViewController.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/Sources/AcknowList/AcknowLocalization.swift" : {
+    "index-unit-output-path" : "/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowLocalization.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowLocalization.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowLocalization.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/Sources/AcknowList/AcknowPackageDecoder.swift" : {
+    "index-unit-output-path" : "/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowPackageDecoder.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowPackageDecoder.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowPackageDecoder.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/Sources/AcknowList/AcknowParser.swift" : {
+    "index-unit-output-path" : "/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowParser.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowParser.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowParser.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/Sources/AcknowList/AcknowPodDecoder.swift" : {
+    "index-unit-output-path" : "/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowPodDecoder.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowPodDecoder.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowPodDecoder.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/Sources/AcknowList/AcknowSwiftUI.swift" : {
+    "index-unit-output-path" : "/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowSwiftUI.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowSwiftUI.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowSwiftUI.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/Sources/AcknowList/AcknowViewController.swift" : {
+    "index-unit-output-path" : "/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowViewController.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowViewController.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/AcknowList/build/AcknowList.build/Release-iphoneos/AcknowList.build/Objects-normal/arm64/AcknowViewController.o"
+  }
+}

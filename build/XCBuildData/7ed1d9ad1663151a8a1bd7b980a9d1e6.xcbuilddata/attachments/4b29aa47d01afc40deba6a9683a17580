@@ -1,0 +1,4 @@
+module CircleMenu {
+header "CircleMenu-Swift.h"
+export *
+}

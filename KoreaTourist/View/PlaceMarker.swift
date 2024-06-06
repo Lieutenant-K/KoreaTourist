@@ -6,68 +6,93 @@
 //
 
 import UIKit
+import Combine
+
 import NMapsMap
 
 final class PlaceMarker: NMFMarker {
-    
-    // 디버그용
-    static let minimumDistance: Double = 500
-    
+    var cancellables = Set<AnyCancellable>()
+    let markerDidTapEvent = PassthroughSubject<PlaceMarker, Never>()
     let placeInfo: CommonPlaceInfo
-    
     var distance: Double {
         didSet {
-            updateMarkerAppearnce()
+            self.updateAppearance()
         }
+    }
+    var isDiscovered: Bool {
+        self.placeInfo.isDiscovered
     }
     
     init(place: CommonPlaceInfo) {
         self.placeInfo = place
         self.distance = place.dist
         super.init()
-        
-        configureMarker()
+        self.configureMarker()
     }
     
-    func updateMarkerAppearnce() {
+    func updateAppearance() {
+        let zIndex = distance <= Constant.minimumDiscoveryDistance ? 2 : 1
         
-        let color: UIColor = placeInfo.isDiscovered ? .discoverdMarker : (distance <= Self.minimumDistance ? .enabledMarker : .disabledMarker)
-        
-        captionText = placeInfo.isDiscovered ? placeInfo.title : (distance <= Self.minimumDistance ? "발견가능" : "미발견")
-        
-        subCaptionText = placeInfo.isDiscovered ? "" : "\(Int(distance))m"
-        
-        zIndex = placeInfo.isDiscovered ? 0 : (distance <= Self.minimumDistance ? 2 : 1)
-        
-        captionColor = color
-        iconTintColor = color
-        captionHaloColor = .systemBackground
-        subCaptionHaloColor = .systemBackground
-        subCaptionColor = .label
-        
+        self.captionText = self.placeInfo.isDiscovered ? self.placeInfo.title : self.statusText
+        self.subCaptionText = self.placeInfo.isDiscovered ? "" : "\(Int(distance))m"
+        self.zIndex = self.placeInfo.isDiscovered ? 0 : zIndex
+        self.captionColor = self.markerColor
+        self.iconTintColor = self.markerColor
+        self.captionHaloColor = .systemBackground
+        self.subCaptionHaloColor = .systemBackground
+        self.subCaptionColor = .label
+    }
+}
+
+extension PlaceMarker {
+    var statusColor: UIColor {
+        if self.distance <= Constant.minimumDiscoveryDistance {
+            return .enabledMarker
+        } else {
+            return .disabledMarker
+        }
+    }
+    
+    var markerColor: UIColor {
+        if self.placeInfo.isDiscovered {
+            return .discoverdMarker
+        } else {
+            return self.statusColor
+        }
+    }
+    
+    var statusText: String {
+        if self.distance <= Constant.minimumDiscoveryDistance {
+            return "발견가능"
+        } else {
+            return "미발견"
+        }
     }
     
     private func configureMarker() {
+        self.position = NMGLatLng(lat: placeInfo.lat, lng: placeInfo.lng)
+        self.iconImage = NMF_MARKER_IMAGE_BLACK
+        self.width = Constant.defaultMarkerImageWidth
+        self.height = Constant.defaultMarkerImageHeight
+        self.updateAppearance()
+        self.configureCaption()
+        self.globalZIndex = 3
+        self.isHideCollidedSymbols = true
+        self.isHideCollidedCaptions = true
+        self.iconPerspectiveEnabled = true
         
-        position = NMGLatLng(lat: placeInfo.lat, lng: placeInfo.lng)
-        iconImage = NMF_MARKER_IMAGE_BLACK
-        isHideCollidedSymbols = true
-        isHideCollidedCaptions = true
-        iconPerspectiveEnabled = true
-//        captionPerspectiveEnabled = true
-        captionTextSize = 30
-        captionOffset = 4
-        subCaptionTextSize = 24
-//        captionMinZoom = 14
-        captionRequestedWidth = 4
-        
-//        width = 50
-//        height = 65
-        
-        updateMarkerAppearnce()
-        
+        self.touchHandler = { [weak self] in
+            if let marker = $0 as? PlaceMarker {
+                self?.markerDidTapEvent.send(marker)
+            }
+            return true
+        }
     }
     
-    
-    
+    private func configureCaption() {
+        self.captionRequestedWidth = 4
+        self.captionOffset = 4
+        self.captionTextSize = Constant.defaultMarkerCaptionTextSize
+        self.subCaptionTextSize = Constant.defaultMarkerSubCaptionTextSize
+    }
 }

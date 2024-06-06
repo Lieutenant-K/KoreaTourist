@@ -10,6 +10,7 @@ import NMapsMap
 import FirebaseCore
 import FirebaseMessaging
 import RealmSwift
+import AlamofireNetworkActivityLogger
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,6 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         Realm.Configuration.defaultConfiguration = realmConfig
+        
+        NetworkActivityLogger.shared.level = .debug
+        NetworkActivityLogger.shared.startLogging()
         
         return true
     }

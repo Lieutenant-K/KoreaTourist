@@ -1,0 +1,4 @@
+module RealmCoreResources {
+umbrella "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/realm-core/src/spm"
+export *
+}

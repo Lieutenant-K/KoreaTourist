@@ -1,0 +1,4 @@
+module AlamofireNetworkActivityLogger {
+header "AlamofireNetworkActivityLogger-Swift.h"
+export *
+}
