@@ -1,0 +1,4 @@
+module Hero {
+header "Hero-Swift.h"
+export *
+}

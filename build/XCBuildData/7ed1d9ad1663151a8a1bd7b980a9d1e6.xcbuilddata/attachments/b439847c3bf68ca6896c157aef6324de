@@ -1,0 +1,4 @@
+module s2geometry {
+umbrella "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/realm-core/src/external/s2"
+export *
+}

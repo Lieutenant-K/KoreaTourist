@@ -1,0 +1,25 @@
+{
+  "" : {
+    "const-values" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/build/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenu-master.swiftconstvalues",
+    "dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/build/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenu-master.d",
+    "diagnostics" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/build/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenu-master.dia",
+    "emit-module-dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/build/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenu-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/build/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenu-master-emit-module.dia",
+    "swift-dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/build/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenu-master.swiftdeps"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/CircleMenuLib/CircleMenu.swift" : {
+    "index-unit-output-path" : "/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenu.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/build/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenu.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/build/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenu.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/CircleMenuLib/CircleMenuButton/CircleMenuButton.swift" : {
+    "index-unit-output-path" : "/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenuButton.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/build/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenuButton.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/build/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenuButton.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/CircleMenuLib/CircleMenuLoader/CircleMenuLoader.swift" : {
+    "index-unit-output-path" : "/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenuLoader.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/build/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenuLoader.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/circle-menu/build/CircleMenu.build/Release-iphoneos/CircleMenu.build/Objects-normal/arm64/CircleMenuLoader.o"
+  }
+}

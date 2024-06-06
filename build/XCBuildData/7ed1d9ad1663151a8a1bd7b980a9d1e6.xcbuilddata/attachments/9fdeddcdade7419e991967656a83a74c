@@ -1,0 +1,15 @@
+{
+  "" : {
+    "const-values" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Toast-Swift/build/Toast.build/Release-iphoneos/Toast.build/Objects-normal/arm64/Toast-master.swiftconstvalues",
+    "dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Toast-Swift/build/Toast.build/Release-iphoneos/Toast.build/Objects-normal/arm64/Toast-master.d",
+    "diagnostics" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Toast-Swift/build/Toast.build/Release-iphoneos/Toast.build/Objects-normal/arm64/Toast-master.dia",
+    "emit-module-dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Toast-Swift/build/Toast.build/Release-iphoneos/Toast.build/Objects-normal/arm64/Toast-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Toast-Swift/build/Toast.build/Release-iphoneos/Toast.build/Objects-normal/arm64/Toast-master-emit-module.dia",
+    "swift-dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Toast-Swift/build/Toast.build/Release-iphoneos/Toast.build/Objects-normal/arm64/Toast-master.swiftdeps"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Toast-Swift/Toast/Toast.swift" : {
+    "index-unit-output-path" : "/Toast.build/Release-iphoneos/Toast.build/Objects-normal/arm64/Toast.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Toast-Swift/build/Toast.build/Release-iphoneos/Toast.build/Objects-normal/arm64/Toast.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/Toast-Swift/build/Toast.build/Release-iphoneos/Toast.build/Objects-normal/arm64/Toast.o"
+  }
+}

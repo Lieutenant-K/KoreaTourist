@@ -1,0 +1,4 @@
+module PaperOnboarding {
+header "PaperOnboarding-Swift.h"
+export *
+}

@@ -1,0 +1,4 @@
+module CombineInterception {
+header "CombineInterception-Swift.h"
+export *
+}

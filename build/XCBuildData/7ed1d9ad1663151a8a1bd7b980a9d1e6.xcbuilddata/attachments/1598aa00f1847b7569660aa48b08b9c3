@@ -1,0 +1,70 @@
+{
+  "" : {
+    "const-values" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboarding-master.swiftconstvalues",
+    "dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboarding-master.d",
+    "diagnostics" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboarding-master.dia",
+    "emit-module-dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboarding-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboarding-master-emit-module.dia",
+    "swift-dependencies" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboarding-master.swiftdeps"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/Source/FillAnimationView/FillAnimationView.swift" : {
+    "index-unit-output-path" : "/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/FillAnimationView.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/FillAnimationView.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/FillAnimationView.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/Source/GestureControl/GestureControl.swift" : {
+    "index-unit-output-path" : "/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/GestureControl.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/GestureControl.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/GestureControl.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/Source/Helpers/Configuring.swift" : {
+    "index-unit-output-path" : "/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/Configuring.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/Configuring.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/Configuring.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/Source/Helpers/ConstraintsHelper.swift" : {
+    "index-unit-output-path" : "/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/ConstraintsHelper.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/ConstraintsHelper.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/ConstraintsHelper.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/Source/OnboardingContentView/Item/OnboardingContantViewItem.swift" : {
+    "index-unit-output-path" : "/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/OnboardingContantViewItem.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/OnboardingContantViewItem.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/OnboardingContantViewItem.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/Source/OnboardingContentView/OnboardingContentView.swift" : {
+    "index-unit-output-path" : "/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/OnboardingContentView.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/OnboardingContentView.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/OnboardingContentView.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/Source/PageView/Item/PageViewItem.swift" : {
+    "index-unit-output-path" : "/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PageViewItem.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PageViewItem.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PageViewItem.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/Source/PageView/PageContainerView/PageContainer.swift" : {
+    "index-unit-output-path" : "/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PageContainer.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PageContainer.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PageContainer.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/Source/PageView/PageView.swift" : {
+    "index-unit-output-path" : "/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PageView.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PageView.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PageView.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/Source/PaperOnboarding.swift" : {
+    "index-unit-output-path" : "/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboarding.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboarding.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboarding.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/Source/PaperOnboardingDataSource.swift" : {
+    "index-unit-output-path" : "/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboardingDataSource.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboardingDataSource.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboardingDataSource.o"
+  },
+  "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/Source/PaperOnboardingDelegate.swift" : {
+    "index-unit-output-path" : "/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboardingDelegate.o",
+    "llvm-bc" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboardingDelegate.bc",
+    "object" : "/Users/uisigjukeompeoni/Library/Developer/Xcode/DerivedData/KoreaTourist-bxkyckhcjdgfekeutdparbsjzpyq/SourcePackages/checkouts/paper-onboarding/build/PaperOnboarding.build/Release-iphoneos/PaperOnboarding.build/Objects-normal/arm64/PaperOnboardingDelegate.o"
+  }
+}
