@@ -108,17 +108,12 @@
 		0DF5734E2A90F73900944DE9 /* DynamicCameraModeMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF5734D2A90F73900944DE9 /* DynamicCameraModeMap.swift */; };
 		0DFCE12C2A8DF393003A6FF4 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE12B2A8DF393003A6FF4 /* CombineCocoa */; };
 		0DFCE12F2A8DF39B003A6FF4 /* PaperOnboarding in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE12E2A8DF39B003A6FF4 /* PaperOnboarding */; };
-		0DFCE1322A8DF3C5003A6FF4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE1312A8DF3C5003A6FF4 /* FirebaseAnalytics */; };
-		0DFCE1342A8DF3C5003A6FF4 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE1332A8DF3C5003A6FF4 /* FirebaseCrashlytics */; };
-		0DFCE1362A8DF3C5003A6FF4 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE1352A8DF3C5003A6FF4 /* FirebaseMessaging */; };
 		0DFCE1392A8DF3DC003A6FF4 /* CircleMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE1382A8DF3DC003A6FF4 /* CircleMenu */; };
 		0DFCE13C2A8DF3E9003A6FF4 /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE13B2A8DF3E9003A6FF4 /* XMLCoder */; };
 		0DFCE13F2A8DF3F8003A6FF4 /* AcknowList in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE13E2A8DF3F8003A6FF4 /* AcknowList */; };
 		0DFCE1422A8DF406003A6FF4 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE1412A8DF406003A6FF4 /* Toast */; };
 		0DFCE1452A8DF420003A6FF4 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE1442A8DF420003A6FF4 /* Alamofire */; };
 		0DFCE1482A8DF430003A6FF4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE1472A8DF430003A6FF4 /* SnapKit */; };
-		0DFCE14B2A8DF44D003A6FF4 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE14A2A8DF44D003A6FF4 /* Realm */; };
-		0DFCE14D2A8DF44D003A6FF4 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE14C2A8DF44D003A6FF4 /* RealmSwift */; };
 		0DFCE1502A8DF45E003A6FF4 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 0DFCE14F2A8DF45E003A6FF4 /* Then */; };
 		0DFFCA8D28E3895C008B5705 /* PlaceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFFCA8C28E3895C008B5705 /* PlaceCollectionCell.swift */; };
 		533ED68E2C0AF289002A16A7 /* MapLaboratoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533ED68D2C0AF289002A16A7 /* MapLaboratoryButton.swift */; };
@@ -131,9 +126,29 @@
 		535B967A2B08DA190011C3E5 /* PlaceDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535B96792B08DA190011C3E5 /* PlaceDetailCoordinator.swift */; };
 		535B967C2B08EC710011C3E5 /* PopupFinishDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535B967B2B08EC710011C3E5 /* PopupFinishDelegate.swift */; };
 		535B967F2B08F9810011C3E5 /* DiscoveredPlaceMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535B967E2B08F9810011C3E5 /* DiscoveredPlaceMapViewController.swift */; };
+		53CC5D272C118F0000B11F1D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53CC5D262C118F0000B11F1D /* GoogleService-Info.plist */; };
+		53CC5D342C11990600B11F1D /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 53CC5D332C11990600B11F1D /* FirebaseAnalyticsSwift */; };
+		53CC5D362C11990600B11F1D /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 53CC5D352C11990600B11F1D /* FirebaseCrashlytics */; };
+		53CC5D382C11990600B11F1D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 53CC5D372C11990600B11F1D /* FirebaseMessaging */; };
+		53CC5D3B2C11992E00B11F1D /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 53CC5D3A2C11992E00B11F1D /* RealmSwift */; };
+		53CC5D3D2C119D1E00B11F1D /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 53CC5D3A2C11992E00B11F1D /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		53D040BB2C109083006D9100 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D040BA2C109083006D9100 /* Const.swift */; };
 		D045CE37CB2C47864BCCA0D1 /* Pods_KoreaTourist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54DA04C722821319ECFCAEC1 /* Pods_KoreaTourist.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		53CC5D312C11968E00B11F1D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				53CC5D3D2C119D1E00B11F1D /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0D00CBBE2B4A1A46003010F4 /* MyCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCollectionViewModel.swift; sourceTree = "<group>"; };
@@ -246,8 +261,8 @@
 		535B96792B08DA190011C3E5 /* PlaceDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlaceDetailCoordinator.swift; path = KoreaTourist/Scene/PlaceDetail/PlaceDetailCoordinator.swift; sourceTree = SOURCE_ROOT; };
 		535B967B2B08EC710011C3E5 /* PopupFinishDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFinishDelegate.swift; sourceTree = "<group>"; };
 		535B967E2B08F9810011C3E5 /* DiscoveredPlaceMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredPlaceMapViewController.swift; sourceTree = "<group>"; };
+		53CC5D262C118F0000B11F1D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		53D040BA2C109083006D9100 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
-		53E52A892C0B6AC300C4182B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		54DA04C722821319ECFCAEC1 /* Pods_KoreaTourist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KoreaTourist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4754B79013F5839232E6CFA /* Pods-KoreaTourist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaTourist.release.xcconfig"; path = "Target Support Files/Pods-KoreaTourist/Pods-KoreaTourist.release.xcconfig"; sourceTree = "<group>"; };
 		DC2E0683F5F281302A2E4573 /* Pods-KoreaTourist.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaTourist.dev.xcconfig"; path = "Target Support Files/Pods-KoreaTourist/Pods-KoreaTourist.dev.xcconfig"; sourceTree = "<group>"; };
@@ -258,25 +273,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53CC5D3B2C11992E00B11F1D /* RealmSwift in Frameworks */,
+				53CC5D382C11990600B11F1D /* FirebaseMessaging in Frameworks */,
 				0DFCE1392A8DF3DC003A6FF4 /* CircleMenu in Frameworks */,
 				0DFCE13F2A8DF3F8003A6FF4 /* AcknowList in Frameworks */,
-				0DFCE14D2A8DF44D003A6FF4 /* RealmSwift in Frameworks */,
-				0DFCE1362A8DF3C5003A6FF4 /* FirebaseMessaging in Frameworks */,
 				535B96782B08D51E0011C3E5 /* Hero in Frameworks */,
 				0DFCE12C2A8DF393003A6FF4 /* CombineCocoa in Frameworks */,
 				D045CE37CB2C47864BCCA0D1 /* Pods_KoreaTourist.framework in Frameworks */,
 				0DFCE1452A8DF420003A6FF4 /* Alamofire in Frameworks */,
-				0DFCE1342A8DF3C5003A6FF4 /* FirebaseCrashlytics in Frameworks */,
-				0DFCE1322A8DF3C5003A6FF4 /* FirebaseAnalytics in Frameworks */,
 				0DFCE13C2A8DF3E9003A6FF4 /* XMLCoder in Frameworks */,
 				535B966F2B07B2D50011C3E5 /* CombineInterception in Frameworks */,
 				0DFCE1502A8DF45E003A6FF4 /* Then in Frameworks */,
 				0DFCE1482A8DF430003A6FF4 /* SnapKit in Frameworks */,
 				0DFCE1422A8DF406003A6FF4 /* Toast in Frameworks */,
 				0D7B79B72A8E2AA600912BF7 /* JGProgressHUD in Frameworks */,
+				53CC5D342C11990600B11F1D /* FirebaseAnalyticsSwift in Frameworks */,
+				53CC5D362C11990600B11F1D /* FirebaseCrashlytics in Frameworks */,
 				0D7B79BD2A8E2B7F00912BF7 /* Kingfisher in Frameworks */,
 				0D580AA52B2D625100AC944B /* AlamofireNetworkActivityLogger in Frameworks */,
-				0DFCE14B2A8DF44D003A6FF4 /* Realm in Frameworks */,
 				0DFCE12F2A8DF39B003A6FF4 /* PaperOnboarding in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -598,7 +612,7 @@
 		53E52A872C0B6A4A00C4182B /* Dev */ = {
 			isa = PBXGroup;
 			children = (
-				53E52A892C0B6AC300C4182B /* GoogleService-Info.plist */,
+				53CC5D262C118F0000B11F1D /* GoogleService-Info.plist */,
 			);
 			path = Dev;
 			sourceTree = "<group>";
@@ -641,6 +655,7 @@
 				0DF3F5B628D8567000D2F399 /* Frameworks */,
 				53E52A8B2C0B6B0100C4182B /* Setup Firebase plist files */,
 				0DF3F5B728D8567000D2F399 /* Resources */,
+				53CC5D312C11968E00B11F1D /* Embed Frameworks */,
 				9B71E8501BDFDF6617277076 /* [CP] Embed Pods Frameworks */,
 				0DE3BC2528F5E53F00FBFBFC /* Crashlytics */,
 			);
@@ -652,23 +667,22 @@
 			packageProductDependencies = (
 				0DFCE12B2A8DF393003A6FF4 /* CombineCocoa */,
 				0DFCE12E2A8DF39B003A6FF4 /* PaperOnboarding */,
-				0DFCE1312A8DF3C5003A6FF4 /* FirebaseAnalytics */,
-				0DFCE1332A8DF3C5003A6FF4 /* FirebaseCrashlytics */,
-				0DFCE1352A8DF3C5003A6FF4 /* FirebaseMessaging */,
 				0DFCE1382A8DF3DC003A6FF4 /* CircleMenu */,
 				0DFCE13B2A8DF3E9003A6FF4 /* XMLCoder */,
 				0DFCE13E2A8DF3F8003A6FF4 /* AcknowList */,
 				0DFCE1412A8DF406003A6FF4 /* Toast */,
 				0DFCE1442A8DF420003A6FF4 /* Alamofire */,
 				0DFCE1472A8DF430003A6FF4 /* SnapKit */,
-				0DFCE14A2A8DF44D003A6FF4 /* Realm */,
-				0DFCE14C2A8DF44D003A6FF4 /* RealmSwift */,
 				0DFCE14F2A8DF45E003A6FF4 /* Then */,
 				0D7B79B62A8E2AA600912BF7 /* JGProgressHUD */,
 				0D7B79BC2A8E2B7F00912BF7 /* Kingfisher */,
 				535B966E2B07B2D50011C3E5 /* CombineInterception */,
 				535B96772B08D51E0011C3E5 /* Hero */,
 				0D580AA42B2D625100AC944B /* AlamofireNetworkActivityLogger */,
+				53CC5D332C11990600B11F1D /* FirebaseAnalyticsSwift */,
+				53CC5D352C11990600B11F1D /* FirebaseCrashlytics */,
+				53CC5D372C11990600B11F1D /* FirebaseMessaging */,
+				53CC5D3A2C11992E00B11F1D /* RealmSwift */,
 			);
 			productName = KoreaTourist;
 			productReference = 0DFCE1292A8DF339003A6FF4 /* KoreaTourist.app */;
@@ -701,20 +715,20 @@
 			packageReferences = (
 				0DFCE12A2A8DF393003A6FF4 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 				0DFCE12D2A8DF39B003A6FF4 /* XCRemoteSwiftPackageReference "paper-onboarding" */,
-				0DFCE1302A8DF3C5003A6FF4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				0DFCE1372A8DF3DC003A6FF4 /* XCRemoteSwiftPackageReference "circle-menu" */,
 				0DFCE13A2A8DF3E9003A6FF4 /* XCRemoteSwiftPackageReference "XMLCoder" */,
 				0DFCE13D2A8DF3F8003A6FF4 /* XCRemoteSwiftPackageReference "AcknowList" */,
 				0DFCE1402A8DF406003A6FF4 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				0DFCE1432A8DF420003A6FF4 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				0DFCE1462A8DF430003A6FF4 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				0DFCE1492A8DF44D003A6FF4 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				0DFCE14E2A8DF45E003A6FF4 /* XCRemoteSwiftPackageReference "Then" */,
 				0D7B79B52A8E2AA600912BF7 /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
 				0D7B79BB2A8E2B7E00912BF7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				535B966D2B07B2D50011C3E5 /* XCRemoteSwiftPackageReference "CombineInterception" */,
 				535B96762B08D51E0011C3E5 /* XCRemoteSwiftPackageReference "Hero" */,
 				0D580AA32B2D625100AC944B /* XCRemoteSwiftPackageReference "AlamofireNetworkActivityLogger" */,
+				53CC5D322C11990600B11F1D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				53CC5D392C11992E00B11F1D /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 0DF3F5B028D8567000D2F399;
 			projectDirPath = "";
@@ -735,6 +749,7 @@
 				0D7B155728E77EC700E70D3B /* Pods-KoreaTourist-acknowledgements.plist in Resources */,
 				0D4A88422B59853E00A2AC91 /* Package.resolved in Resources */,
 				0DF3F5C628D8567100D2F399 /* Assets.xcassets in Resources */,
+				53CC5D272C118F0000B11F1D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1300,14 +1315,6 @@
 				minimumVersion = 6.0.0;
 			};
 		};
-		0DFCE1302A8DF3C5003A6FF4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.0.0;
-			};
-		};
 		0DFCE1372A8DF3DC003A6FF4 /* XCRemoteSwiftPackageReference "circle-menu" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Ramotion/circle-menu.git";
@@ -1356,14 +1363,6 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		0DFCE1492A8DF44D003A6FF4 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-swift.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		0DFCE14E2A8DF45E003A6FF4 /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then.git";
@@ -1386,6 +1385,22 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.6.2;
+			};
+		};
+		53CC5D322C11990600B11F1D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.27.0;
+			};
+		};
+		53CC5D392C11992E00B11F1D /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1415,21 +1430,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0DFCE12D2A8DF39B003A6FF4 /* XCRemoteSwiftPackageReference "paper-onboarding" */;
 			productName = PaperOnboarding;
-		};
-		0DFCE1312A8DF3C5003A6FF4 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0DFCE1302A8DF3C5003A6FF4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		0DFCE1332A8DF3C5003A6FF4 /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0DFCE1302A8DF3C5003A6FF4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-		0DFCE1352A8DF3C5003A6FF4 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0DFCE1302A8DF3C5003A6FF4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
 		};
 		0DFCE1382A8DF3DC003A6FF4 /* CircleMenu */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1461,16 +1461,6 @@
 			package = 0DFCE1462A8DF430003A6FF4 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		0DFCE14A2A8DF44D003A6FF4 /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0DFCE1492A8DF44D003A6FF4 /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = Realm;
-		};
-		0DFCE14C2A8DF44D003A6FF4 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0DFCE1492A8DF44D003A6FF4 /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = RealmSwift;
-		};
 		0DFCE14F2A8DF45E003A6FF4 /* Then */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0DFCE14E2A8DF45E003A6FF4 /* XCRemoteSwiftPackageReference "Then" */;
@@ -1485,6 +1475,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 535B96762B08D51E0011C3E5 /* XCRemoteSwiftPackageReference "Hero" */;
 			productName = Hero;
+		};
+		53CC5D332C11990600B11F1D /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53CC5D322C11990600B11F1D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		53CC5D352C11990600B11F1D /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53CC5D322C11990600B11F1D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		53CC5D372C11990600B11F1D /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53CC5D322C11990600B11F1D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		53CC5D3A2C11992E00B11F1D /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53CC5D392C11992E00B11F1D /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
