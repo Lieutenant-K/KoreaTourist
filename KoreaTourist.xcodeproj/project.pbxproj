@@ -132,6 +132,7 @@
 		53CC5D382C11990600B11F1D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 53CC5D372C11990600B11F1D /* FirebaseMessaging */; };
 		53CC5D3B2C11992E00B11F1D /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 53CC5D3A2C11992E00B11F1D /* RealmSwift */; };
 		53CC5D3D2C119D1E00B11F1D /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 53CC5D3A2C11992E00B11F1D /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		53CC5D412C11A39400B11F1D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 53CC5D402C11A39400B11F1D /* PrivacyInfo.xcprivacy */; };
 		53D040BB2C109083006D9100 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D040BA2C109083006D9100 /* Const.swift */; };
 		D045CE37CB2C47864BCCA0D1 /* Pods_KoreaTourist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54DA04C722821319ECFCAEC1 /* Pods_KoreaTourist.framework */; };
 /* End PBXBuildFile section */
@@ -262,6 +263,7 @@
 		535B967B2B08EC710011C3E5 /* PopupFinishDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFinishDelegate.swift; sourceTree = "<group>"; };
 		535B967E2B08F9810011C3E5 /* DiscoveredPlaceMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredPlaceMapViewController.swift; sourceTree = "<group>"; };
 		53CC5D262C118F0000B11F1D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		53CC5D402C11A39400B11F1D /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		53D040BA2C109083006D9100 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		54DA04C722821319ECFCAEC1 /* Pods_KoreaTourist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KoreaTourist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4754B79013F5839232E6CFA /* Pods-KoreaTourist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KoreaTourist.release.xcconfig"; path = "Target Support Files/Pods-KoreaTourist/Pods-KoreaTourist.release.xcconfig"; sourceTree = "<group>"; };
@@ -492,6 +494,7 @@
 		0DF3F5BB28D8567000D2F399 /* KoreaTourist */ = {
 			isa = PBXGroup;
 			children = (
+				53CC5D402C11A39400B11F1D /* PrivacyInfo.xcprivacy */,
 				53D040B92C109079006D9100 /* Const */,
 				0DE3BC1B28F5BD2100FBFBFC /* KoreaTourist.entitlements */,
 				53E52A862C0B6A0000C4182B /* Firebase */,
@@ -745,6 +748,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DF3F61828D85B9600D2F399 /* .gitignore in Resources */,
+				53CC5D412C11A39400B11F1D /* PrivacyInfo.xcprivacy in Resources */,
 				0DF3F5C928D8567100D2F399 /* LaunchScreen.storyboard in Resources */,
 				0D7B155728E77EC700E70D3B /* Pods-KoreaTourist-acknowledgements.plist in Resources */,
 				0D4A88422B59853E00A2AC91 /* Package.resolved in Resources */,
